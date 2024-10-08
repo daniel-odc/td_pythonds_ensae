@@ -1,0 +1,9 @@
+hpack==4.0.0
+matplotlib==3.9.2
+munkres==1.1.4
+opencv-python-headless==4.10.0.84
+protobuf==4.25.3
+pyarrow==17.0.0
+setuptools==74.1.2
+wheel==0.44.0
+zstandard==0.23.0
