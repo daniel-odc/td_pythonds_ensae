@@ -1,6 +1,7 @@
-# TD ENSAE - année 2024 - 2025
-Code and descriptions for the "Python pour la data science" lecture at ENSAE year 2024 - 2025
+# TD ENSAE - Python pour la data science
 
-# Cours de Git
-* 1ère semaine: bases
-* 2ème semaine: git collaboratif
+Ce repo comporte des supports de présentation pour la conduite des TD du cours [ENSAE](https://www.ensae.fr/) [Python pour la data science](https://pythonds.linogaliana.fr/) de [Lino Galiana](https://github.com/linogaliana).
+
+# Sommaire
+
+- [TD 01 - Rappels de base]()

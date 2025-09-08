@@ -1,8 +1,11 @@
 # fichier de config
 config.cgf
 
-# répertoires
+# répertoires:
 venv/
 
 # fichiers de données:
 *.csv
+
+# corrections:
+notebooks/_corrections/
