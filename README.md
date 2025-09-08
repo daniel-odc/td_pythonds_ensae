@@ -4,4 +4,4 @@ Ce repo comporte des supports de présentation pour la conduite des TD du cours 
 
 # Sommaire
 
-- [TD 01 - Rappels de base]()
+- [TD 01 - Rappels de base](./slides/TD_01_rappels_de_base.html)
