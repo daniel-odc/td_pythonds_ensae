@@ -1,0 +1,14 @@
+---
+title: "Python pour la data science TD 2"
+format:
+  revealjs:
+    width: 1280
+    height: 720
+    minScale: 0.02
+    margin: 0.04
+    scrollable: true
+    code-overflow: wrap
+lang: fr
+---
+
+- [Intro Numpy](https://pythonds.linogaliana.fr/content/manipulation/01_numpy.html)

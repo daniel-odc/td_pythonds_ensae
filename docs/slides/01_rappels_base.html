@@ -233,11 +233,15 @@
 </section>
 <section class="slide level2">
 
+<div class="columns">
+<div class="column">
 <p>Dans le cadre du cours ==&gt; écosystème <strong>cloud</strong> sous <strong><code>SSP Cloud</code></strong> avec IDE <strong><code>VS Code</code></strong>.</p>
 <p><em>Note:</em> En pratique on crée un environnement de développement local, avec un <em>environnement virtuel</em>: il s’agit d’un environnement de développement propre au projet, avec ses propres versions de modules, communiquées grâce au fichier <code>requirements.txt</code>.</p>
 <p><strong>1ère étape:</strong> Création de compte <a href="http://datalab.sspcloud.fr/"><code>SSP Cloud</code></a></p>
-
-<img src="img/01_ssp_cloud_01_connection_page.jpg" width="25%" class="r-stretch"></section>
+</div><div class="column">
+<p><img src="img/01_ssp_cloud_01_connection_page.jpg" width="85%"></p>
+</div></div>
+</section>
 <section class="slide level2">
 
 <p><em>Application:</em> Créer une instance SSP Cloud:</p>
@@ -319,25 +323,85 @@
 <span id="cb4-14"><a href=""></a>li3[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">30</span></span>
 <span id="cb4-15"><a href=""></a><span class="bu">print</span>(<span class="ss">f'li3: </span><span class="sc">{</span>li3<span class="sc">}</span><span class="ch">\n</span><span class="ss">li1: </span><span class="sc">{</span>li1<span class="sc">}</span><span class="ss">'</span>)  <span class="co"># le contenu de li1 n'a pas été modifié lorsque li3 a été modifié</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
+<section id="imports-de-modules" class="slide level2">
+<h2>Imports de modules</h2>
+<h3 id="installation-dun-module">Installation d’un module</h3>
+<p>==&gt; Uniquement pour les modules non natifs (ex de modules natifs: <code>datetime</code>, <code>os</code>, <code>re</code> etc.)</p>
+<blockquote>
+<p>Dans le terminal:</p>
+</blockquote>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource shell number-lines code-with-copy"><code class="sourceCode"><span id="cb5-1"><a href=""></a>pip install mon_module  # example: pip install pandas</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote>
+<p>Dans jupyter:</p>
+</blockquote>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="op">!</span>pip install mon_module  <span class="co"># notez le "!"</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<h3 id="import-de-modules">Import de modules</h3>
+<p>==&gt; Toujours en tête de fichier</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np  <span class="co"># et jamais "from numpy import *"!</span></span>
+<span id="cb7-2"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb7-3"><a href=""></a></span>
+<span id="cb7-4"><a href=""></a>df <span class="op">=</span> pd.read_csv(<span class="st">'https://www.insee.fr/fr/statistiques/fichier/6800675/v_commune_2023.csv'</span>)</span>
+<span id="cb7-5"><a href=""></a><span class="co"># reste du code...</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
 <section class="slide level2">
 
 <p><a href="https://pythonds.linogaliana.fr/content/getting-started/03_revisions.html">Exercices de révision</a></p>
 </section>
-<section id="imports-de-modules" class="slide level2">
-<h2>Imports de modules</h2>
-<p>TODO</p>
-</section>
 <section id="arborescence-de-projet" class="slide level2">
 <h2>Arborescence de projet</h2>
-<p>TODO</p>
+<p>Dans un projet, maintenir l’ensemble du code dans un notebook n’est pas maintenable. Le code est déporté sur des fichiers dédiés, modules.</p>
+<p><em>Arborescence classique de projet:</em></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource shell number-lines code-with-copy"><code class="sourceCode"><span id="cb8-1"><a href=""></a>mon_projet/</span>
+<span id="cb8-2"><a href=""></a>    - `main.py`             # fonction principale</span>
+<span id="cb8-3"><a href=""></a>    - `requirements.txt`    # liste des modules et numéros de version à utiliser</span>
+<span id="cb8-4"><a href=""></a>    - mes_modules/          # répertoire où les modules externes sont créés</span>
+<span id="cb8-5"><a href=""></a>        `module1.py`        # module pour tâche 1</span>
+<span id="cb8-6"><a href=""></a>        `module2.py`        # module pour tâche 2</span>
+<span id="cb8-7"><a href=""></a>        ...</span>
+<span id="cb8-8"><a href=""></a>    - venv/                 # environnement Python virtuel</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p><br></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="co"># # Fichier `main.py`:</span></span>
+<span id="cb9-2"><a href=""></a><span class="im">import</span> mes_modules.module1 <span class="im">as</span> m1</span>
+<span id="cb9-3"><a href=""></a><span class="im">import</span> mes_modules.module2 <span class="im">as</span> m2</span>
+<span id="cb9-4"><a href=""></a></span>
+<span id="cb9-5"><a href=""></a>m1.print_msg(<span class="st">'msg appelé depuis main...'</span>)</span>
+<span id="cb9-6"><a href=""></a></span>
+<span id="cb9-7"><a href=""></a><span class="co"># Fichier module1.py</span></span>
+<span id="cb9-8"><a href=""></a><span class="kw">def</span> print_msg(msg):</span>
+<span id="cb9-9"><a href=""></a>    <span class="bu">print</span>(msg)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="classes-et-programmation-orientée-objet-poo-ou-oop" class="slide level2">
 <h2>Classes et programmation orientée objet (POO ou OOP)</h2>
-<p>TODO</p>
+<blockquote>
+<p>Permet de structurer des logiques de code par types de données / manipulation <br> Rend le code maintenable et scalable <br> Tous les modules <code>Python</code> sont des classes!</p>
+</blockquote>
+<p><em>Exemple:</em></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a><span class="co"># # Classe principale:</span></span>
+<span id="cb10-2"><a href=""></a><span class="kw">class</span> Mother:</span>
+<span id="cb10-3"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, param):</span>
+<span id="cb10-4"><a href=""></a>        <span class="va">self</span>.param <span class="op">=</span> param</span>
+<span id="cb10-5"><a href=""></a>        <span class="va">self</span>._attribut_prive <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb10-6"><a href=""></a></span>
+<span id="cb10-7"><a href=""></a>    <span class="kw">def</span> action(<span class="va">self</span>):</span>
+<span id="cb10-8"><a href=""></a>        <span class="bu">print</span>(<span class="va">self</span>.param)</span>
+<span id="cb10-9"><a href=""></a></span>
+<span id="cb10-10"><a href=""></a><span class="co"># # Classe fille (hérite de la classe principale):</span></span>
+<span id="cb10-11"><a href=""></a><span class="kw">class</span> Daughter(Mother):</span>
+<span id="cb10-12"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, param):</span>
+<span id="cb10-13"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(param<span class="op">=</span>param)       <span class="co"># initialisation des attributs et méthodes de la classe mère, transmis à la fille</span></span>
+<span id="cb10-14"><a href=""></a>        <span class="va">self</span>.param_fille <span class="op">=</span> <span class="st">'param fille'</span>    <span class="co"># définition des attributs et méthodes propres à la fille</span></span>
+<span id="cb10-15"><a href=""></a>        </span>
+<span id="cb10-16"><a href=""></a><span class="co"># # Instanciation d'un objet de la classe fille:</span></span>
+<span id="cb10-17"><a href=""></a>d <span class="op">=</span> Daughter(param<span class="op">=</span><span class="st">'param entrée'</span>)</span>
+<span id="cb10-18"><a href=""></a>d.action() <span class="co"># la fille hérite des actions implémentées dans la classe mère</span></span>
+<span id="cb10-19"><a href=""></a></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="conventions-pep-8" class="slide level2">
 <h2>Conventions PEP-8</h2>
-<p>TODO</p>
+<p>==&gt; Guide officiel de style Python : il fixe des règles pour écrire un code lisible et cohérent. Non obligatoire mais fortement recommandé pour écrire du code maintenable et reproduit!</p>
+<blockquote>
+<p>Modules/paquets : tout_en_minuscules, underscores permis. <br> Classes : CapWords (CamelCase), ex. DataLoader. <br> Fonctions &amp; variables : snake_case. <br> Constantes : UPPER_CASE. <br> à lire: <a href="https://peps.python.org/pep-0008/">PEP 8 – Style Guide for Python Code</a></p>
+</blockquote>
 
 </section></section>
     </div>
