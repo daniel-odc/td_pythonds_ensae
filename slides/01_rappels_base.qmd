@@ -1,0 +1,188 @@
+---
+title: "Python pour la data science TD 1"
+format:
+  revealjs:
+    width: 1280
+    height: 720
+    minScale: 0.02
+    margin: 0.04
+    scrollable: true
+    code-overflow: wrap
+lang: fr
+---
+
+
+
+# TD01: Rappels de base
+
+## Intro
+
+* Cours `Python` de [Lino Galiana](https://github.com/linogaliana/python-datascientist/tree/main), sous environnement [SSP Cloud](https://www.sspcloud.fr/)
+* Questions à dmarin@open-dc.com
+* Programme:
+    * TD 01 - Rappels de base
+    * TD 02 - `Numpy`, `Pandas` et `GeoPandas`
+    * TD 03 - `Git`
+    * TD 04 - API et webscrapping
+    * TD 05 - Machine learning
+    * TD 06 - Machine learning (2)
+    * TD 07 - Introduction au NLP
+
+---
+
+## Environnements Python, gestionnaire de modules et IDE
+
+Pour programmer en `Python` on a besoin:
+
+* d'un exécutable `Python` (installé par défaut sur Linux et Mac), à installer sur Windows pour un environnement local.
+
+* d'un environnement de développement: IDE (`VS Code`, `PyCharm`, `Spyder` etc.)
+
+* d'un gestionnaire de modules (`pip`, `conda`)
+
+Cet écosystème peut être local ou dans le cloud (`Google Colab`, `SSP Cloud`).
+
+---
+
+Dans le cadre du cours ==> écosystème **cloud** sous **`SSP Cloud`** avec IDE **`VS Code`**.
+
+*Note:* En pratique on crée un environnement de développement local, avec un *environnement virtuel*: il s'agit d'un environnement de développement propre au projet, avec ses propres versions de modules, communiquées grâce au fichier `requirements.txt`.
+
+---
+
+*Application:* Créer une instance SSP Cloud:
+
+> -Se connecter sur le [`Datalab` du SSP Cloud](http://datalab.sspcloud.fr/) <br/>
+> - My Services / + New service <br/>
+> - Lancer un service `VS Code` <br/>
+> - Copier la clé de sécurité dans le presse-papier <br/>
+> - Créer un nouveau notebook `jupyter` <br/>
+> - Tester les commandes du TD <br/>
+> - Supprimer le service à la fin du TD! <br/>
+
+---
+
+<img src="img/01_ssp_cloud_01_connection_page.jpg" width="25%">
+<img src="img/01_ssp_cloud_02_services.jpg" width="25%">
+<img src="img/01_ssp_cloud_03_vscode.jpg" width="25%">
+<img src="img/01_ssp_cloud_04_link.jpg" width="25%">
+<img src="img/01_ssp_cloud_05_new_file.jpg" width="25%">
+<img src="img/01_ssp_cloud_06_notebook_example.jpg" width="25%">
+<img src="img/01_ssp_cloud_07_suppresion.jpg" width="25%">
+
+---
+
+## Rappel des bases du langage Python
+
+*Note: * On ne revient pas ici sur les notions de base de programmation telles que les variables, fonctions, boucles, conditions. On se concentre sur les spécificités de `Python` par rapport aux autres langages.
+
+### Types de base
+
+```{python}
+# Les types de base: int, float, str
+a = 2
+b = 3.14
+c = 'texte'
+
+# variables non allouées à un type donné:
+a = 'texte'  # a passe de int à str sans problème
+```
+
+---
+
+### Listes, dictionnaires et tuples
+
+---
+
+#### Listes:
+
+```python
+li = [2, 3, 4]      # liste de 3 éléments
+print(f'1ère valeur: {li[0]}')        # l'index commence à 0
+li.append(5)        # ajoute un élément
+print(li)
+li.extend([6, 7])   # ajoute une liste à la liste
+print(li)
+li.pop(4)           # retire le 4ème élément de la liste (et non l'élément 4 de la liste!)
+print(li)
+# # boucle sur les éléments:
+for el in li:
+    print(el)
+# # boucle avec conservation des index:
+for ix, el in enumerate(li):
+    print(f'index {ix}, valeur: {el}')
+```
+
+---
+
+#### Dictionnaires
+
+```python
+di = {'nom': 'Crusoé', 'prénom': 'Robinson', 'âge': 42}
+print(di)
+di['nom'] = 'Stévenin'  # les clés sont uniques
+print(di) 
+prenom = di.get('prénom', '???')        # clé existante
+adresse = di.get('adresse', '???')      # clé manquante
+print(f'prénom:\t{prenom},\nadresse:\t{adresse}')
+```
+
+---
+
+#### Tuples:
+
+```python
+tu = (49.4545, 2.4545)  # tuple à 2 éléments
+print(f'{tu[0]}, {tu[1]}')
+# tu[2] = 0               # le nombre d'éléments d'un tuple est invariable (pas de méthodes `append` ou `pop`)
+# tu[1] = 0               # le contenu d'un tuple n'est pas modifiable
+```
+
+---
+
+## Mutabilité
+
+En `Python`, seuls les types de base `int`, `float` et `str` ne sont pas mutables.
+
+```python
+a = 2
+b = a
+b = 3
+print(f'a: {a}, b: {b}')  # le contenu de a n'a pas changé: une copie de a a été réalisée pour être alouée à b (idem si a est un float ou str)
+
+li1 = [1, 2]
+print(f'li1: {li1}')
+li2 = li1
+li2[0] = 0
+print(f'li2: {li2}\nli1: {li1}')  # le contenu de li1 a été modifié lorsque li2 a été modifié
+
+# # Solution: créer une copie de l'objet mutable:
+li3 = li1.copy()
+li3[0] = 30
+print(f'li3: {li3}\nli1: {li1}')  # le contenu de li1 n'a pas été modifié lorsque li3 a été modifié
+```
+
+---
+
+## Imports de modules
+
+TODO
+
+---
+
+## Arborescence de projet
+
+TODO
+
+---
+
+## Classes et programmation orientée objet (POO ou OOP)
+
+TODO
+
+---
+
+## Conventions PEP-8
+
+TODO
+
