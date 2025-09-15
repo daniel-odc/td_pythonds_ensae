@@ -170,6 +170,11 @@ print(f'li3: {li3}\nli1: {li1}')  # le contenu de li1 n'a pas été modifié lor
 
 ---
 
+[Exercices de révision](https://pythonds.linogaliana.fr/content/getting-started/03_revisions.html)
+
+
+---
+
 ## Imports de modules
 
 TODO
