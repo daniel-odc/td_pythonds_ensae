@@ -9,3 +9,6 @@ venv/
 
 # corrections:
 notebooks/_corrections/
+
+/.quarto/
+**/*.quarto_ipynb

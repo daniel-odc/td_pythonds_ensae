@@ -1,0 +1,14 @@
+---
+title: "Python pour la data science - Index"
+format:
+  revealjs:
+    width: 1280
+    height: 720
+    minScale: 0.02
+    margin: 0.04
+    scrollable: true
+    code-overflow: wrap
+lang: fr
+---
+
+- [TD 01 - Rappel des bases](./slides/01_rappels_base.html)

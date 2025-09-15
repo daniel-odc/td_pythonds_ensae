@@ -105,12 +105,18 @@ li.extend([6, 7])   # ajoute une liste à la liste
 print(li)
 li.pop(4)           # retire le 4ème élément de la liste (et non l'élément 4 de la liste!)
 print(li)
+
 # # boucle sur les éléments:
 for el in li:
     print(el)
+
 # # boucle avec conservation des index:
 for ix, el in enumerate(li):
     print(f'index {ix}, valeur: {el}')
+
+# # Comprehension lists:
+li = [i for i in range(10) if i%2 == 0]
+
 ```
 
 ---

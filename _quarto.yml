@@ -1,0 +1,6 @@
+project:
+  type: default         # or "website" if you're building a site
+  output-dir: docs      # all rendered files go into ./docs
+format:
+  revealjs:       # or html
+    self-contained: true
