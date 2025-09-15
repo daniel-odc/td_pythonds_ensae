@@ -44,13 +44,19 @@ Cet écosystème peut être local ou dans le cloud (`Google Colab`, `SSP Cloud`)
 
 ---
 
+::: columns
+::: column
 Dans le cadre du cours ==> écosystème **cloud** sous **`SSP Cloud`** avec IDE **`VS Code`**.
 
 *Note:* En pratique on crée un environnement de développement local, avec un *environnement virtuel*: il s'agit d'un environnement de développement propre au projet, avec ses propres versions de modules, communiquées grâce au fichier `requirements.txt`.
 
 **1ère étape:** Création de compte [`SSP Cloud`](http://datalab.sspcloud.fr/)
+:::
 
-<img src="img/01_ssp_cloud_01_connection_page.jpg" width="25%">
+::: column
+<img src="img/01_ssp_cloud_01_connection_page.jpg" width="85%">
+:::
+:::
 
 ---
 
@@ -173,30 +179,124 @@ print(f'li3: {li3}\nli1: {li1}')  # le contenu de li1 n'a pas été modifié lor
 
 ---
 
+## Imports de modules
+
+### Installation d'un module
+
+==> Uniquement pour les modules non natifs (ex de modules natifs: `datetime`, `os`, `re` etc.)
+
+> Dans le terminal:
+
+```shell
+pip install mon_module  # example: pip install pandas
+```
+
+> Dans jupyter:
+
+```python
+!pip install mon_module  # notez le "!"
+```
+
+### Import de modules
+
+==> Toujours en tête de fichier
+
+```python
+import numpy as np  # et jamais "from numpy import *"!
+import pandas as pd
+
+df = pd.read_csv('https://www.insee.fr/fr/statistiques/fichier/6800675/v_commune_2023.csv')
+# reste du code...
+
+```
+
+
+---
+
+
 [Exercices de révision](https://pythonds.linogaliana.fr/content/getting-started/03_revisions.html)
 
 
 ---
 
-## Imports de modules
-
-TODO
-
----
-
 ## Arborescence de projet
 
-TODO
+Dans un projet, maintenir l'ensemble du code dans un notebook n'est pas maintenable. Le code est déporté sur des fichiers dédiés, modules.
+
+*Arborescence classique de projet:*
+
+```shell
+mon_projet/
+    - `main.py`             # fonction principale
+    - `requirements.txt`    # liste des modules et numéros de version à utiliser
+    - mes_modules/          # répertoire où les modules externes sont créés
+        `module1.py`        # module pour tâche 1
+        `module2.py`        # module pour tâche 2
+        ...
+    - venv/                 # environnement Python virtuel
+```
+
+<br>
+
+```python
+# # Fichier `main.py`:
+import mes_modules.module1 as m1
+import mes_modules.module2 as m2
+
+m1.print_msg('msg appelé depuis main...')
+
+# Fichier module1.py
+def print_msg(msg):
+    print(msg)
+
+```
 
 ---
 
 ## Classes et programmation orientée objet (POO ou OOP)
 
-TODO
+> Permet de structurer des logiques de code par types de données / manipulation <br>
+> Rend le code maintenable et scalable <br>
+> Tous les modules `Python` sont des classes!
+
+*Exemple:*
+
+```python
+# # Classe principale:
+class Mother:
+    def __init__(self, param):
+        self.param = param
+        self._attribut_prive = 2
+
+    def action(self):
+        print(self.param)
+
+# # Classe fille (hérite de la classe principale):
+class Daughter(Mother):
+    def __init__(self, param):
+        super().__init__(param=param)       # initialisation des attributs et méthodes de la classe mère, transmis à la fille
+        self.param_fille = 'param fille'    # définition des attributs et méthodes propres à la fille
+        
+# # Instanciation d'un objet de la classe fille:
+d = Daughter(param='param entrée')
+d.action() # la fille hérite des actions implémentées dans la classe mère
+
+
+```
 
 ---
 
 ## Conventions PEP-8
 
-TODO
+==> Guide officiel de style Python : il fixe des règles pour écrire un code lisible et cohérent.
+Non obligatoire mais fortement recommandé pour écrire du code maintenable et reproduit!
 
+> Modules/paquets : `tout_en_minuscules`, underscores permis. <br>
+> Classes : `CapWords` (CamelCase), ex. DataLoader. <br>
+> Fonctions & variables : `snake_case`. <br>
+> Constantes : UPPER_CASE. <br>
+> à lire: [PEP 8 – Style Guide for Python Code](https://peps.python.org/pep-0008/)
+
+---
+
+[TD 02](./02_numpy_pandas_geopandas.html)

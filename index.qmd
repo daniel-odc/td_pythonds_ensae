@@ -10,11 +10,14 @@ format:
 lang: fr
 ---
 
-*Liens*: 
+# Liens: 
 
 - Slides: [https://daniel-odc.github.io/td_pythonds_ensae/](https://daniel-odc.github.io/td_pythonds_ensae/)
 - [Cours](https://pythonds.linogaliana.fr/content/getting-started/)
 - [Notebooks](https://github.com/linogaliana/python-datascientist-notebooks/tree/main/notebooks)
 - [Évaluation](https://pythonds.linogaliana.fr/content/annexes/evaluation)
 
+# TDs:
+
 - [TD 01 - Rappel des bases](./slides/01_rappels_base.html)
+- [TD 02 - Numpy, Pandas et Geopandas](./slides/02_numpy_pandas_geopandas.html)
