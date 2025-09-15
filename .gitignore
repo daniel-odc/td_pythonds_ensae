@@ -3,12 +3,20 @@ config.cgf
 
 # répertoires:
 venv/
+.idea/
+.quarto/
 
 # fichiers de données:
 *.csv
+*.parquet
+*.xlsx
+*.xls
+*notebooks/03_Modelisation/data/
 
 # corrections:
 notebooks/_corrections/
 
 /.quarto/
 **/*.quarto_ipynb
+
+/notebooks/03_Modelisation/data/

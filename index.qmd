@@ -1,5 +1,4 @@
 ---
-title: "Python pour la data science - Index"
 format:
   revealjs:
     width: 1280
@@ -10,5 +9,12 @@ format:
     code-overflow: wrap
 lang: fr
 ---
+
+*Liens*: 
+
+- Slides: [https://daniel-odc.github.io/td_pythonds_ensae/](https://daniel-odc.github.io/td_pythonds_ensae/)
+- [Cours](https://pythonds.linogaliana.fr/content/getting-started/)
+- [Notebooks](https://github.com/linogaliana/python-datascientist-notebooks/tree/main/notebooks)
+- [Évaluation](https://pythonds.linogaliana.fr/content/annexes/evaluation)
 
 - [TD 01 - Rappel des bases](./slides/01_rappels_base.html)
