@@ -1,7 +1,15 @@
 ---
-title: "Python pour la data science TD 2"
+title: |
+  <div>Python pour la data science TD 2</div>
+  <div style="text-align:center;">
+    <img src="./img/logo_numpy.png" style="height:100px; margin-right:10px;">
+    <img src="./img/logo_pandas.png" style="height:100px; margin-right:10px;">
+    <img src="./img/logo_geopandas.png" style="height:100px;">
+  </div>
+  
 format:
   revealjs:
+    css: slides.css
     width: 1280
     height: 720
     minScale: 0.02
@@ -11,4 +19,121 @@ format:
 lang: fr
 ---
 
-- [Intro Numpy](https://pythonds.linogaliana.fr/content/manipulation/01_numpy.html)
+# Intro
+
+- `Pandas` : librairie de base pour l’analyse de données, téléchargée 5 millions de  fois par jour.
+- `Numpy`: briques de base de pandas. Essentielle pour le calcul numérique, moins utilisé pour l’analyse de données, sauf quand les critères de performance entrent en jeu.
+- `Geopandas` : toutes les fonctionnalités de pandas avec la dimension géospatiale
+
+*Note:* Libraires non adaptées pour des grands volumes de données ie plusieurs milliards
+d’enregistrements (mais adaptées à l’immense majorité des données que vous aurez à traiter)
+
+*Note 2:* Pour des données « big data », s’orienter plutôt vers les solutions:
+
+- [`Polars`](https://pola.rs/)
+
+- [`Dask`](https://www.dask.org/)
+
+- [`DuckDB`](https://duckdb.org/docs/stable/clients/python/overview.html)
+
+- [`Spark`](https://spark.apache.org/docs/latest/api/python/index.html)
+
+--- 
+
+## Numpy
+
+### Import et installation
+
+::: columns
+::: column
+```python
+# Installation depuis Jupyter:
+!pip install numpy
+
+# Import:
+import numpy as np
+
+```
+:::
+::: column
+```python
+# Installation depuis le terminal:
+pip install numpy
+
+# Import:
+import numpy as np
+
+```
+:::
+:::
+
+### `array`
+
+==> tableau à N dimensions, de données structurées avec le même type de données (contrairement aux `list`) ==> opérations optimisées
+
+```python
+import numpy as np
+
+a = np.array([1, 2, 3])
+
+b = np.array([1, 'a', 3]) # Message d'erreur! ==> mêmes types de données
+
+c = np.zeros((3, 4))      # Matrice 3x4 remplie de zéros
+
+c = np.eye(3)             # Matrice identité en dimension 3
+
+# ...
+```
+
+---
+
+## [Numpy cheatsheet](https://www.datacamp.com/cheat-sheet/numpy-cheat-sheet-data-analysis-in-python)
+
+Pour toutes les opérations de base:
+
+::: columns
+::: column
+![](./img/numpy_cheatsheet_01.png){width="100%"}
+:::
+
+::: column
+![](./img/numpy_cheatsheet_02.png){width="100%"}
+:::
+:::
+
+---
+
+## `Pandas`
+
+### Import et installation
+
+::: columns
+::: column
+```python
+# Installation depuis Jupyter:
+!pip install pandas
+
+# Import:
+import pandas as pd
+
+```
+:::
+::: column
+```python
+# Installation depuis le terminal:
+pip install pandas
+
+# Import:
+import pandas as pd
+
+```
+:::
+:::
+
+---
+
+### Dataframe
+
+[Comparaisons avec d’autres langages ici](https://pandas.pydata.org/pandas-docs/stable/getting_started/comparison/index.html)
+
+![](./img/pandas_dataframe_rows_col.png){width="500px"}

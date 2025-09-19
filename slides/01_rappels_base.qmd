@@ -1,19 +1,24 @@
 ---
-title: "Python pour la data science TD 1"
+title: |
+  <div>Python pour la data science TD 1 - Rappel des bases</div>
+  <div style="text-align:center;">
+    <img src="./img/logo_python.png" style="height:100px; margin-right:10px;">    
+  </div>
 format:
   revealjs:
+    css: slides.css
     width: 1280
     height: 720
     minScale: 0.02
     margin: 0.04
     scrollable: true
     code-overflow: wrap
+    include-in-header: 
+      - text: |
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 lang: fr
 ---
 
-
-
-# TD01: Rappels de base
 
 ## Intro
 
@@ -250,6 +255,20 @@ def print_msg(msg):
     print(msg)
 
 ```
+
+:lightbulb: Utiliser la librairie `importlib` pour recharger les modifications du fichier externe dans l'appel du fichier principal.
+
+```python
+# # Fichier `main.py`:
+import importlib
+import mes_modules.module1 as m1
+
+importlib.relaod(m1)  # permet de recharge les modifications dans `module1` sans avoir à relancer `jupyter`
+
+m1.print_msg('msg appelé depuis main...')
+
+```
+
 
 ---
 

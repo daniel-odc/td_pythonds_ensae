@@ -9,7 +9,7 @@
 <link href="01_rappels_base_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.8.24">
 
-  <title>Python pour la data science TD 1</title>
+  <title>quarto-input9de258384bfa15ff</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -95,6 +95,7 @@
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="01_rappels_base_files/libs/revealjs/dist/theme/quarto-5f66212b01f094180b8d10b5b9960144.css">
+  <link rel="stylesheet" href="slides.css">
   <link href="01_rappels_base_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="01_rappels_base_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="01_rappels_base_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -187,21 +188,22 @@
       margin-right: 0; 
     }
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Python pour la data science TD 1</h1>
+  <h1 class="title"><div>
+Python pour la data science TD 1 - Rappel des bases
+</div>
+<div style="text-align:center;">
+<p><img src="./img/logo_python.png" style="height:100px; margin-right:10px;"></p>
+</div></h1>
 
 <div class="quarto-title-authors">
 </div>
-
-</section>
-<section>
-<section id="td01-rappels-de-base" class="title-slide slide level1 center">
-<h1>TD01: Rappels de base</h1>
 
 </section>
 <section id="intro" class="slide level2">
@@ -369,6 +371,14 @@
 <span id="cb9-7"><a href=""></a><span class="co"># Fichier module1.py</span></span>
 <span id="cb9-8"><a href=""></a><span class="kw">def</span> print_msg(msg):</span>
 <span id="cb9-9"><a href=""></a>    <span class="bu">print</span>(msg)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p>:lightbulb: Utiliser la librairie <code>importlib</code> pour recharger les modifications du fichier externe dans l’appel du fichier principal.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a><span class="co"># # Fichier `main.py`:</span></span>
+<span id="cb10-2"><a href=""></a><span class="im">import</span> importlib</span>
+<span id="cb10-3"><a href=""></a><span class="im">import</span> mes_modules.module1 <span class="im">as</span> m1</span>
+<span id="cb10-4"><a href=""></a></span>
+<span id="cb10-5"><a href=""></a>importlib.relaod(m1)  <span class="co"># permet de recharge les modifications dans `module1` sans avoir à relancer `jupyter`</span></span>
+<span id="cb10-6"><a href=""></a></span>
+<span id="cb10-7"><a href=""></a>m1.print_msg(<span class="st">'msg appelé depuis main...'</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="classes-et-programmation-orientée-objet-poo-ou-oop" class="slide level2">
 <h2>Classes et programmation orientée objet (POO ou OOP)</h2>
@@ -376,25 +386,25 @@
 <p>Permet de structurer des logiques de code par types de données / manipulation <br> Rend le code maintenable et scalable <br> Tous les modules <code>Python</code> sont des classes!</p>
 </blockquote>
 <p><em>Exemple:</em></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a><span class="co"># # Classe principale:</span></span>
-<span id="cb10-2"><a href=""></a><span class="kw">class</span> Mother:</span>
-<span id="cb10-3"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, param):</span>
-<span id="cb10-4"><a href=""></a>        <span class="va">self</span>.param <span class="op">=</span> param</span>
-<span id="cb10-5"><a href=""></a>        <span class="va">self</span>._attribut_prive <span class="op">=</span> <span class="dv">2</span></span>
-<span id="cb10-6"><a href=""></a></span>
-<span id="cb10-7"><a href=""></a>    <span class="kw">def</span> action(<span class="va">self</span>):</span>
-<span id="cb10-8"><a href=""></a>        <span class="bu">print</span>(<span class="va">self</span>.param)</span>
-<span id="cb10-9"><a href=""></a></span>
-<span id="cb10-10"><a href=""></a><span class="co"># # Classe fille (hérite de la classe principale):</span></span>
-<span id="cb10-11"><a href=""></a><span class="kw">class</span> Daughter(Mother):</span>
-<span id="cb10-12"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, param):</span>
-<span id="cb10-13"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(param<span class="op">=</span>param)       <span class="co"># initialisation des attributs et méthodes de la classe mère, transmis à la fille</span></span>
-<span id="cb10-14"><a href=""></a>        <span class="va">self</span>.param_fille <span class="op">=</span> <span class="st">'param fille'</span>    <span class="co"># définition des attributs et méthodes propres à la fille</span></span>
-<span id="cb10-15"><a href=""></a>        </span>
-<span id="cb10-16"><a href=""></a><span class="co"># # Instanciation d'un objet de la classe fille:</span></span>
-<span id="cb10-17"><a href=""></a>d <span class="op">=</span> Daughter(param<span class="op">=</span><span class="st">'param entrée'</span>)</span>
-<span id="cb10-18"><a href=""></a>d.action() <span class="co"># la fille hérite des actions implémentées dans la classe mère</span></span>
-<span id="cb10-19"><a href=""></a></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href=""></a><span class="co"># # Classe principale:</span></span>
+<span id="cb11-2"><a href=""></a><span class="kw">class</span> Mother:</span>
+<span id="cb11-3"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, param):</span>
+<span id="cb11-4"><a href=""></a>        <span class="va">self</span>.param <span class="op">=</span> param</span>
+<span id="cb11-5"><a href=""></a>        <span class="va">self</span>._attribut_prive <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb11-6"><a href=""></a></span>
+<span id="cb11-7"><a href=""></a>    <span class="kw">def</span> action(<span class="va">self</span>):</span>
+<span id="cb11-8"><a href=""></a>        <span class="bu">print</span>(<span class="va">self</span>.param)</span>
+<span id="cb11-9"><a href=""></a></span>
+<span id="cb11-10"><a href=""></a><span class="co"># # Classe fille (hérite de la classe principale):</span></span>
+<span id="cb11-11"><a href=""></a><span class="kw">class</span> Daughter(Mother):</span>
+<span id="cb11-12"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, param):</span>
+<span id="cb11-13"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(param<span class="op">=</span>param)       <span class="co"># initialisation des attributs et méthodes de la classe mère, transmis à la fille</span></span>
+<span id="cb11-14"><a href=""></a>        <span class="va">self</span>.param_fille <span class="op">=</span> <span class="st">'param fille'</span>    <span class="co"># définition des attributs et méthodes propres à la fille</span></span>
+<span id="cb11-15"><a href=""></a>        </span>
+<span id="cb11-16"><a href=""></a><span class="co"># # Instanciation d'un objet de la classe fille:</span></span>
+<span id="cb11-17"><a href=""></a>d <span class="op">=</span> Daughter(param<span class="op">=</span><span class="st">'param entrée'</span>)</span>
+<span id="cb11-18"><a href=""></a>d.action() <span class="co"># la fille hérite des actions implémentées dans la classe mère</span></span>
+<span id="cb11-19"><a href=""></a></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="conventions-pep-8" class="slide level2">
 <h2>Conventions PEP-8</h2>
@@ -407,7 +417,7 @@
 
 <p><a href="./02_numpy_pandas_geopandas.html">TD 02</a></p>
 
-</section></section>
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
