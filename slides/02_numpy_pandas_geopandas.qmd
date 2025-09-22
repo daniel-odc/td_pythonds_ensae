@@ -44,28 +44,12 @@ d’enregistrements (mais adaptées à l’immense majorité des données que vo
 
 ### Import et installation
 
-::: columns
-::: column
 ```python
-# Installation depuis Jupyter:
-!pip install numpy
+pip install numpy  # !pip install numpy si installation depuis Jupyter
 
 # Import:
 import numpy as np
-
 ```
-:::
-::: column
-```python
-# Installation depuis le terminal:
-pip install numpy
-
-# Import:
-import numpy as np
-
-```
-:::
-:::
 
 ### `array`
 
@@ -107,28 +91,15 @@ Pour toutes les opérations de base:
 
 ### Import et installation
 
-::: columns
-::: column
+
 ```python
 # Installation depuis Jupyter:
-!pip install pandas
+pip install pandas  # `!pip install pandas` si installation depuis Jupyter
 
 # Import:
 import pandas as pd
 
 ```
-:::
-::: column
-```python
-# Installation depuis le terminal:
-pip install pandas
-
-# Import:
-import pandas as pd
-
-```
-:::
-:::
 
 ---
 
@@ -136,4 +107,190 @@ import pandas as pd
 
 [Comparaisons avec d’autres langages ici](https://pandas.pydata.org/pandas-docs/stable/getting_started/comparison/index.html)
 
-![](./img/pandas_dataframe_rows_col.png){width="500px"}
+![](./img/pandas_dataframe_rows_col.png){width="1000px"}
+source: https://x.com/epfl_exts/status/997506000600084480
+
+---
+
+- `Serie`: objet vecteur pandas
+- `Dataframe`: matrice ==> ensemble de `Series`. Les différentes colonnes peuvent être de types mixtes contrairement aux Numpy array.
+- Formats de de fichiers pour l’import de données:
+  - `csv` (méthode `read_csv()`)
+  - `parquet` (méthode `read_parquet()`)
+  - `json` (méthode `read_json()`)
+  - `txt` (méthode `read_csv()`)
+  - `zip` (méthode `read_csv()`)
+  - `excel` (méthode `read_excel()`)
+  - `html` (méthode `read_html()`)
+  - `SQL DB` (méthode `read_sql()`)
+  - etc.
+
+
+---
+
+### Indexation
+
+```python
+# colonnes pour une condition donnée:
+df.loc[df['column1']==valeur, ['column2', 'column3']]
+
+# Ensemble de la colonne:
+df.column1 # ne fonctionne que si les colonnes n'ont pas d'espaces ou caractères spéciaux
+# ou
+df['column1'] # renvoie une `Serie`
+df[['column1']] # renvoie un `DataFrame` à une colonne
+
+# Accéder aux lignes:
+df.iloc[0, 3]  # accès par numéro d'index: 1ère ligne, 4ème colonne. Attention à la mise à jour des index!
+
+df.loc['nom_index', 'nom_colonne']  # accès par nom d'index
+
+```
+
+---
+
+![](./img/pandas_dataframe_simple.jpg)
+
+```python
+df = pd.DataFrame({'year': [2012, 2014, 2013, 2014], 'month'=[1, 4, 7, 10], 'sale': [55, 40, 84, 31]})
+df.set_index(month, inplace=True, drop=True)
+
+df.loc[10, 'year']
+df.iloc[0, 1]
+df.loc[:, 'sale']
+
+```
+
+[Exercice 1](https://pythonds.linogaliana.fr/content/manipulation/02_pandas_intro.html#:~:text=Importer%20les%20donn%C3%A9es%20de%20l%E2%80%99Ademe%20%C3%A0%20l%E2%80%99aide%20du%20package%20Pandas%20et%20de%20la)
+
+- url d'import: https://koumoul.com/s/data-fair/api/v1/datasets/igt-pouvoir-de-rechauffement-global/convert
+
+- Si fichier local, toujours privilégier les liens web ou fichiers dans des sous-répertoires du code!
+
+---
+
+### Statistiques descriptives
+
+```python
+df['columns'].count()
+df['columns'].sum()
+df['columns'].min()
+df['columns'].max()
+df['columns'].mean()
+df['columns'].std()
+df['columns'].nunique()
+df['columns'].unique()
+# etc.
+```
+
+---
+
+### Merge
+
+![](./img/pandas_merge_star-schema.png)
+
+---
+
+```python
+df_merged = df_left.merge(df_right, on=‘key’, how=‘left’) # (how=‘inner’, ‘left’, ‘right’ ou ‘outer’)
+```
+
+![](./img/pandas_merge_inner_outer_etc.jpg)
+
+---
+
+### Groupby
+
+```python
+df_grouped = df.groupby(by=‘x’, as_index=False)[‘y’].mean()
+```
+
+![](./img/pandas_groupby.png)
+
+---
+
+### Reshaping data
+
+![](./img/pandas_reshape.png)
+
+[Exercice 2](https://pythonds.linogaliana.fr/content/manipulation/02_pandas_intro.html#:~:text=En%20premier%20lieu%2C%20on%20propose%20de%20se%20familiariser%20avec%20les%20op%C3%A9rations%20sur%20les%20colonnes.)
+
+---
+
+## GeoPandas
+
+- `Geopandas` = `Pandas` avec données géospatiales
+- Permet de:
+  - Calculer des distances et des surfaces
+  - Agréger rapidement des zonages (regrouper les communes en département par exemple)
+  - Trouver dans quelle commune se trouve un bâtiment à partir de ses coordonnées géographiques
+  - Recalculer des coordonnées dans un autre système de projection
+  - Faire une carte, rapidement et simplement.
+
+
+
+### Installation
+
+```python
+# installation des dépendances:
+pip install pandas  fiona shapely pyproj rtree # !pip install ... si dans jupyter
+pip install geopandas
+pip install contextily  # pour les excercices
+pip install topojson  # pour les excercices
+
+# Import:
+import geopandas as gpd
+import contextily as ctx  # pour les excercices
+import matplotlib.pyplot as plt  # pour les excercices
+```
+
+---
+
+- `DataFrame` avec une colonne `geometry` (nom de colonne fixe)
+
+::: columns
+::: column
+![](./img/geopandas_geodf_object.png)
+:::
+
+::: column
+![](./img/geopandas_geometries_wkt.png)
+:::
+:::
+
+- Formats de fichiers:
+  - `Shapefile` (.shp)
+  - `Geopackage` (.gpkg)
+  - `Geoparquet` (.parquet)
+  - `GeoJSON` (.geojson)
+  - `WKT` (.csv)
+  - etc.
+
+---
+
+### Systèmes de projection
+
+::: columns
+
+::: column
+- Système de projection:
+  - Coordonnées sphériques: GPS: longitude latitude: `WGS84` (EPSG **4326**)
+  - Coordonnées projetées:
+    - Cartes Google Maps: `Mercator`: EPSG **3857**
+    - France métropolitaine: `Lambert 93`: EPSG **2154**
+- Attribut:
+  - `gdf.crs`
+- Méthodes:
+  - `gdf.set_crs(epsg=2154)` (à éviter habituellement!)
+  - `gdf.to_crs(epsg=2154)`
+
+:::
+
+::: column
+![](./img/geopandas_projection_system.png)
+:::
+:::
+
+[Exercice](https://pythonds.linogaliana.fr/content/manipulation/03_geopandas_intro.html#:~:text=Souvent%2C%20le%20d%C3%A9coupage%20communal)
+
+

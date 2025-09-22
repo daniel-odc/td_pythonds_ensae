@@ -9,7 +9,7 @@
 <link href="02_numpy_pandas_geopandas_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.8.24">
 
-  <title>quarto-inputc83f01c3204f1024</title>
+  <title>quarto-input51c4ca89e8458dda</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -225,33 +225,23 @@ Python pour la data science TD 2
 <section id="numpy" class="slide level2">
 <h2>Numpy</h2>
 <h3 id="import-et-installation">Import et installation</h3>
-<div class="columns">
-<div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="co"># Installation depuis Jupyter:</span></span>
-<span id="cb1-2"><a href=""></a><span class="op">!</span>pip install numpy</span>
-<span id="cb1-3"><a href=""></a></span>
-<span id="cb1-4"><a href=""></a><span class="co"># Import:</span></span>
-<span id="cb1-5"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
-</div><div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="co"># Installation depuis le terminal:</span></span>
-<span id="cb2-2"><a href=""></a>pip install numpy</span>
-<span id="cb2-3"><a href=""></a></span>
-<span id="cb2-4"><a href=""></a><span class="co"># Import:</span></span>
-<span id="cb2-5"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
-</div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a>pip install numpy  <span class="co"># !pip install numpy si installation depuis Jupyter</span></span>
+<span id="cb1-2"><a href=""></a></span>
+<span id="cb1-3"><a href=""></a><span class="co"># Import:</span></span>
+<span id="cb1-4"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <h3 id="array"><code>array</code></h3>
 <p>==&gt; tableau à N dimensions, de données structurées avec le même type de données (contrairement aux <code>list</code>) ==&gt; opérations optimisées</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb3-2"><a href=""></a></span>
-<span id="cb3-3"><a href=""></a>a <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>])</span>
-<span id="cb3-4"><a href=""></a></span>
-<span id="cb3-5"><a href=""></a>b <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="st">'a'</span>, <span class="dv">3</span>]) <span class="co"># Message d'erreur! ==&gt; mêmes types de données</span></span>
-<span id="cb3-6"><a href=""></a></span>
-<span id="cb3-7"><a href=""></a>c <span class="op">=</span> np.zeros((<span class="dv">3</span>, <span class="dv">4</span>))      <span class="co"># Matrice 3x4 remplie de zéros</span></span>
-<span id="cb3-8"><a href=""></a></span>
-<span id="cb3-9"><a href=""></a>c <span class="op">=</span> np.eye(<span class="dv">3</span>)             <span class="co"># Matrice identité en dimension 3</span></span>
-<span id="cb3-10"><a href=""></a></span>
-<span id="cb3-11"><a href=""></a><span class="co"># ...</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href=""></a></span>
+<span id="cb2-3"><a href=""></a>a <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>])</span>
+<span id="cb2-4"><a href=""></a></span>
+<span id="cb2-5"><a href=""></a>b <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="st">'a'</span>, <span class="dv">3</span>]) <span class="co"># Message d'erreur! ==&gt; mêmes types de données</span></span>
+<span id="cb2-6"><a href=""></a></span>
+<span id="cb2-7"><a href=""></a>c <span class="op">=</span> np.zeros((<span class="dv">3</span>, <span class="dv">4</span>))      <span class="co"># Matrice 3x4 remplie de zéros</span></span>
+<span id="cb2-8"><a href=""></a></span>
+<span id="cb2-9"><a href=""></a>c <span class="op">=</span> np.eye(<span class="dv">3</span>)             <span class="co"># Matrice identité en dimension 3</span></span>
+<span id="cb2-10"><a href=""></a></span>
+<span id="cb2-11"><a href=""></a><span class="co"># ...</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="numpy-cheatsheet" class="slide level2">
 <h2><a href="https://www.datacamp.com/cheat-sheet/numpy-cheat-sheet-data-analysis-in-python">Numpy cheatsheet</a></h2>
@@ -266,28 +256,183 @@ Python pour la data science TD 2
 <section id="pandas" class="slide level2">
 <h2><code>Pandas</code></h2>
 <h3 id="import-et-installation-1">Import et installation</h3>
-<div class="columns">
-<div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="co"># Installation depuis Jupyter:</span></span>
-<span id="cb4-2"><a href=""></a><span class="op">!</span>pip install pandas</span>
-<span id="cb4-3"><a href=""></a></span>
-<span id="cb4-4"><a href=""></a><span class="co"># Import:</span></span>
-<span id="cb4-5"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
-</div><div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="co"># Installation depuis le terminal:</span></span>
-<span id="cb5-2"><a href=""></a>pip install pandas</span>
-<span id="cb5-3"><a href=""></a></span>
-<span id="cb5-4"><a href=""></a><span class="co"># Import:</span></span>
-<span id="cb5-5"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
-</div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="co"># Installation depuis Jupyter:</span></span>
+<span id="cb3-2"><a href=""></a>pip install pandas  <span class="co"># `!pip install pandas` si installation depuis Jupyter</span></span>
+<span id="cb3-3"><a href=""></a></span>
+<span id="cb3-4"><a href=""></a><span class="co"># Import:</span></span>
+<span id="cb3-5"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section class="slide level2">
 
 <h3 id="dataframe">Dataframe</h3>
 <p><a href="https://pandas.pydata.org/pandas-docs/stable/getting_started/comparison/index.html">Comparaisons avec d’autres langages ici</a></p>
+<p><img data-src="./img/pandas_dataframe_rows_col.png" width="1000"> source: https://x.com/epfl_exts/status/997506000600084480</p>
+</section>
+<section class="slide level2">
+
+<ul>
+<li><code>Serie</code>: objet vecteur pandas</li>
+<li><code>Dataframe</code>: matrice ==&gt; ensemble de <code>Series</code>. Les différentes colonnes peuvent être de types mixtes contrairement aux Numpy array.</li>
+<li>Formats de de fichiers pour l’import de données:
+<ul>
+<li><code>csv</code> (méthode <code>read_csv()</code>)</li>
+<li><code>parquet</code> (méthode <code>read_parquet()</code>)</li>
+<li><code>json</code> (méthode <code>read_json()</code>)</li>
+<li><code>txt</code> (méthode <code>read_csv()</code>)</li>
+<li><code>zip</code> (méthode <code>read_csv()</code>)</li>
+<li><code>excel</code> (méthode <code>read_excel()</code>)</li>
+<li><code>html</code> (méthode <code>read_html()</code>)</li>
+<li><code>SQL DB</code> (méthode <code>read_sql()</code>)</li>
+<li>etc.</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="indexation">Indexation</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="co"># colonnes pour une condition donnée:</span></span>
+<span id="cb4-2"><a href=""></a>df.loc[df[<span class="st">'column1'</span>]<span class="op">==</span>valeur, [<span class="st">'column2'</span>, <span class="st">'column3'</span>]]</span>
+<span id="cb4-3"><a href=""></a></span>
+<span id="cb4-4"><a href=""></a><span class="co"># Ensemble de la colonne:</span></span>
+<span id="cb4-5"><a href=""></a>df.column1 <span class="co"># ne fonctionne que si les colonnes n'ont pas d'espaces ou caractères spéciaux</span></span>
+<span id="cb4-6"><a href=""></a><span class="co"># ou</span></span>
+<span id="cb4-7"><a href=""></a>df[<span class="st">'column1'</span>] <span class="co"># renvoie une `Serie`</span></span>
+<span id="cb4-8"><a href=""></a>df[[<span class="st">'column1'</span>]] <span class="co"># renvoie un `DataFrame` à une colonne</span></span>
+<span id="cb4-9"><a href=""></a></span>
+<span id="cb4-10"><a href=""></a><span class="co"># Accéder aux lignes:</span></span>
+<span id="cb4-11"><a href=""></a>df.iloc[<span class="dv">0</span>, <span class="dv">3</span>]  <span class="co"># accès par numéro d'index: 1ère ligne, 4ème colonne. Attention à la mise à jour des index!</span></span>
+<span id="cb4-12"><a href=""></a></span>
+<span id="cb4-13"><a href=""></a>df.loc[<span class="st">'nom_index'</span>, <span class="st">'nom_colonne'</span>]  <span class="co"># accès par nom d'index</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section class="slide level2">
 
 
-<img data-src="./img/pandas_dataframe_rows_col.png" width="500" class="r-stretch"></section></section>
+<img data-src="./img/pandas_dataframe_simple.jpg" class="r-stretch"><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a>df <span class="op">=</span> pd.DataFrame({<span class="st">'year'</span>: [<span class="dv">2012</span>, <span class="dv">2014</span>, <span class="dv">2013</span>, <span class="dv">2014</span>], <span class="st">'month'</span><span class="op">=</span>[<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">10</span>], <span class="st">'sale'</span>: [<span class="dv">55</span>, <span class="dv">40</span>, <span class="dv">84</span>, <span class="dv">31</span>]})</span>
+<span id="cb5-2"><a href=""></a>df.set_index(month, inplace<span class="op">=</span><span class="va">True</span>, drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-3"><a href=""></a></span>
+<span id="cb5-4"><a href=""></a>df.loc[<span class="dv">10</span>, <span class="st">'year'</span>]</span>
+<span id="cb5-5"><a href=""></a>df.iloc[<span class="dv">0</span>, <span class="dv">1</span>]</span>
+<span id="cb5-6"><a href=""></a>df.loc[:, <span class="st">'sale'</span>]</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p><a href="https://pythonds.linogaliana.fr/content/manipulation/02_pandas_intro.html#:~:text=Importer%20les%20donn%C3%A9es%20de%20l%E2%80%99Ademe%20%C3%A0%20l%E2%80%99aide%20du%20package%20Pandas%20et%20de%20la">Exercice 1</a></p>
+<ul>
+<li><p>url d’import: https://koumoul.com/s/data-fair/api/v1/datasets/igt-pouvoir-de-rechauffement-global/convert</p></li>
+<li><p>Si fichier local, toujours privilégier les liens web ou fichiers dans des sous-répertoires du code!</p></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="statistiques-descriptives">Statistiques descriptives</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a>df[<span class="st">'columns'</span>].count()</span>
+<span id="cb6-2"><a href=""></a>df[<span class="st">'columns'</span>].<span class="bu">sum</span>()</span>
+<span id="cb6-3"><a href=""></a>df[<span class="st">'columns'</span>].<span class="bu">min</span>()</span>
+<span id="cb6-4"><a href=""></a>df[<span class="st">'columns'</span>].<span class="bu">max</span>()</span>
+<span id="cb6-5"><a href=""></a>df[<span class="st">'columns'</span>].mean()</span>
+<span id="cb6-6"><a href=""></a>df[<span class="st">'columns'</span>].std()</span>
+<span id="cb6-7"><a href=""></a>df[<span class="st">'columns'</span>].nunique()</span>
+<span id="cb6-8"><a href=""></a>df[<span class="st">'columns'</span>].unique()</span>
+<span id="cb6-9"><a href=""></a><span class="co"># etc.</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section class="slide level2">
+
+<h3 id="merge">Merge</h3>
+
+<img data-src="./img/pandas_merge_star-schema.png" class="r-stretch"></section>
+<section class="slide level2">
+
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a>df_merged <span class="op">=</span> df_left.merge(df_right, on<span class="op">=</span>‘key’, how<span class="op">=</span>‘left’) <span class="co"># (how=‘inner’, ‘left’, ‘right’ ou ‘outer’)</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+
+<img data-src="./img/pandas_merge_inner_outer_etc.jpg" class="r-stretch"></section>
+<section class="slide level2">
+
+<h3 id="groupby">Groupby</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a>df_grouped <span class="op">=</span> df.groupby(by<span class="op">=</span>‘x’, as_index<span class="op">=</span><span class="va">False</span>)[‘y’].mean()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+
+<img data-src="./img/pandas_groupby.png" class="r-stretch"></section>
+<section class="slide level2">
+
+<h3 id="reshaping-data">Reshaping data</h3>
+
+<img data-src="./img/pandas_reshape.png" class="r-stretch"><p><a href="https://pythonds.linogaliana.fr/content/manipulation/02_pandas_intro.html#:~:text=En%20premier%20lieu%2C%20on%20propose%20de%20se%20familiariser%20avec%20les%20op%C3%A9rations%20sur%20les%20colonnes.">Exercice 2</a></p>
+</section>
+<section id="geopandas" class="slide level2">
+<h2>GeoPandas</h2>
+<ul>
+<li><code>Geopandas</code> = <code>Pandas</code> avec données géospatiales</li>
+<li>Permet de:
+<ul>
+<li>Calculer des distances et des surfaces</li>
+<li>Agréger rapidement des zonages (regrouper les communes en département par exemple)</li>
+<li>Trouver dans quelle commune se trouve un bâtiment à partir de ses coordonnées géographiques</li>
+<li>Recalculer des coordonnées dans un autre système de projection</li>
+<li>Faire une carte, rapidement et simplement.</li>
+</ul></li>
+</ul>
+<h3 id="installation">Installation</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="co"># installation des dépendances:</span></span>
+<span id="cb9-2"><a href=""></a>pip install pandas  fiona shapely pyproj rtree <span class="co"># !pip install ... si dans jupyter</span></span>
+<span id="cb9-3"><a href=""></a>pip install geopandas</span>
+<span id="cb9-4"><a href=""></a>pip install contextily  <span class="co"># pour les excercices</span></span>
+<span id="cb9-5"><a href=""></a>pip install topojson  <span class="co"># pour les excercices</span></span>
+<span id="cb9-6"><a href=""></a></span>
+<span id="cb9-7"><a href=""></a><span class="co"># Import:</span></span>
+<span id="cb9-8"><a href=""></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb9-9"><a href=""></a><span class="im">import</span> contextily <span class="im">as</span> ctx  <span class="co"># pour les excercices</span></span>
+<span id="cb9-10"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt  <span class="co"># pour les excercices</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section class="slide level2">
+
+<ul>
+<li><code>DataFrame</code> avec une colonne <code>geometry</code> (nom de colonne fixe)</li>
+</ul>
+<div class="columns">
+<div class="column">
+<p><img data-src="./img/geopandas_geodf_object.png"></p>
+</div><div class="column">
+<p><img data-src="./img/geopandas_geometries_wkt.png"></p>
+</div></div>
+<ul>
+<li>Formats de fichiers:
+<ul>
+<li><code>Shapefile</code> (.shp)</li>
+<li><code>Geopackage</code> (.gpkg)</li>
+<li><code>Geoparquet</code> (.parquet)</li>
+<li><code>GeoJSON</code> (.geojson)</li>
+<li><code>WKT</code> (.csv)</li>
+<li>etc.</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="systèmes-de-projection">Systèmes de projection</h3>
+<div class="columns">
+<div class="column">
+<ul>
+<li>Système de projection:
+<ul>
+<li>Coordonnées sphériques: GPS: longitude latitude: <code>WGS84</code> (EPSG <strong>4326</strong>)</li>
+<li>Coordonnées projetées:
+<ul>
+<li>Cartes Google Maps: <code>Mercator</code>: EPSG <strong>3857</strong></li>
+<li>France métropolitaine: <code>Lambert 93</code>: EPSG <strong>2154</strong></li>
+</ul></li>
+</ul></li>
+<li>Attribut:
+<ul>
+<li><code>gdf.crs</code></li>
+</ul></li>
+<li>Méthodes:
+<ul>
+<li><code>gdf.set_crs(epsg=2154)</code> (à éviter habituellement!)</li>
+<li><code>gdf.to_crs(epsg=2154)</code></li>
+</ul></li>
+</ul>
+</div><div class="column">
+<p><img data-src="./img/geopandas_projection_system.png"></p>
+</div></div>
+<p><a href="https://pythonds.linogaliana.fr/content/manipulation/03_geopandas_intro.html#:~:text=Souvent%2C%20le%20d%C3%A9coupage%20communal">Exercice</a></p>
+
+</section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
