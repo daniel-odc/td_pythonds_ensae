@@ -1,13 +1,10 @@
 ---
-format:
-  revealjs:
-    width: 1280
-    height: 720
-    minScale: 0.02
-    margin: 0.04
-    scrollable: true
-    code-overflow: wrap
-lang: fr
+title: |
+  <div>Python pour la data science - Index</div>
+  <div style="text-align:center;">
+    <img src="./slides/img/logo_ensae.png" style="height:100px; margin-right:10px;">    
+  </div>
+format: html 
 ---
 
 # Liens: 
@@ -21,3 +18,4 @@ lang: fr
 
 - [TD 01 - Rappel des bases](./slides/01_rappels_base.html)
 - [TD 02 - Numpy, Pandas et Geopandas](./slides/02_numpy_pandas_geopandas.html)
+- [TD 03 - Git](./slides/03_git.html)

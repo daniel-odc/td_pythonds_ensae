@@ -1,0 +1,324 @@
+---
+title: |
+  <div>Python pour la data science TD 3</div>
+  <div style="text-align:center;">
+    <img src="./img/git_logo_git.png" style="height:100px; margin-right:10px;">
+  </div>
+format:
+  revealjs:
+    css: slides.css   # ensure the CSS is loaded even if _metadata.yml isn't picked up
+---
+
+## Pourquoi utiliser Git?
+
+
+Inline (HTML): <span class="textgrey">my grey text</span>
+[grey test]{.textgrey}
+
+::: columns
+::: column
+
+* Multiples versions d’un fichier au cours du temps
+* Casse-tête sur le nommage des versions de fichiers: 
+    * `[date]_[fichier].py`? (ex: `241001_main.py`)
+    * `[fichier]_[version].py`? (ex: `main_v0.3.py`)
+
+:::
+::: column
+![](./img/git_finalfinal.png)
+:::
+:::
+
+* Difficulté à connaitre les évolutions entre fichiers (ex: correction de bug, ajout de fonctionnalité etc.)
+* Fichiers avec le même nom en local et dans le cloud (Google Drive, Sharepoint etc.) peuvent être différents
+* Travailler en équipe sur le même fichier et gestion des conflits
+
+==> Solution:   `Git`.
+* **Logiciel** spécialisé dans le contrôle de version (de loin le plus populaire)
+* Utilisé par tous les développeurs, qu’ils travaillent seuls ou en équipe.
+
+*Notes:*
+* `Git` est indépendant du langage de programmation, et peut être utilisé pour d’autres finalités: documentation ou tout projet avec des évolutions de fichiers.
+* `Git` n’est pas `Github` ou `Gitlab` (cf. slide suivant)
+
+---
+
+## `Git` vs `GitHub` vs `Gitlab` 
+
+* `Git` est un logiciel:
+    - Utilisation en ligne de commandes
+    - Interfaces graphiques sur la plupart des outils modernes de développement (`RStudio`, `VS Code`, `Pycharm` etc.)
+* `GitHub`, `GitLab`, `Bitbucket` etc. sont des **forges logicielles**.
+    - Espace d’archivage de code dans le cloud
+    - Fonctions supplémentaires de réseaux sociaux
+
+---
+
+## Principe de fonctionnement
+
+![](./img/git_localremote.png)
+
+---
+
+## Principe de fonctionnement
+
+::: columns
+
+::: column
+*Évolution du fichier dans le temps:*
+
+![](./img/git_evol_file.png){height="500px"}
+
+:::
+::: column
+*Suivi des modifications sur `GitHub`:*
+
+![](./img/git_evol_file_log.png)
+:::
+:::
+
+---
+
+## Création de compte `GitHub`
+
+::: columns
+
+::: column
+### Création de compte et dépôt
+
+* Se rendre sur `github.com` et créer un compte si pas déjà fait
+* Créer un dépôt privé.
+* Ajouter un `README.md`
+* Ajouter un `.gitignore` (modèle: `Python`)
+
+
+:::
+::: column
+
+![](./img/git_account_creation.jpg)
+:::
+:::
+
+---
+
+## Authentification - `GitHub`
+
+* Nécessaire pour contribuer à un dépôt
+* Deux types d’authentifications:
+  - HTTPS: login et mot de passer ou token généré par GitHub
+  - SSH: clé cryptée en local sur le poste de travail
+* Aller sur son profil en haut à gauche puis: 
+
+> **settings** / menu gauche: **developper settings** / **Personal access tokens**, click **Fine-grained tokens** / **Generate new token**.
+
+* Donner un nom au token, période de validité et le copier.<br>
+
+
+
+![](./img/git_authentication.jpg)
+
+---
+
+## Authentification - `SSP Cloud` {.smalltext}
+
+is this text smaller?
+
+* Ne jamais copier le token dans un fichier texte non crypté! (utiliser [Keepass](https://keepass.fr/) par exemple).
+* Aller sur [“Mon compte”](https://auth.lab.sspcloud.fr/auth/realms/sspcloud/protocol/openid-connect/auth?client_id=onyxia&redirect_uri=https%3A%2F%2Fdatalab.sspcloud.fr%2F&response_type=code&scope=openid+profile&state=b2lkYy1zcGEulmV5oZr5T_O8qtDJMdYP&code_challenge=k7U-KbYo2h0izIbAQfoJL0XVBNlqdL5W2akZFKeCik0&code_challenge_method=S256&response_mode=fragment&audience=onyxia&ui_locales=en&onyxia-instance-public-url=https%3A%2F%2Fdatalab.sspcloud.fr) du `SSPCloud`, onglet **Git**, section **Git Forge Personal Access Token**, **edit** et coller le token. 
+* Aller sur [Mes Services](https://auth.lab.sspcloud.fr/auth/realms/sspcloud/protocol/openid-connect/auth?client_id=onyxia&redirect_uri=https%3A%2F%2Fdatalab.sspcloud.fr%2F&response_type=code&scope=openid+profile&state=b2lkYy1zcGEuOVUrrs-a9IJmQuEQ9Quy&code_challenge=hkJJmj3gX-XcbS2IkDdFUrPsN5dTRYXpYZ-pTYv4S30&code_challenge_method=S256&response_mode=fragment&audience=onyxia&ui_locales=en&onyxia-instance-public-url=https%3A%2F%2Fdatalab.sspcloud.fr) / ➕Nouveau service / vscode-python
+
+
+![](./img/git_ssp_cloud_authentication.jpg)
+
+---
+
+## Clone de repo `Git`
+
+::: columns
+::: column
+
+* Sur le Repo `Git`, récupérer l’url du repo.
+* Sur le projet `SSPCloud`: Ouvrir le terminal (`☰ / Terminal / New Terminal`) et taper
+
+```shell
+git clone https://github.com/<username>/<reponame>.git
+```
+
+* Suivre les étapes
+* Observer la mise à jour de l’explorateur de fichiers sur `VSCode`, votre `README` et votre `.gitignore` visibles sur `Github` doivent maintenant être là.
+* Tester l’ajout et la modification de fichiers et répertoires.
+
+::: 
+::: column
+
+![](./img/git_clone.jpg)
+
+::: 
+::: 
+
+## Les commandes essentielles
+
+| Commande | Description |
+| --- | --- |
+| `git remote -v` | Obtention de l’url du repo distant |
+| `git add my_file.py` | Ajout du fichier my_file.py à la staging area  |
+| `git commit –m "commentaire"` | Commit des changements avec commentaire de description des modifications |
+| `git pull origin master` | Récupération de la dernière version du code depuis le repo remote (opération `« fetch »`), et fusion avec changements locaux si nécessaire (opération `« merge »`) |
+| `git push origin master` | Envoi des dernières modifications locales sur le repo remote |
+
+## Le fichier `.gitignore`
+
+
+::: columns
+
+::: column
+
+* Permet de lister des répertoires, fichiers, ou types de fichiers à ne pas inclure dans les historiques de versions.
+* Exemple:
+  - Jeux de données
+  - Fichiers de configuration avec mots de passe
+  - Fichiers temporaires
+  - Librairies externes
+  - Etc.
+
+* Syntaxe:
+  - `#`: 		commentaires
+  - `my_file.txt`: 	le fichier my_file.txt ne sera pas pris en compte
+  - `*.txt`: 	aucun fichier texte pris en compte
+  - `__pycache__`: aucun fichier dans le répertoire `__pycache__` ne seront pris en compte.
+
+::: 
+::: column
+![](./img/git_gitignore.png)
+
+[Exemple de fichier `.gitignore`]{.legend}
+::: 
+::: 
+
+---
+
+## Structurer un projet Python
+
+::: columns
+::: column
+* Structure minimale:
+
+![](./img/python_project_structure_minimale.png)
+
+::: 
+::: column
+* Structure complète:
+
+![](./img/python_project_structure_complete.png)
+
+[source: ChatGPT]{.legend}
+::: 
+::: 
+
+## Exercices
+
+1. Enrichir le fichier `.gitignore` en ajoutant les fichiers de type `.csv` et `.pyc` au fichier
+
+2. Modifier un fichier depuis `VSCode` et envoyer sur le repo remote
+
+3. Modifier le fichier `README.md` directement dans `GitHub` et rapatrier les modifications dans `VSCode`
+
+4. Créer une structure de projet minimale sur `VSCode` et envoyer sur le repo remote
+
+## Les branches
+
+::: columns
+::: column
+Une branche est une version parallèle du projet qui coexiste avec la version principale, sur main. Cela veut dire qu’avec Git, on peut avoir un même fichier qui coexiste sous plusieurs versions différentes ce qui constitue un terreau fertile pour l’expérimentation. Une version sera active (la branche active) mais les autres seront disponibles, activables si besoin
+
+::: 
+::: column
+![](./img/git_branches.jpg)
+::: 
+::: 
+
+## Exercices
+
+::: columns
+::: column
+* Cf. [cours](https://pythonds.linogaliana.fr/content/git/introgit.html#:~:text=Ouvrir%20une%20issue%20sur%20Github.%20Signaler%20qu%E2%80%99il%20serait%20bien%20d%E2%80%99ajouter%20un%20emoji%20chat%20dans%20le%20README.%20Dans%20la%20partie%20de%20droite%2C%20cliquer%20sur%20la%20petite%20roue%20%C3%A0%20c%C3%B4t%C3%A9%20de%20Label%20et%20cliquer%20sur%20Edit%20Labels.%20Cr%C3%A9er%20un%20label%20Markdown.%20Normalement%2C%20le%20label%20a%20%C3%A9t%C3%A9%20ajout%C3%A9.)
+
+* *Notes:*
+  - Créer la banche sur VSCode:
+
+> `Volet source control, en haut à gauche: « … » / Branch / Create Branch`
+
+  - Rendre le repo public sur GitHub:
+
+> `Settings / Danger zone / Change visibility`
+
+  - Merge branch:
+    - `« squash and merge »`: permet de fusionner tous les commit de la branch à merger en un seul
+    - Si conflit, résoudre le conflit en local sur la branche, pas sur le main!
+
+:::
+::: column
+
+![](./img/git_branches_manip.jpg)
+
+:::
+:::
+
+## Gestion des conflits
+
+::: columns
+::: column
+
+* Cas simple: ajout par une personne tierce en remote, sans évolutions en local entretemps
+
+> `fast-forward merge`
+
+* Cas plus complexe: modifications simultanées. 2 stratégies:
+
+> `merge`: vérification manuelle des changements ligne par ligne
+
+> `rebase`: 3 étapes:
+
+    1. Supprime temporairement le commit local
+    2. Réalise un fast forward merge maintenant que le commit local n’est plus là
+    3. Rajoute le commit local au bout de l’historique
+
+* Exercices: cf. [cours](https://pythonds.linogaliana.fr/content/git/exogit.html#:~:text=Cet%20exercice%20se%20fait%20par%20groupe%20de%20trois%20ou%20quatre.%20Il%20y%20aura%20deux%20r%C3%B4les%20dans%20ce%20sc%C3%A9nario%20%3A)
+
+:::
+::: column
+
+![](./img/git_conflit_01_simple.png)
+
+[Cas simple]{.legend}
+
+![](./img/git_conflit_02_avg.png)
+
+[Cas `merge`]{.legend}
+
+![](./img/git_conflit_03_rebase1.png)
+![](./img/git_conflit_03_rebase2.png)
+
+[Cas `rebase`]{.legend}
+
+:::
+:::
+
+## Les commandes de branches
+
+| Commande | Description |
+| --- | --- |
+| `git branch` | Indique sur quelle branche on travaille |
+| `git branch branch_name` | Crée la nouvelle branche `branch_name` |
+| `git checkout branch_name` | Active la branche `branch_name` |
+| `git merge branch_name` | Fusionne les changements de la branche `branch_name` avec la branche active |
+| `git branch –d branch_name` | Efface la branche |
+
+## Les commandes de projet collaboratif
+
+| Commande | Description |
+| --- | --- |
+| `git clone repo_distant repo_local` | Clone le projet distant `repo_distant` dans le répertoire local `repo_local`|
+| `git fetch` | Récupère les derniers changements du repo remote |
+| `git pull origin main` | Met à jour les modifs dans le repo local |
+| `git push origin banch_name` | Push les modifs de `branch_name` sur le repo distant |

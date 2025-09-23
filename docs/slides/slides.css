@@ -1,18 +1,31 @@
-.reveal .slides section {
-  padding-top: 0em; /* adjust as needed */
-  margin-top: 0 !important;
-  font-size: 32px; /* adjust as needed */
+
+/* Style paragraph */
+.reveal {
+    font-size: 26px;
+    margin-top: 0.2em;
 }
+
+/* (Optional) avoid overlap with content at the bottom */
+.reveal .slides { padding-bottom: 56px; }
 
 /* Style all level-2 headings (##) */
 .reveal .slides section h2 {
-    font-size: 1.5em; /* adjust as needed */
-    margin-top: 0.5em; /* adjust as needed */
+    font-size: 40px;
+    margin-top: 0.2em;
 }
 
 /* Style all level-3 headings (###) */
 .reveal .slides section h3 {
   color:black;
-  font-size: 1.2em; /* adjust as needed */
-  margin-top: 1.5em; /* adjust as needed */
+  font-size: 38px;
+  margin-top: 0.2em;
 }
+
+.reveal section .legend,
+.reveal .slides section .legend {
+  color: rgb(183, 184, 187);
+  font-style: italic;
+  font-size: 14px;
+  margin-top: 0.2em;
+}
+

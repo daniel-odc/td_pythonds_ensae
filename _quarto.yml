@@ -1,16 +1,8 @@
 project:
-  type: default         # or "website" if you're building a site
-  output-dir: docs      # all rendered files go into ./docs
-  preview:
-    host: 127.0.0.1
-    port: 4500
-    browser: true
-format:
-  revealjs:
-    width: 1280
-    height: 720
-    minScale: 0.02
-    margin: 0.04
-    scrollable: true
-    code-overflow: wrap
+  type: default
+  output-dir: docs
+  # Ensure assets from /slides get copied into /docs preserving structure
+  resources:
+    - slides/**
+
 lang: fr

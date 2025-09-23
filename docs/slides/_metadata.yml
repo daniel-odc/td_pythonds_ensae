@@ -1,0 +1,30 @@
+# Slides level configuration
+project:
+  type: default         # or "website" if you're building a site
+  output-dir: docs      # all rendered files go into ./docs
+  preview:
+    host: 127.0.0.1
+    port: 4500
+    browser: true
+format:
+  revealjs:    
+    theme: simple
+    css: slides.css
+    footer: |
+      <span style="font-size:12px; line-height:1.2; color:#888;">
+        TD ENSAE Python pour la data science – 
+        <a href="https://pythonds.linogaliana.fr/">pythonds.linogaliana.fr</a>
+      </span>
+    width: 1280
+    height: 720
+    minScale: 0.02
+    margin: 0.04
+    scrollable: true
+    code-overflow: wrap
+    slide-number: true
+    controls: true
+    progress: true
+    transition: fade
+    highlight-style: tango # or "github", "monochrome", "tango", "pygments", etc.
+
+lang: fr
