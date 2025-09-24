@@ -1,0 +1,18 @@
+---
+title: |
+  <div>Python pour la data science TD 5 - Machine learning session 1</div>
+  <div style="text-align:center;">
+    <img src="./img/logo_XXX.png" style="height:100px; margin-right:10px;">    
+  </div>
+format:
+  revealjs:
+    css: slides.css   # ensure the CSS is loaded even if _metadata.yml isn't picked up
+---
+
+## Intro
+
+TODO
+
+---
+
+[TD 06](./06_ML_session2.html)

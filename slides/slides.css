@@ -29,3 +29,30 @@
   margin-top: 0.2em;
 }
 
+.reveal section .smalltext,
+.reveal .slides section .smalltext {
+  font-size: 0.2em;  
+}
+
+/* Only affects slides with class 'tight-table' */
+.reveal section.tight-table table {
+  font-size: 0.85rem;        /* shrink text */
+  table-layout: fixed;        /* force wrapping */
+  width: 100%;
+}
+.reveal section.tight-table th,
+.reveal section.tight-table td {
+  padding: 0.25em 0.4em;      /* tighter cells */
+  line-height: 1.2;
+  vertical-align: top;
+}
+.reveal section.tight-table td,
+.reveal section.tight-table th {
+  overflow-wrap: anywhere;    /* wrap long words/URLs */
+}
+.reveal section.tight-table code {
+  white-space: pre-wrap;      /* let code wrap too */
+  word-break: break-word;
+}
+
+

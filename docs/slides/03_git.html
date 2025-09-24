@@ -9,7 +9,7 @@
 <link href="03_git_files/libs/quarto-html/quarto-syntax-highlighting-15ea27bac76f9890c21e80949f497921.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.8.24">
 
-  <title>quarto-inputf859ba9d9dbba7dc</title>
+  <title>quarto-inputf0419c7a83ea5f3e</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -205,7 +205,6 @@ Python pour la data science TD 3
 </section>
 <section id="pourquoi-utiliser-git" class="slide level2">
 <h2>Pourquoi utiliser Git?</h2>
-<p>Inline (HTML): <span class="textgrey">my grey text</span> <span class="textgrey">grey test</span></p>
 <div class="columns">
 <div class="column">
 <ul>
@@ -224,8 +223,16 @@ Python pour la data science TD 3
 <li>Fichiers avec le même nom en local et dans le cloud (Google Drive, Sharepoint etc.) peuvent être différents</li>
 <li>Travailler en équipe sur le même fichier et gestion des conflits</li>
 </ul>
-<p>==&gt; Solution: <code>Git</code>. * <strong>Logiciel</strong> spécialisé dans le contrôle de version (de loin le plus populaire) * Utilisé par tous les développeurs, qu’ils travaillent seuls ou en équipe.</p>
-<p><em>Notes:</em> * <code>Git</code> est indépendant du langage de programmation, et peut être utilisé pour d’autres finalités: documentation ou tout projet avec des évolutions de fichiers. * <code>Git</code> n’est pas <code>Github</code> ou <code>Gitlab</code> (cf.&nbsp;slide suivant)</p>
+<p>==&gt; Solution: <code>Git</code>.</p>
+<ul>
+<li><strong>Logiciel</strong> spécialisé dans le contrôle de version (de loin le plus populaire)</li>
+<li>Utilisé par tous les développeurs, qu’ils travaillent seuls ou en équipe.</li>
+</ul>
+<p><em>Notes:</em></p>
+<ul>
+<li><code>Git</code> est indépendant du langage de programmation, et peut être utilisé pour d’autres finalités: documentation ou tout projet avec des évolutions de fichiers.</li>
+<li><code>Git</code> n’est pas <code>Github</code> ou <code>Gitlab</code> (cf.&nbsp;slide suivant)</li>
+</ul>
 </section>
 <section id="git-vs-github-vs-gitlab" class="slide level2">
 <h2><code>Git</code> vs <code>GitHub</code> vs <code>Gitlab</code></h2>
@@ -257,6 +264,132 @@ Python pour la data science TD 3
 <p><img data-src="./img/git_evol_file_log.png"></p>
 </div></div>
 </section>
+<section id="le-format-markdown" class="slide level2">
+<h2>Le format <code>Markdown</code></h2>
+<ul>
+<li>Language de balisage simpifié permettant de générer du code <code>html</code> à partir d’une syntaxe allégée.</li>
+</ul>
+<div class="columns">
+<div class="column">
+<ul>
+<li>Syntaxe <code>Markdown</code>:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href=""></a># Titre 1</span>
+<span id="cb1-2"><a href=""></a># # Titre 2</span>
+<span id="cb1-3"><a href=""></a></span>
+<span id="cb1-4"><a href=""></a>paragraphe</span>
+<span id="cb1-5"><a href=""></a></span>
+<span id="cb1-6"><a href=""></a>* bullet 1</span>
+<span id="cb1-7"><a href=""></a>  - sous-bullet 1</span>
+<span id="cb1-8"><a href=""></a>  - sous-bullet 2</span>
+<span id="cb1-9"><a href=""></a>* bullet 2</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<ul>
+<li>Syntaxe équivalente <code>HTML</code>:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb2-1"><a href=""></a><span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>Titre 1<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb2-2"><a href=""></a><span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>Titre 2<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb2-3"><a href=""></a></span>
+<span id="cb2-4"><a href=""></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>paragraphe<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb2-5"><a href=""></a></span>
+<span id="cb2-6"><a href=""></a><span class="dt">&lt;</span><span class="kw">ul</span><span class="dt">&gt;</span></span>
+<span id="cb2-7"><a href=""></a>    <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>bullet 1</span>
+<span id="cb2-8"><a href=""></a>        <span class="dt">&lt;</span><span class="kw">ul</span><span class="dt">&gt;</span></span>
+<span id="cb2-9"><a href=""></a>            <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>sous-bullet 1<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb2-10"><a href=""></a>            <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>sous-bullet 2<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb2-11"><a href=""></a>        <span class="dt">&lt;/</span><span class="kw">ul</span><span class="dt">&gt;</span></span>
+<span id="cb2-12"><a href=""></a>    <span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb2-13"><a href=""></a>    <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>bullet 2<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb2-14"><a href=""></a><span class="dt">&lt;/</span><span class="kw">ul</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+<ul>
+<li>Language utilisé sur <code>GitHub</code> pour la rédaction des fichiers <code>README.md</code> et pour les échanges entre contributeurs.</li>
+<li>Language utilisé dans Jupyter pour créer des cellules de commentaires et analyses (à utiliser pour le projet!)</li>
+<li>Permet de générer des pages web de façon rapide et maintenables.</li>
+<li>Utilisé pour la rédaction de ces slides et du cours <a href="https://pythonds.linogaliana.fr/">Python pour la data science</a>.</li>
+<li><a href="https://commonmark.org/help/">Documentation</a>.</li>
+</ul>
+</section>
+<section id="markdown-cheatsheet" class="slide level2 tight-table">
+<h2>Markdown Cheatsheet</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 32%">
+<col style="width: 31%">
+<col style="width: 35%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Or …</th>
+<th>Get</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>*Italic*</code></td>
+<td><code>_Italic_</code></td>
+<td><em>Italic</em></td>
+</tr>
+<tr class="even">
+<td><code>**Bold**</code></td>
+<td><code>__Bold__</code></td>
+<td><strong>Bold</strong></td>
+</tr>
+<tr class="odd">
+<td><code># Heading 1</code></td>
+<td><code>Heading 1</code><br><code>=========</code></td>
+<td><img data-src="./img/markdown_heading1.jpg"></td>
+</tr>
+<tr class="even">
+<td><code>## Heading 2</code></td>
+<td><code>Heading 2</code><br><code>---------</code></td>
+<td><img data-src="./img/markdown_heading2.jpg"></td>
+</tr>
+<tr class="odd">
+<td><code>[Link](http://a.com)</code></td>
+<td><code>[Link][1]</code><br><code>[1]: http://b.org</code></td>
+<td><a href="http://a.com">Link</a></td>
+</tr>
+<tr class="even">
+<td><code>![Image](http://url/a.png)</code></td>
+<td><code>![Image][1]</code><br><code>[1]: http://url/b.jpg</code></td>
+<td><img data-src="./img/markdown_image.jpg"></td>
+</tr>
+<tr class="odd">
+<td><code>&gt; Blockquote</code></td>
+<td></td>
+<td><img data-src="./img/markdown_blockquote.jpg"></td>
+</tr>
+<tr class="even">
+<td><code>* List</code><br><code>* List</code><br><code>* List</code></td>
+<td><code>- List</code><br><code>- List</code><br><code>- List</code></td>
+<td><img data-src="./img/markdown_list.jpg"></td>
+</tr>
+<tr class="odd">
+<td><code>1. One</code><br><code>2. Two</code><br><code>3. Three</code></td>
+<td><code>1) One</code><br><code>2) Two</code><br><code>3) Three</code></td>
+<td><img data-src="./img/markdown_ordered_list.jpg"></td>
+</tr>
+<tr class="even">
+<td><code>horizontal rule</code> <br> <code>---</code></td>
+<td><code>horizontal rule</code> <br> <code>***</code></td>
+<td><img data-src="./img/markdown_horizontal_rule.jpg"></td>
+</tr>
+<tr class="odd">
+<td><code>Inline `code` with backticks</code></td>
+<td></td>
+<td><img data-src="./img/markdown_inline_code.jpg"></td>
+</tr>
+<tr class="even">
+<td>``` <br># code block<br>print ‘3 backticks or’<br>print ‘indent 4 spaces’<br>```</td>
+<td>····# code block<br>····print ‘3 backticks or’<br>····print ‘indent 4 spaces’</td>
+<td><img data-src="./img/markdown_code_block.jpg"></td>
+</tr>
+</tbody>
+</table>
+<p><span class="legend">Source: https://commonmark.org/help/</span></p>
+</section>
 <section id="création-de-compte-github" class="slide level2">
 <h2>Création de compte <code>GitHub</code></h2>
 <div class="columns">
@@ -284,16 +417,15 @@ Python pour la data science TD 3
 <li>Aller sur son profil en haut à gauche puis:</li>
 </ul>
 <blockquote>
-<p><strong>settings</strong> / menu gauche: <strong>developper settings</strong> / <strong>Personal access tokens</strong>, click <strong>Fine-grained tokens</strong> / <strong>Generate new token</strong>.</p>
+<p><strong>settings</strong> / menu gauche: <strong>developper settings</strong> / <strong>Personal access tokens</strong>, click <strong>Fine-grained tokens</strong> / <em> </em>Generate new token**.</p>
 </blockquote>
 <ul>
 <li>Donner un nom au token, période de validité et le copier.<br></li>
 </ul>
 
 <img data-src="./img/git_authentication.jpg" class="r-stretch"></section>
-<section id="authentification---ssp-cloud" class="slide level2 smalltext">
+<section id="authentification---ssp-cloud" class="slide level2">
 <h2>Authentification - <code>SSP Cloud</code></h2>
-<p>is this text smaller?</p>
 <ul>
 <li>Ne jamais copier le token dans un fichier texte non crypté! (utiliser <a href="https://keepass.fr/">Keepass</a> par exemple).</li>
 <li>Aller sur <a href="https://auth.lab.sspcloud.fr/auth/realms/sspcloud/protocol/openid-connect/auth?client_id=onyxia&amp;redirect_uri=https%3A%2F%2Fdatalab.sspcloud.fr%2F&amp;response_type=code&amp;scope=openid+profile&amp;state=b2lkYy1zcGEulmV5oZr5T_O8qtDJMdYP&amp;code_challenge=k7U-KbYo2h0izIbAQfoJL0XVBNlqdL5W2akZFKeCik0&amp;code_challenge_method=S256&amp;response_mode=fragment&amp;audience=onyxia&amp;ui_locales=en&amp;onyxia-instance-public-url=https%3A%2F%2Fdatalab.sspcloud.fr">“Mon compte”</a> du <code>SSPCloud</code>, onglet <strong>Git</strong>, section <strong>Git Forge Personal Access Token</strong>, <strong>edit</strong> et coller le token.</li>
@@ -309,7 +441,7 @@ Python pour la data science TD 3
 <li>Sur le Repo <code>Git</code>, récupérer l’url du repo.</li>
 <li>Sur le projet <code>SSPCloud</code>: Ouvrir le terminal (<code>☰ / Terminal / New Terminal</code>) et taper</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource shell number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href=""></a>git clone https://github.com/&lt;username&gt;/&lt;reponame&gt;.git</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource shell number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a href=""></a>git clone https://github.com/&lt;username&gt;/&lt;reponame&gt;.git</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>Suivre les étapes</li>
 <li>Observer la mise à jour de l’explorateur de fichiers sur <code>VSCode</code>, votre <code>README</code> et votre <code>.gitignore</code> visibles sur <code>Github</code> doivent maintenant être là.</li>
@@ -323,8 +455,8 @@ Python pour la data science TD 3
 <h2>Les commandes essentielles</h2>
 <table class="caption-top">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 15%">
+<col style="width: 84%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -486,8 +618,8 @@ Python pour la data science TD 3
 <h2>Les commandes de branches</h2>
 <table class="caption-top">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 27%">
+<col style="width: 72%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -523,8 +655,8 @@ Python pour la data science TD 3
 <h2>Les commandes de projet collaboratif</h2>
 <table class="caption-top">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 32%">
+<col style="width: 67%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -551,6 +683,10 @@ Python pour la data science TD 3
 </tr>
 </tbody>
 </table>
+</section>
+<section class="slide level2">
+
+<p><a href="./04_API_webscrapping.html">TD 04</a></p>
 
 </section>
     </div>
