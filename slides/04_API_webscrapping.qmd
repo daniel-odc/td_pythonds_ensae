@@ -1,17 +1,174 @@
 ---
-title: |
-  <div>Python pour la data science TD 4 - API et webscrapping</div>
-  <div style="text-align:center;">
-    <img src="./img/logo_XXX.png" style="height:100px; margin-right:10px;">    
-  </div>
+title: Python pour la data science
+subtitle: TD 4 - API et webscrapping
 format:
-  revealjs:
-    css: slides.css   # ensure the CSS is loaded even if _metadata.yml isn't picked up
+  revealjs  
 ---
 
 ## Intro
 
+* **API**: Application Programming Interface: infrastructure dédiée pour permettre d’accéder à de la donnée de façon programmatique ==> légal, encadré, documenté.
+  - Exemples:
+    - [API Sirene de l’INSEE](https://www.data.gouv.fr/datasets/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/)
+    - [Base adresse nationale de l’IGN (BAN)](https://www.data.gouv.fr/dataservices/api-adresse-base-adresse-nationale-ban/)
+    - [API directions de Google Maps](https://developers.google.com/maps/documentation/directions/overview)
+    - Etc.
+* **Webscrapping**: technique de reproduction de comportements humains (requêtes, copier, coller) pour automatiser un recueil de données.
+
+💡Les API sont à privilégier dès que c’est possible!
+
+## API
+
+* Gratuites ou payantes
+* En général, nécessité de création de compte
+* Structure habituelle:
+  - URL racine de l'API ("root"): (ex: `https://api-adresse.data.gouv.fr`)
+  - Point d’entrée pour la tâche demandée ("End point"): (ex: `search`)
+  - Clé de requête (en général `?q=`)
+  - Paramètres de requête définis dans la documentation de l’API (ex: `5 +Av.+Le+Chatelier&postcode=91120`)
+  
+Exemple dans la base adresse nationale:
+
+$$
+ \underbrace{{https://api-adresse.data.gouv.fr}}_{Point d’entrée (root)}/
+ \underbrace{search}_{end point}/
+ \underbrace{{?q=}}_{Clé}
+ \underbrace{{5 +Av.+Le+Chatelier}}_{Valeurs de requête}
+$$
+
+
+==> Retourne en général un objet JSON
+
+## Application
+
+```python
+import requests       # pour lancer une requête web (module natif)
+import pandas as pd   # pour stocker et manipuler les données requêtées
+
+# # Exemple avec l’API BAN:
+root = 'https://api-adresse.data.gouv.fr/'
+endpoint = 'search/'
+key = '?q='
+address = '8+bd+du+port'
+
+query = f'{root}{endpoint}{key}{address}'
+
+print(query)  
+```
+
+1. Copiez coller le résutat de `query` dans la barre url du navigateur et pressez `Entrée`
+2. Examinez la structure de la réponse
+
+(suite au slide suivant)
+
+---
+
+3. Chargez le contenu pertinent de la réponse dans un dataframe `pandas` au moyen du code ci-dessous
+
+```python
+req = requests.get(query)  # requête web
+
+# # Récupération de l'ensemble de la donnée:
+data = req.json()
+df2 = pd.DataFrame(data)
+df2.head()  # observez le résultat...
+```
+
+<br>
+
+```python
+df3 = pd.DataFrame(data['features'])
+df3.head() # observez le résultat...
+```
+
+<br>
+
+```python
+# # Lorsque la structure JSON de sortie est emboitée comme ici, utiliser `pd.json_normalize`:
+df4 = pd.json_normalize(data['features'])
+df4.head() # observez le résultat...
+```
+
+
+## Bonne pratiques du webscrapping
+
 TODO
+
+## Structure d'une page `HTML`
+
+TODO
+
+## BeautifulSoup
+
+TODO
+
+## Application pratique
+
+TODO
+
+## Expressions régulières
+
+* Expressions régulières ou “regex” ==> outils syntaxiques communs à beaucoup de langages.
+
+*Définition: *
+
+::: {.center}
+Outil permettant de décrire un ensemble de chaînes de caractères possibles selon une syntaxe précise, et donc de définir un motif (ou pattern)
+:::
+
+==> Très utile pour le nettoyage de textes (données issues de formulaires, extractions d’adresses mails depuis un texte, corrections de dates à différents formats etc.)
+
+---
+
+### Exemple 1: Recherche basique
+
+```python
+import re  # module natif de gestion des expressions régulières (re: 'regular expression')
+
+text = "Quelques mots avec des chiffres: python3, data2science, hello, test"
+
+# # Quelques patterns sous forme d'expressions régulières
+# # \w    = un caractère (n'importe lequel)
+# # \w*   = n'importe quel mot
+# # \d    = un chiffre
+
+# # Définition du pattern:
+pattern = r"\w*\d\w*"  # n'importe quel mot précédent ou suivant un chiffre
+
+# # Recherche du pattern dans le mot:
+words_with_numbers = re.findall(pattern, text)
+print(words_with_numbers)
+```
+
+---
+
+### Exemple 2: Recherche d'adresses mail dans un texte
+
+```python
+import re
+
+text = "Contact me at hello@example.com"
+
+# # Expression régulière pour la définition d'un email:
+pattern = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
+
+match = re.search(pattern, text)
+
+if match:
+    print("Found email:", match.group())
+```
+
+---
+
+* Outils de tests d’expressions régulières: [https://regex101.com/](https://regex101.com/)
+* [Cheatsheet](https://ole.michelsen.dk/tools/regex/):
+
+<br>
+
+![](./img/regex_cheatsheet.jpg){.absolute bottom=2 right=2 width=80%}
+
+
+[Source: https://ole.michelsen.dk/tools/regex/]{.legend .absolute bottom=0 right=0}
 
 ---
 

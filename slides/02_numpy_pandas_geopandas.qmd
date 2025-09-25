@@ -293,3 +293,6 @@ from cartiflette import carti_download  # pour les excercices
 [Exercice](https://pythonds.linogaliana.fr/content/manipulation/03_geopandas_intro.html#:~:text=Souvent%2C%20le%20d%C3%A9coupage%20communal)
 
 
+---
+
+[TD 03](./03_git.html)

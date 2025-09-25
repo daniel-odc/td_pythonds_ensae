@@ -8,8 +8,9 @@ project:
     browser: true
 format:
   revealjs:    
-    theme: simple
-    css: slides.css
+    theme: slides.scss
+    css: slides.scss
+    logo: img/logo_ensae.png
     footer: |
       <span style="font-size:12px; line-height:1.2; color:#888;">
         TD ENSAE Python pour la data science – 

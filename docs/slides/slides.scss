@@ -1,0 +1,75 @@
+/*-- scss:defaults --*/
+
+// fonts
+//$font-family-sans-serif: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif !default;
+
+// colors
+$body-bg: hsl(0, 0%, 100%) !default;
+$body-color: #000 !default;
+$link-color: #3653f893 !default;
+$selection-bg: #26351c !default;
+//  ODC colors:
+$odc-green: #93AC9D !default;
+$odc-stormy: #646174 !default;
+
+// headings
+//$presentation-heading-font: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif !default;
+$presentation-heading-color: #383d3d !default;
+
+$presentation-font-size-root: 30px;
+$presentation-h1-font-size: 60px;
+$presentation-h2-font-size: 40px;
+$code-block-font-size: 0.9em;
+
+/*-- scss:rules --*/
+
+.odc-green {
+  color: $odc-green;
+}
+
+.reveal a {
+  line-height: 1.3em;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center; 
+}
+
+.full-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center; 
+  height: 100%;
+}
+
+.reveal section .smalltext,
+.reveal .slides section .smalltext {
+  font-size: 0.2em;  
+}
+
+/* Only affects slides with class 'tight-table' */
+.reveal section.tight-table table {
+  font-size: 0.85rem;        /* shrink text */
+  table-layout: fixed;        /* force wrapping */
+  width: 100%;
+}
+.reveal section.tight-table th,
+.reveal section.tight-table td {
+  padding: 0.25em 0.4em;      /* tighter cells */
+  line-height: 1.2;
+  vertical-align: top;
+}
+.reveal section.tight-table td,
+.reveal section.tight-table th {
+  overflow-wrap: anywhere;    /* wrap long words/URLs */
+}
+.reveal section.tight-table code {
+  white-space: pre-wrap;      /* let code wrap too */
+  word-break: break-word;
+}
+
+
