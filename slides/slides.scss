@@ -19,18 +19,36 @@ $presentation-heading-color: #383d3d !default;
 $presentation-font-size-root: 30px;
 $presentation-h1-font-size: 60px;
 $presentation-h2-font-size: 40px;
+$presentation-h3-font-size: 35px;
+$presentation-h4-font-size: 30px;
 $code-block-font-size: 0.9em;
 
 /*-- scss:rules --*/
 
+/*  Colors: --------------------------- */
 .odc-green {
   color: $odc-green;
 }
+
+/*  Sections: -------------------------- */
+
+/* Reduce top & bottom padding inside slides */
+.reveal .slides section {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+.reveal .slides section.tight {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+
 
 .reveal a {
   line-height: 1.3em;
 }
 
+/*  Size and position: ----------------- */
 .center {
   display: flex;
   justify-content: center;
@@ -50,6 +68,8 @@ $code-block-font-size: 0.9em;
 .reveal .slides section .smalltext {
   font-size: 0.2em;  
 }
+
+/*  Tables: ----------------- */
 
 /* Only affects slides with class 'tight-table' */
 .reveal section.tight-table table {
