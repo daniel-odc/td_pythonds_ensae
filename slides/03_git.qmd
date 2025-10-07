@@ -233,8 +233,8 @@ git clone https://github.com/<username>/<reponame>.git
 | `git remote -v`               | Obtention de l’url du repo distant                                                                                                                                 |
 | `git add my_file.py`          | Ajout du fichier my_file.py à la staging area                                                                                                                      |
 | `git commit –m "commentaire"` | Commit des changements avec commentaire de description des modifications                                                                                           |
-| `git pull origin master`      | Récupération de la dernière version du code depuis le repo remote (opération `« fetch »`), et fusion avec changements locaux si nécessaire (opération `« merge »`) |
-| `git push origin master`      | Envoi des dernières modifications locales sur le repo remote                                                                                                       |
+| `git pull origin main`      | Récupération de la dernière version du code depuis le repo remote (opération `« fetch »`), et fusion avec changements locaux si nécessaire (opération `« merge »`) (`git pull origin master` dans des versions plus anciennes de projet) |
+| `git push origin main`      | Envoi des dernières modifications locales sur le repo  (`git push origin master` dans des versions plus anciennes de projet)remote                                                                                                       |
 
 ## Le fichier `.gitignore`
 
