@@ -20,6 +20,8 @@ format:
     * `[date]_[fichier].py`? (ex: `241001_main.py`)
     * `[fichier]_[version].py`? (ex: `main_v0.3.py`)
 
+![](./img/git_fichiers_multiples.png)    
+
 :::
 ::: column
 ![](./img/git_finalfinal.png)
@@ -30,7 +32,11 @@ format:
 * Fichiers avec le même nom en local et dans le cloud (Google Drive, Sharepoint etc.) peuvent être différents
 * Travailler en équipe sur le même fichier et gestion des conflits
 
-==> Solution:   `Git`.
+==> Solution:   **`Git`**.
+
+---
+
+### `Git`
 
 * **Logiciel** spécialisé dans le contrôle de version (de loin le plus populaire)
 * Utilisé par tous les développeurs, qu’ils travaillent seuls ou en équipe.
@@ -39,11 +45,9 @@ format:
 
 * `Git` est indépendant du langage de programmation, et peut être utilisé pour d’autres finalités: documentation ou tout
   projet avec des évolutions de fichiers.
-* `Git` n’est pas `Github` ou `Gitlab` (cf. slide suivant)
+* `Git` n’est pas `Github` ou `Gitlab`
 
----
-
-## `Git` vs `GitHub` vs `Gitlab`
+### `Git` vs `GitHub` vs `Gitlab`
 
 * `Git` est un logiciel:
     - Utilisation en ligne de commandes
@@ -228,13 +232,15 @@ git clone https://github.com/<username>/<reponame>.git
 
 ## Les commandes essentielles
 
+
 | Commande                      | Description                                                                                                                                                        |
 |-------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `git remote -v`               | Obtention de l’url du repo distant                                                                                                                                 |
-| `git add my_file.py`          | Ajout du fichier my_file.py à la staging area                                                                                                                      |
+| `git pull origin main`      | Récupération de la dernière version du code depuis le repo remote (opération `« fetch »`), et fusion avec changements locaux si nécessaire (opération `« merge »`) (`git pull origin master` au lieu de `main` dans des versions anciennes de projets `git`)|
+| `git add my_file.py`          | Ajout du fichier `my_file.py` à la staging area                                                                                                                      |
 | `git commit –m "commentaire"` | Commit des changements avec commentaire de description des modifications                                                                                           |
-| `git pull origin master`      | Récupération de la dernière version du code depuis le repo remote (opération `« fetch »`), et fusion avec changements locaux si nécessaire (opération `« merge »`) |
-| `git push origin master`      | Envoi des dernières modifications locales sur le repo remote                                                                                                       |
+| `git push origin main`      | Envoi des dernières modifications locales sur le repo remote (`git push origin master` au lieu de `main` dans des versions anciennes de projet `git`)                                                                                                       |
+
 
 ## Le fichier `.gitignore`
 
@@ -391,7 +397,28 @@ Cf. [cours](https://pythonds.linogaliana.fr/content/git/introgit.html#:~:text=Ou
 | `git merge branch_name`     | Fusionne les changements de la branche `branch_name` avec la branche active |
 | `git branch –d branch_name` | Efface la branche                                                           |
 
-## Les commandes de projet collaboratif
+
+## Projets collaboratifs
+
+### Ajouter des collaborateurs
+
+::: columns
+
+::: column
+
+> `Settings` / `Collaborators` / `Add people`
+> Puis ajouter les collaborateurs en utilisant leur identifiant `GitHub` (visible sur le profile)
+
+:::
+
+::: column
+![](./img/git_collaborators.jpg)
+:::
+:::
+
+---
+
+### Les commandes de projet collaboratif
 
 | Commande                            | Description                                                                  |
 |-------------------------------------|------------------------------------------------------------------------------|

@@ -9,7 +9,7 @@
 <link href="03_git_files/libs/quarto-html/quarto-syntax-highlighting-15ea27bac76f9890c21e80949f497921.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.8.24">
 
-  <title>quarto-inputf0419c7a83ea5f3e</title>
+  <title>quarto-inputc1c195dbf866275f</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -92,7 +92,8 @@
     code span.vs { color: #4e9a06; } /* VerbatimString */
     code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="03_git_files/libs/revealjs/dist/theme/quarto-9bacd3158296feb21eaa887ded9f5e13.css">
+  <link rel="stylesheet" href="03_git_files/libs/revealjs/dist/theme/quarto-05bc1c7b0f255ae508ca6f1b5f99c4f8.css">
+  <link rel="stylesheet" href="slides.scss">
   <link rel="stylesheet" href="slides.css">
   <link href="03_git_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="03_git_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -215,6 +216,7 @@ Python pour la data science TD 3
 <li><code>[fichier]_[version].py</code>? (ex: <code>main_v0.3.py</code>)</li>
 </ul></li>
 </ul>
+<p><img data-src="./img/git_fichiers_multiples.png"></p>
 </div><div class="column">
 <p><img data-src="./img/git_finalfinal.png"></p>
 </div></div>
@@ -223,7 +225,11 @@ Python pour la data science TD 3
 <li>Fichiers avec le même nom en local et dans le cloud (Google Drive, Sharepoint etc.) peuvent être différents</li>
 <li>Travailler en équipe sur le même fichier et gestion des conflits</li>
 </ul>
-<p>==&gt; Solution: <code>Git</code>.</p>
+<p>==&gt; Solution: <strong><code>Git</code></strong>.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="git"><code>Git</code></h3>
 <ul>
 <li><strong>Logiciel</strong> spécialisé dans le contrôle de version (de loin le plus populaire)</li>
 <li>Utilisé par tous les développeurs, qu’ils travaillent seuls ou en équipe.</li>
@@ -231,11 +237,9 @@ Python pour la data science TD 3
 <p><em>Notes:</em></p>
 <ul>
 <li><code>Git</code> est indépendant du langage de programmation, et peut être utilisé pour d’autres finalités: documentation ou tout projet avec des évolutions de fichiers.</li>
-<li><code>Git</code> n’est pas <code>Github</code> ou <code>Gitlab</code> (cf.&nbsp;slide suivant)</li>
+<li><code>Git</code> n’est pas <code>Github</code> ou <code>Gitlab</code></li>
 </ul>
-</section>
-<section id="git-vs-github-vs-gitlab" class="slide level2">
-<h2><code>Git</code> vs <code>GitHub</code> vs <code>Gitlab</code></h2>
+<h3 id="git-vs-github-vs-gitlab"><code>Git</code> vs <code>GitHub</code> vs <code>Gitlab</code></h3>
 <ul>
 <li><code>Git</code> est un logiciel:
 <ul>
@@ -470,20 +474,20 @@ Python pour la data science TD 3
 <td>Obtention de l’url du repo distant</td>
 </tr>
 <tr class="even">
-<td><code>git add my_file.py</code></td>
-<td>Ajout du fichier my_file.py à la staging area</td>
+<td><code>git pull origin main</code></td>
+<td>Récupération de la dernière version du code depuis le repo remote (opération <code>«&nbsp;fetch&nbsp;»</code>), et fusion avec changements locaux si nécessaire (opération <code>«&nbsp;merge&nbsp;»</code>) (<code>git pull origin master</code> au lieu de <code>main</code> dans des versions anciennes de projets <code>git</code>)</td>
 </tr>
 <tr class="odd">
+<td><code>git add my_file.py</code></td>
+<td>Ajout du fichier <code>my_file.py</code> à la staging area</td>
+</tr>
+<tr class="even">
 <td><code>git commit –m "commentaire"</code></td>
 <td>Commit des changements avec commentaire de description des modifications</td>
 </tr>
-<tr class="even">
-<td><code>git pull origin master</code></td>
-<td>Récupération de la dernière version du code depuis le repo remote (opération <code>«&nbsp;fetch&nbsp;»</code>), et fusion avec changements locaux si nécessaire (opération <code>«&nbsp;merge&nbsp;»</code>)</td>
-</tr>
 <tr class="odd">
-<td><code>git push origin master</code></td>
-<td>Envoi des dernières modifications locales sur le repo remote</td>
+<td><code>git push origin main</code></td>
+<td>Envoi des dernières modifications locales sur le repo remote (<code>git push origin master</code> au lieu de <code>main</code> dans des versions anciennes de projet <code>git</code>)</td>
 </tr>
 </tbody>
 </table>
@@ -651,8 +655,21 @@ Python pour la data science TD 3
 </tbody>
 </table>
 </section>
-<section id="les-commandes-de-projet-collaboratif" class="slide level2">
-<h2>Les commandes de projet collaboratif</h2>
+<section id="projets-collaboratifs" class="slide level2">
+<h2>Projets collaboratifs</h2>
+<h3 id="ajouter-des-collaborateurs">Ajouter des collaborateurs</h3>
+<div class="columns">
+<div class="column">
+<blockquote>
+<p><code>Settings</code> / <code>Collaborators</code> / <code>Add people</code> Puis ajouter les collaborateurs en utilisant leur identifiant <code>GitHub</code> (visible sur le profile)</p>
+</blockquote>
+</div><div class="column">
+<p><img data-src="./img/git_collaborators.jpg"></p>
+</div></div>
+</section>
+<section class="slide level2">
+
+<h3 id="les-commandes-de-projet-collaboratif">Les commandes de projet collaboratif</h3>
 <table class="caption-top">
 <colgroup>
 <col style="width: 32%">
@@ -691,6 +708,7 @@ Python pour la data science TD 3
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="img/logo_ensae.png" class="slide-logo"></p>
 <div class="footer footer-default">
 <p><span style="font-size:12px; line-height:1.2; color:#888;"> TD ENSAE Python pour la data science – <a href="https://pythonds.linogaliana.fr/">pythonds.linogaliana.fr</a> </span></p>
 </div>
