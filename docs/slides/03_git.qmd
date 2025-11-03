@@ -365,6 +365,7 @@ Cf. [cours](https://pythonds.linogaliana.fr/content/git/introgit.html#:~:text=Ou
     2. Réalise un fast forward merge maintenant que le commit local n’est plus là
     3. Rajoute le commit local au bout de l’historique
 
+
 * Exercices:
   cf. [cours](https://pythonds.linogaliana.fr/content/git/exogit.html#:~:text=Cet%20exercice%20se%20fait%20par%20groupe%20de%20trois%20ou%20quatre.%20Il%20y%20aura%20deux%20r%C3%B4les%20dans%20ce%20sc%C3%A9nario%20%3A)
 

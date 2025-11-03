@@ -302,6 +302,46 @@
 <section class="slide level2">
 
 <p><a href="https://pythonds.linogaliana.fr/content/manipulation/04c_API_TP.html#premi%C3%A8re-utilisation-dapi:~:text=Tester%20sans%20aucun%20autre%20param%C3%A8tre%2C%20le%20retour%20de%20notre%20API.%20Transformer%20en%20DataFrame%20le%20r%C3%A9sultat.">Exercice 1</a></p>
+<p>💡Aide</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="co"># # Récupérer des coordonnées avec l'API BAN:</span></span>
+<span id="cb6-2"><a href=""></a><span class="im">import</span> requests</span>
+<span id="cb6-3"><a href=""></a></span>
+<span id="cb6-4"><a href=""></a>postcode <span class="op">=</span> <span class="dv">92120</span></span>
+<span id="cb6-5"><a href=""></a>url_ban_example <span class="op">=</span> <span class="ss">f'https://api-adresse.data.gouv.fr/search/?q=</span><span class="sc">{</span>adresse<span class="sc">.</span>replace(<span class="st">" "</span>, <span class="st">"+"</span>)<span class="sc">}</span><span class="ss">&amp;postcode=</span><span class="sc">{</span>postcode<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb6-6"><a href=""></a>req <span class="op">=</span> requests.get(url_ban_example)</span>
+<span id="cb6-7"><a href=""></a><span class="co"># req.json()</span></span>
+<span id="cb6-8"><a href=""></a>prop <span class="op">=</span> req.json().get(<span class="st">'features'</span>)[<span class="dv">0</span>].get(<span class="st">'properties'</span>) </span>
+<span id="cb6-9"><a href=""></a>x, y <span class="op">=</span> prop.get(<span class="st">'x'</span>), prop.get(<span class="st">'y'</span>) </span>
+<span id="cb6-10"><a href=""></a><span class="bu">print</span>(<span class="ss">f'x: </span><span class="sc">{</span>x<span class="sc">}</span><span class="ss">, y: </span><span class="sc">{</span>y<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb6-11"><a href=""></a></span>
+<span id="cb6-12"><a href=""></a><span class="co"># # Afficher les résultats sur une carte avec `GeoPandas` et `Folium`</span></span>
+<span id="cb6-13"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb6-14"><a href=""></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb6-15"><a href=""></a><span class="im">import</span> folium</span>
+<span id="cb6-16"><a href=""></a></span>
+<span id="cb6-17"><a href=""></a>gdf <span class="op">=</span> gpd.GeoDataFrame(data<span class="op">=</span>pd.DataFrame({<span class="st">'ville'</span>: [<span class="st">'Montrouge'</span>]}), geometry<span class="op">=</span>gpd.points_from_xy([x], [y]), crs<span class="op">=</span><span class="st">'EPSG:2154'</span>)</span>
+<span id="cb6-18"><a href=""></a>gdf.to_crs(epsg<span class="op">=</span><span class="dv">4326</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-19"><a href=""></a>gdf[<span class="st">'longitude'</span>] <span class="op">=</span> gdf.geometry.x</span>
+<span id="cb6-20"><a href=""></a>gdf[<span class="st">'latitude'</span>] <span class="op">=</span> gdf.geometry.y</span>
+<span id="cb6-21"><a href=""></a></span>
+<span id="cb6-22"><a href=""></a>center <span class="op">=</span> gdf[[<span class="st">'latitude'</span>, <span class="st">'longitude'</span>]].mean().values.tolist()</span>
+<span id="cb6-23"><a href=""></a><span class="co"># sw = gdf[['latitude', 'longitude']].min().values.tolist()</span></span>
+<span id="cb6-24"><a href=""></a><span class="co"># ne = gdf[['latitude', 'longitude']].max().values.tolist()</span></span>
+<span id="cb6-25"><a href=""></a></span>
+<span id="cb6-26"><a href=""></a>m <span class="op">=</span> folium.Map(location <span class="op">=</span> center, tiles<span class="op">=</span><span class="st">'CartoDB.Positron'</span>) <span class="co"># CartoDB.Positron, openstreetmap </span></span>
+<span id="cb6-27"><a href=""></a></span>
+<span id="cb6-28"><a href=""></a><span class="co"># I can add marker one by one on the map</span></span>
+<span id="cb6-29"><a href=""></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>,<span class="bu">len</span>(gdf)):</span>
+<span id="cb6-30"><a href=""></a>    folium.Marker(</span>
+<span id="cb6-31"><a href=""></a>        [gdf.iloc[i][<span class="st">'latitude'</span>], gdf.iloc[i][<span class="st">'longitude'</span>]],</span>
+<span id="cb6-32"><a href=""></a>        popup<span class="op">=</span>gdf.iloc[i][<span class="st">'ville'</span>]</span>
+<span id="cb6-33"><a href=""></a>    ).add_to(m)</span>
+<span id="cb6-34"><a href=""></a></span>
+<span id="cb6-35"><a href=""></a><span class="co"># m.fit_bounds([sw, ne])</span></span>
+<span id="cb6-36"><a href=""></a>m</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section class="slide level2">
+
 <p><a href="https://pythonds.linogaliana.fr/content/manipulation/04c_API_TP.html#:~:text=Trouver%20un%20lieu%20commun%20o%C3%B9%20se%20retrouver%20entre%20amis%20est%20toujours%20l%E2%80%99objet%20d%E2%80%99%C3%A2pres">Exercice 4</a></p>
 </section>
 <section id="web-scrapping" class="slide level2 scrollable">
@@ -327,35 +367,35 @@
 <ul>
 <li><code>HTML</code> brut:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb6-1"><a href=""></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
-<span id="cb6-2"><a href=""></a><span class="dt">&lt;</span><span class="kw">html</span><span class="ot"> lang</span><span class="op">=</span><span class="st">"en"</span><span class="dt">&gt;</span></span>
-<span id="cb6-3"><a href=""></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
-<span id="cb6-4"><a href=""></a>  <span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> charset</span><span class="op">=</span><span class="st">"UTF-8"</span><span class="dt">&gt;</span></span>
-<span id="cb6-5"><a href=""></a>  <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>Simple Page<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
-<span id="cb6-6"><a href=""></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
-<span id="cb6-7"><a href=""></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
-<span id="cb6-8"><a href=""></a>  <span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>My Sample Page<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
-<span id="cb6-9"><a href=""></a>  <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>This is a short paragraph explaining the content below.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
-<span id="cb6-10"><a href=""></a>  </span>
-<span id="cb6-11"><a href=""></a>  <span class="dt">&lt;</span><span class="kw">table</span><span class="ot"> border</span><span class="op">=</span><span class="st">"1"</span><span class="dt">&gt;</span></span>
-<span id="cb6-12"><a href=""></a>    <span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
-<span id="cb6-13"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>Name<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;</span></span>
-<span id="cb6-14"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>Age<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;</span></span>
-<span id="cb6-15"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>City<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;</span></span>
-<span id="cb6-16"><a href=""></a>    <span class="dt">&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
-<span id="cb6-17"><a href=""></a>    <span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
-<span id="cb6-18"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>Alice<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
-<span id="cb6-19"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>29<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
-<span id="cb6-20"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>Paris<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
-<span id="cb6-21"><a href=""></a>    <span class="dt">&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
-<span id="cb6-22"><a href=""></a>    <span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
-<span id="cb6-23"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>Bob<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
-<span id="cb6-24"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>35<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
-<span id="cb6-25"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>Berlin<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
-<span id="cb6-26"><a href=""></a>    <span class="dt">&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
-<span id="cb6-27"><a href=""></a>  <span class="dt">&lt;/</span><span class="kw">table</span><span class="dt">&gt;</span></span>
-<span id="cb6-28"><a href=""></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
-<span id="cb6-29"><a href=""></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb7-1"><a href=""></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb7-2"><a href=""></a><span class="dt">&lt;</span><span class="kw">html</span><span class="ot"> lang</span><span class="op">=</span><span class="st">"en"</span><span class="dt">&gt;</span></span>
+<span id="cb7-3"><a href=""></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb7-4"><a href=""></a>  <span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> charset</span><span class="op">=</span><span class="st">"UTF-8"</span><span class="dt">&gt;</span></span>
+<span id="cb7-5"><a href=""></a>  <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>Simple Page<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
+<span id="cb7-6"><a href=""></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb7-7"><a href=""></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb7-8"><a href=""></a>  <span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>My Sample Page<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb7-9"><a href=""></a>  <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>This is a short paragraph explaining the content below.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb7-10"><a href=""></a>  </span>
+<span id="cb7-11"><a href=""></a>  <span class="dt">&lt;</span><span class="kw">table</span><span class="ot"> border</span><span class="op">=</span><span class="st">"1"</span><span class="dt">&gt;</span></span>
+<span id="cb7-12"><a href=""></a>    <span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb7-13"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>Name<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;</span></span>
+<span id="cb7-14"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>Age<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;</span></span>
+<span id="cb7-15"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>City<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;</span></span>
+<span id="cb7-16"><a href=""></a>    <span class="dt">&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb7-17"><a href=""></a>    <span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb7-18"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>Alice<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb7-19"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>29<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb7-20"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>Paris<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb7-21"><a href=""></a>    <span class="dt">&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb7-22"><a href=""></a>    <span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb7-23"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>Bob<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb7-24"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>35<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb7-25"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>Berlin<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb7-26"><a href=""></a>    <span class="dt">&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb7-27"><a href=""></a>  <span class="dt">&lt;/</span><span class="kw">table</span><span class="dt">&gt;</span></span>
+<span id="cb7-28"><a href=""></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb7-29"><a href=""></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:10%;">
 
 </div><div class="column" style="width:45%;">
@@ -417,34 +457,34 @@
 <li><code>BeautifulSoup</code> est un module <code>Python</code> permettant d’extraire facilement les informations des balises <code>html</code>.</li>
 <li>Installation:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource shell number-lines code-with-copy"><code class="sourceCode"><span id="cb7-1"><a href=""></a># # lxml pour la gestion des structures XML:</span>
-<span id="cb7-2"><a href=""></a>pip install lxml  # '!pip install lxml' dans Jupyter</span>
-<span id="cb7-3"><a href=""></a></span>
-<span id="cb7-4"><a href=""></a># # BeautifulSoup:</span>
-<span id="cb7-5"><a href=""></a>pip install bs4   # '!pip install bs4' dans Jupyter</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource shell number-lines code-with-copy"><code class="sourceCode"><span id="cb8-1"><a href=""></a># # lxml pour la gestion des structures XML:</span>
+<span id="cb8-2"><a href=""></a>pip install lxml  # '!pip install lxml' dans Jupyter</span>
+<span id="cb8-3"><a href=""></a></span>
+<span id="cb8-4"><a href=""></a># # BeautifulSoup:</span>
+<span id="cb8-5"><a href=""></a>pip install bs4   # '!pip install bs4' dans Jupyter</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section class="slide level2">
 
 <ul>
 <li>Exemple:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="im">import</span> requests  <span class="co"># pour effectuer une requête web</span></span>
-<span id="cb8-2"><a href=""></a><span class="im">import</span> bs4  <span class="co"># BeautifulSoup</span></span>
-<span id="cb8-3"><a href=""></a></span>
-<span id="cb8-4"><a href=""></a>url_ligue_1 <span class="op">=</span> <span class="st">"https://fr.wikipedia.org/wiki/Championnat_de_France_de_football_2019-2020"</span></span>
-<span id="cb8-5"><a href=""></a></span>
-<span id="cb8-6"><a href=""></a>request_text <span class="op">=</span> requests.get(</span>
-<span id="cb8-7"><a href=""></a>    url_ligue_1,</span>
-<span id="cb8-8"><a href=""></a>    headers<span class="op">=</span>{<span class="st">"User-Agent"</span>: <span class="st">"Python for data science tutorial"</span>}  <span class="co"># bonne pratique: indiquer au site le consommateur de sa ressource</span></span>
-<span id="cb8-9"><a href=""></a>).content</span>
-<span id="cb8-10"><a href=""></a></span>
-<span id="cb8-11"><a href=""></a><span class="bu">print</span>(request_text)</span>
-<span id="cb8-12"><a href=""></a></span>
-<span id="cb8-13"><a href=""></a>page <span class="op">=</span> bs4.BeautifulSoup(request_text, <span class="st">"lxml"</span>)</span>
-<span id="cb8-14"><a href=""></a></span>
-<span id="cb8-15"><a href=""></a><span class="bu">print</span>(page)</span>
-<span id="cb8-16"><a href=""></a></span>
-<span id="cb8-17"><a href=""></a><span class="bu">print</span>(page.find(<span class="st">"title"</span>))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="im">import</span> requests  <span class="co"># pour effectuer une requête web</span></span>
+<span id="cb9-2"><a href=""></a><span class="im">import</span> bs4  <span class="co"># BeautifulSoup</span></span>
+<span id="cb9-3"><a href=""></a></span>
+<span id="cb9-4"><a href=""></a>url_ligue_1 <span class="op">=</span> <span class="st">"https://fr.wikipedia.org/wiki/Championnat_de_France_de_football_2019-2020"</span></span>
+<span id="cb9-5"><a href=""></a></span>
+<span id="cb9-6"><a href=""></a>request_text <span class="op">=</span> requests.get(</span>
+<span id="cb9-7"><a href=""></a>    url_ligue_1,</span>
+<span id="cb9-8"><a href=""></a>    headers<span class="op">=</span>{<span class="st">"User-Agent"</span>: <span class="st">"Python for data science tutorial"</span>}  <span class="co"># bonne pratique: indiquer au site le consommateur de sa ressource</span></span>
+<span id="cb9-9"><a href=""></a>).content</span>
+<span id="cb9-10"><a href=""></a></span>
+<span id="cb9-11"><a href=""></a><span class="bu">print</span>(request_text)</span>
+<span id="cb9-12"><a href=""></a></span>
+<span id="cb9-13"><a href=""></a>page <span class="op">=</span> bs4.BeautifulSoup(request_text, <span class="st">"lxml"</span>)</span>
+<span id="cb9-14"><a href=""></a></span>
+<span id="cb9-15"><a href=""></a><span class="bu">print</span>(page)</span>
+<span id="cb9-16"><a href=""></a></span>
+<span id="cb9-17"><a href=""></a><span class="bu">print</span>(page.find(<span class="st">"title"</span>))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="application-pratique" class="slide level2">
 <h2>Application pratique</h2>
@@ -464,36 +504,36 @@
 <section class="slide level2">
 
 <h3 id="exemple-1-recherche-basique">Exemple 1: Recherche basique</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="im">import</span> re  <span class="co"># module natif de gestion des expressions régulières (re: 'regular expression')</span></span>
-<span id="cb9-2"><a href=""></a></span>
-<span id="cb9-3"><a href=""></a>text <span class="op">=</span> <span class="st">"Quelques mots avec des chiffres: python3, data2science, hello, test"</span></span>
-<span id="cb9-4"><a href=""></a></span>
-<span id="cb9-5"><a href=""></a><span class="co"># # Quelques patterns sous forme d'expressions régulières</span></span>
-<span id="cb9-6"><a href=""></a><span class="co"># # \w    = un caractère (n'importe lequel)</span></span>
-<span id="cb9-7"><a href=""></a><span class="co"># # \w*   = n'importe quel mot</span></span>
-<span id="cb9-8"><a href=""></a><span class="co"># # \d    = un chiffre</span></span>
-<span id="cb9-9"><a href=""></a></span>
-<span id="cb9-10"><a href=""></a><span class="co"># # Définition du pattern:</span></span>
-<span id="cb9-11"><a href=""></a>pattern <span class="op">=</span> <span class="vs">r"</span><span class="dv">\w</span><span class="op">*</span><span class="dv">\d\w</span><span class="op">*</span><span class="vs">"</span>  <span class="co"># n'importe quel mot précédent ou suivant un chiffre</span></span>
-<span id="cb9-12"><a href=""></a></span>
-<span id="cb9-13"><a href=""></a><span class="co"># # Recherche du pattern dans le mot:</span></span>
-<span id="cb9-14"><a href=""></a>words_with_numbers <span class="op">=</span> re.findall(pattern, text)</span>
-<span id="cb9-15"><a href=""></a><span class="bu">print</span>(words_with_numbers)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a><span class="im">import</span> re  <span class="co"># module natif de gestion des expressions régulières (re: 'regular expression')</span></span>
+<span id="cb10-2"><a href=""></a></span>
+<span id="cb10-3"><a href=""></a>text <span class="op">=</span> <span class="st">"Quelques mots avec des chiffres: python3, data2science, hello, test"</span></span>
+<span id="cb10-4"><a href=""></a></span>
+<span id="cb10-5"><a href=""></a><span class="co"># # Quelques patterns sous forme d'expressions régulières</span></span>
+<span id="cb10-6"><a href=""></a><span class="co"># # \w    = un caractère (n'importe lequel)</span></span>
+<span id="cb10-7"><a href=""></a><span class="co"># # \w*   = n'importe quel mot</span></span>
+<span id="cb10-8"><a href=""></a><span class="co"># # \d    = un chiffre</span></span>
+<span id="cb10-9"><a href=""></a></span>
+<span id="cb10-10"><a href=""></a><span class="co"># # Définition du pattern:</span></span>
+<span id="cb10-11"><a href=""></a>pattern <span class="op">=</span> <span class="vs">r"</span><span class="dv">\w</span><span class="op">*</span><span class="dv">\d\w</span><span class="op">*</span><span class="vs">"</span>  <span class="co"># n'importe quel mot précédent ou suivant un chiffre</span></span>
+<span id="cb10-12"><a href=""></a></span>
+<span id="cb10-13"><a href=""></a><span class="co"># # Recherche du pattern dans le mot:</span></span>
+<span id="cb10-14"><a href=""></a>words_with_numbers <span class="op">=</span> re.findall(pattern, text)</span>
+<span id="cb10-15"><a href=""></a><span class="bu">print</span>(words_with_numbers)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section class="slide level2">
 
 <h3 id="exemple-2-recherche-dadresses-mail-dans-un-texte">Exemple 2: Recherche d’adresses mail dans un texte</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a><span class="im">import</span> re</span>
-<span id="cb10-2"><a href=""></a></span>
-<span id="cb10-3"><a href=""></a>text <span class="op">=</span> <span class="st">"Contact me at hello@example.com"</span></span>
-<span id="cb10-4"><a href=""></a></span>
-<span id="cb10-5"><a href=""></a><span class="co"># # Expression régulière pour la définition d'un email:</span></span>
-<span id="cb10-6"><a href=""></a>pattern <span class="op">=</span> <span class="vs">r"</span><span class="dv">\b</span><span class="pp">[A-Za-z0-9._%+-]</span><span class="op">+</span><span class="vs">@</span><span class="pp">[A-Za-z0-9.-]</span><span class="op">+</span><span class="ch">\.</span><span class="pp">[A-Z|a-z]</span><span class="op">{2,}</span><span class="dv">\b</span><span class="vs">"</span></span>
-<span id="cb10-7"><a href=""></a></span>
-<span id="cb10-8"><a href=""></a>match <span class="op">=</span> re.search(pattern, text)</span>
-<span id="cb10-9"><a href=""></a></span>
-<span id="cb10-10"><a href=""></a><span class="cf">if</span> match:</span>
-<span id="cb10-11"><a href=""></a>    <span class="bu">print</span>(<span class="st">"Found email:"</span>, match.group())</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href=""></a><span class="im">import</span> re</span>
+<span id="cb11-2"><a href=""></a></span>
+<span id="cb11-3"><a href=""></a>text <span class="op">=</span> <span class="st">"Contact me at hello@example.com"</span></span>
+<span id="cb11-4"><a href=""></a></span>
+<span id="cb11-5"><a href=""></a><span class="co"># # Expression régulière pour la définition d'un email:</span></span>
+<span id="cb11-6"><a href=""></a>pattern <span class="op">=</span> <span class="vs">r"</span><span class="dv">\b</span><span class="pp">[A-Za-z0-9._%+-]</span><span class="op">+</span><span class="vs">@</span><span class="pp">[A-Za-z0-9.-]</span><span class="op">+</span><span class="ch">\.</span><span class="pp">[A-Z|a-z]</span><span class="op">{2,}</span><span class="dv">\b</span><span class="vs">"</span></span>
+<span id="cb11-7"><a href=""></a></span>
+<span id="cb11-8"><a href=""></a>match <span class="op">=</span> re.search(pattern, text)</span>
+<span id="cb11-9"><a href=""></a></span>
+<span id="cb11-10"><a href=""></a><span class="cf">if</span> match:</span>
+<span id="cb11-11"><a href=""></a>    <span class="bu">print</span>(<span class="st">"Found email:"</span>, match.group())</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section class="slide level2">
 

@@ -119,6 +119,50 @@ df4.head() # observez le résultat...
 
 [Exercice 1](https://pythonds.linogaliana.fr/content/manipulation/04c_API_TP.html#premi%C3%A8re-utilisation-dapi:~:text=Tester%20sans%20aucun%20autre%20param%C3%A8tre%2C%20le%20retour%20de%20notre%20API.%20Transformer%20en%20DataFrame%20le%20r%C3%A9sultat.)
 
+💡Aide
+
+```python
+# # Récupérer des coordonnées avec l'API BAN:
+import requests
+
+postcode = 92120
+url_ban_example = f'https://api-adresse.data.gouv.fr/search/?q={adresse.replace(" ", "+")}&postcode={postcode}'
+req = requests.get(url_ban_example)
+# req.json()
+prop = req.json().get('features')[0].get('properties') 
+x, y = prop.get('x'), prop.get('y') 
+print(f'x: {x}, y: {y}')
+
+# # Afficher les résultats sur une carte avec `GeoPandas` et `Folium`
+import pandas as pd
+import geopandas as gpd
+import folium
+
+gdf = gpd.GeoDataFrame(data=pd.DataFrame({'ville': ['Montrouge']}), geometry=gpd.points_from_xy([x], [y]), crs='EPSG:2154')
+gdf.to_crs(epsg=4326, inplace=True)
+gdf['longitude'] = gdf.geometry.x
+gdf['latitude'] = gdf.geometry.y
+
+center = gdf[['latitude', 'longitude']].mean().values.tolist()
+# sw = gdf[['latitude', 'longitude']].min().values.tolist()
+# ne = gdf[['latitude', 'longitude']].max().values.tolist()
+
+m = folium.Map(location = center, tiles='CartoDB.Positron') # CartoDB.Positron, openstreetmap 
+
+# I can add marker one by one on the map
+for i in range(0,len(gdf)):
+    folium.Marker(
+        [gdf.iloc[i]['latitude'], gdf.iloc[i]['longitude']],
+        popup=gdf.iloc[i]['ville']
+    ).add_to(m)
+
+# m.fit_bounds([sw, ne])
+m
+```
+
+
+---
+
 [Exercice 4](https://pythonds.linogaliana.fr/content/manipulation/04c_API_TP.html#:~:text=Trouver%20un%20lieu%20commun%20o%C3%B9%20se%20retrouver%20entre%20amis%20est%20toujours%20l%E2%80%99objet%20d%E2%80%99%C3%A2pres)
 
 
