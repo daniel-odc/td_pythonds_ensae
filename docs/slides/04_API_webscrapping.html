@@ -307,7 +307,7 @@
 <span id="cb6-2"><a href=""></a><span class="im">import</span> requests</span>
 <span id="cb6-3"><a href=""></a></span>
 <span id="cb6-4"><a href=""></a>postcode <span class="op">=</span> <span class="dv">92120</span></span>
-<span id="cb6-5"><a href=""></a>url_ban_example <span class="op">=</span> <span class="ss">f'https://api-adresse.data.gouv.fr/search/?q=</span><span class="sc">{</span>adresse<span class="sc">.</span>replace(<span class="st">" "</span>, <span class="st">"+"</span>)<span class="sc">}</span><span class="ss">&amp;postcode=</span><span class="sc">{</span>postcode<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb6-5"><a href=""></a>url_ban_example <span class="op">=</span> <span class="ss">f'https://api-adresse.data.gouv.fr/search/?q=</span><span class="sc">{</span>address<span class="sc">.</span>replace(<span class="st">" "</span>, <span class="st">"+"</span>)<span class="sc">}</span><span class="ss">&amp;postcode=</span><span class="sc">{</span>postcode<span class="sc">}</span><span class="ss">'</span></span>
 <span id="cb6-6"><a href=""></a>req <span class="op">=</span> requests.get(url_ban_example)</span>
 <span id="cb6-7"><a href=""></a><span class="co"># req.json()</span></span>
 <span id="cb6-8"><a href=""></a>prop <span class="op">=</span> req.json().get(<span class="st">'features'</span>)[<span class="dv">0</span>].get(<span class="st">'properties'</span>) </span>
@@ -339,6 +339,7 @@
 <span id="cb6-34"><a href=""></a></span>
 <span id="cb6-35"><a href=""></a><span class="co"># m.fit_bounds([sw, ne])</span></span>
 <span id="cb6-36"><a href=""></a>m</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p>💡 <em>Note</em>: Si la carte ne s’affiche pas, tapez <code>Ctrl+Shift+P</code> puis <code>Jupyter: Trust Notebook</code> dans le prompt.</p>
 </section>
 <section class="slide level2">
 

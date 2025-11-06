@@ -126,7 +126,7 @@ df4.head() # observez le résultat...
 import requests
 
 postcode = 92120
-url_ban_example = f'https://api-adresse.data.gouv.fr/search/?q={adresse.replace(" ", "+")}&postcode={postcode}'
+url_ban_example = f'https://api-adresse.data.gouv.fr/search/?q={address.replace(" ", "+")}&postcode={postcode}'
 req = requests.get(url_ban_example)
 # req.json()
 prop = req.json().get('features')[0].get('properties') 
@@ -159,6 +159,8 @@ for i in range(0,len(gdf)):
 # m.fit_bounds([sw, ne])
 m
 ```
+
+💡 *Note*: Si la carte ne s'affiche pas, tapez `Ctrl+Shift+P` puis `Jupyter: Trust Notebook` dans le prompt.
 
 
 ---
