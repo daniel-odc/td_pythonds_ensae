@@ -218,7 +218,7 @@
 <div class="columns">
 <div class="column">
 <p><img data-src="./img/ml_00_100pagesMLBook.jpg" style="width:30.0%"></p>
-<p><a href="http://ema.cri-info.cm/wp-content/uploads/2019/07/2019BurkovTheHundred-pageMachineLearning.pdf">The Hundred-Page Machine Learning Book</a>. <br> Andriy BurkovAndriy Burkov</p>
+<p><a href="http://ema.cri-info.cm/wp-content/uploads/2019/07/2019BurkovTheHundred-pageMachineLearning.pdf">The Hundred-Page Machine Learning Book</a>. <br> Andriy Burkov</p>
 </div><div class="column">
 <p><img data-src="./img/ml_00_InterpretableMBook.jpg" style="width:30.0%"></p>
 <p><a href="https://christophm.github.io/interpretable-ml-book/">Interpretable Machine Learning</a>. <br> Christoph Molnar</p>
@@ -238,11 +238,12 @@ y = F_{\beta} (X)
 <li><span class="math inline">\(\beta\)</span>: Ensemble de paramètres à estimer</li>
 <li><span class="math inline">\(X\)</span>: <em>Variables</em> ou <em>features</em></li>
 </ul>
+<p><span class="math inline">\(X\)</span> et <span class="math inline">\(y\)</span> peuvent être des nombres réels, des catégories, des vecteurs, matrices, graphs etc.</p>
 </section>
 <section id="les-principaux-types-de-modèles-ml" class="slide level2">
 <h2>Les principaux types de modèles ML</h2>
 
-<img data-src="./img/ml_02_ScikitAlgoChoiceCheatsheet.svg" style="width:100.0%" class="r-stretch quarto-figure-center"><p class="caption">ML choice cheatsheet</p><ul>
+<img data-src="./img/ml_02_ScikitAlgoChoiceCheatsheet.png" style="width:100.0%" class="r-stretch quarto-figure-center"><p class="caption"><a href="https://scikit-learn.org/1.4/tutorial/machine_learning_map/index.html">source</a></p><ul>
 <li><strong>Supervisé</strong> : on connaît les labels (régression, classification).</li>
 <li><strong>Non-supervisé</strong> : pas de labels (clustering, réduction dimension).</li>
 <li><strong>Semi-supervisé / auto-supervisé</strong> : hybride.</li>
@@ -253,7 +254,7 @@ y = F_{\beta} (X)
 <h2>Exemples de modèles supervisé (1)</h2>
 <h3 id="les-régressions-linéaires-variables-continues">Les régressions linéaires (variables continues)</h3>
 
-<img data-src="./img/ml_linear_regression.png" class="r-stretch quarto-figure-center"><p class="caption">ML linear regression</p><ul>
+<img data-src="./img/ml_linear_regression.png" style="width:100.0%" class="r-stretch"><ul>
 <li>Modèle simple, interprétable : <span class="math inline">\(y = \beta_0 + \beta_1 x_1 + ...\)</span></li>
 <li>Hypothèse : relation linéaire entre features et output.</li>
 <li>Utilisation : prévisions, effets marginaux, tendances.</li>
@@ -264,7 +265,7 @@ y = F_{\beta} (X)
 <h2>Exemples de modèles supervisé (2)</h2>
 <h3 id="les-régressions-logistiques-variables-discrètes">Les régressions logistiques (variables discrètes)</h3>
 
-<img data-src="./img/ml_logistic_regression.jpg" class="r-stretch quarto-figure-center"><p class="caption">ML logisitc regression</p><ul>
+<img data-src="./img/ml_logistic_regression.jpg" style="width:100.0%" class="r-stretch"><ul>
 <li>Sortie = probabilité d’appartenir à une classe.</li>
 <li>Décision : <span class="math inline">\(p &gt; 0.5\)</span> → classe 1 (par défaut).</li>
 <li>Fonction logistique :<br>
@@ -276,7 +277,7 @@ y = F_{\beta} (X)
 <h2>Exemples de modèles non-supervisé (1)</h2>
 <h3 id="svm-support-vector-machine">SVM (Support Vector Machine)</h3>
 
-<img data-src="./img/ml_svm.png" style="width:100.0%" class="r-stretch quarto-figure-center"><p class="caption">ML SVM</p><ul>
+<img data-src="./img/ml_svm.png" style="width:100.0%" class="r-stretch"><ul>
 <li>Trouve l’hyperplan séparant au mieux les classes.</li>
 <li>Version non supervisée : One-Class SVM (détection anomalies).</li>
 <li>En classification : maximise la <em>marge</em> entre classes.</li>

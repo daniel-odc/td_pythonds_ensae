@@ -35,7 +35,7 @@ Utilisation de la bibliothèque [Scikit learn](https://scikit-learn.org/stable/i
 
 ![](./img/ml_00_100pagesMLBook.jpg){width="30%"}
 
-[The Hundred-Page Machine Learning Book](http://ema.cri-info.cm/wp-content/uploads/2019/07/2019BurkovTheHundred-pageMachineLearning.pdf). <br/> Andriy BurkovAndriy Burkov
+[The Hundred-Page Machine Learning Book](http://ema.cri-info.cm/wp-content/uploads/2019/07/2019BurkovTheHundred-pageMachineLearning.pdf). <br/> Andriy Burkov
 
 :::
 
@@ -67,10 +67,11 @@ $$
 - $\beta$: Ensemble de paramètres à estimer
 - $X$: *Variables* ou *features*
 
+$X$ et $y$ peuvent être des nombres réels, des catégories, des vecteurs, matrices, graphs etc.
 
 ## Les principaux types de modèles ML
 
-![ML choice cheatsheet](./img/ml_02_ScikitAlgoChoiceCheatsheet.svg){width="100%"}
+![[source](https://scikit-learn.org/1.4/tutorial/machine_learning_map/index.html)](./img/ml_02_ScikitAlgoChoiceCheatsheet.png){width="100%"}
 
 - **Supervisé** : on connaît les labels (régression, classification).
 - **Non-supervisé** : pas de labels (clustering, réduction dimension).
@@ -83,7 +84,7 @@ $$
 
 ### Les régressions linéaires (variables continues)
 
-![ML linear regression](./img/ml_linear_regression.png)
+![](./img/ml_linear_regression.png){width="100%"}
 
 - Modèle simple, interprétable : $y = \beta_0 + \beta_1 x_1 + ...$
 - Hypothèse : relation linéaire entre features et output.
@@ -98,7 +99,7 @@ $$
 
 ### Les régressions logistiques (variables discrètes)
 
-![ML logisitc regression](./img/ml_logistic_regression.jpg)
+![](./img/ml_logistic_regression.jpg){width="100%"}
 
 - Sortie = probabilité d’appartenir à une classe.
 - Décision : $p > 0.5$ → classe 1 (par défaut).
@@ -111,7 +112,7 @@ $$
 
 ### SVM (Support Vector Machine)
 
-![ML SVM](./img/ml_svm.png){width="100%"}
+![](./img/ml_svm.png){width="100%"}
 
 - Trouve l’hyperplan séparant au mieux les classes.
 - Version non supervisée : One-Class SVM (détection anomalies).
