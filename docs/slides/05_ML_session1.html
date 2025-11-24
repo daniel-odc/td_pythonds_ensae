@@ -254,24 +254,28 @@ y = F_{\beta} (X)
 <h2>Exemples de modèles supervisé (1)</h2>
 <h3 id="les-régressions-linéaires-variables-continues">Les régressions linéaires (variables continues)</h3>
 
-<img data-src="./img/ml_linear_regression.png" style="width:100.0%" class="r-stretch"><ul>
+<img data-src="./img/ml_linear_regression.png" style="width:100.0%" class="r-stretch"><p><br></p>
+<ul>
 <li>Modèle simple, interprétable : <span class="math inline">\(y = \beta_0 + \beta_1 x_1 + ...\)</span></li>
 <li>Hypothèse : relation linéaire entre features et output.</li>
 <li>Utilisation : prévisions, effets marginaux, tendances.</li>
 </ul>
+<p>==&gt; Estimation des paramètres <span class="math inline">\(\beta\)</span> par la méthode des <strong>moindres carrés</strong>.</p>
 <p>💡En économétrie, on se concentre sur l’estimation des <span class="math inline">\(\beta\)</span>, en ML donne plus d’importance à l’estimation de <span class="math inline">\(y\)</span>.</p>
 </section>
 <section id="exemples-de-modèles-supervisé-2" class="slide level2">
 <h2>Exemples de modèles supervisé (2)</h2>
 <h3 id="les-régressions-logistiques-variables-discrètes">Les régressions logistiques (variables discrètes)</h3>
 
-<img data-src="./img/ml_logistic_regression.jpg" style="width:100.0%" class="r-stretch"><ul>
+<img data-src="./img/ml_logistic_regression.jpg" style="width:100.0%" class="r-stretch"><p><br></p>
+<ul>
 <li>Sortie = probabilité d’appartenir à une classe.</li>
 <li>Décision : <span class="math inline">\(p &gt; 0.5\)</span> → classe 1 (par défaut).</li>
 <li>Fonction logistique :<br>
 <span class="math display">\[p = \frac{1}{1 + e^{-(\beta_0 + \beta X)}}\]</span></li>
 <li>Utilisation : scoring, détection fraude, détection mode de transport.</li>
 </ul>
+<p>==&gt; Estimation des paramètres <span class="math inline">\(\beta\)</span> par la méthode du <strong>maximum de vraisemblance</strong>.</p>
 </section>
 <section id="exemples-de-modèles-non-supervisé-1" class="slide level2">
 <h2>Exemples de modèles non-supervisé (1)</h2>
@@ -288,7 +292,8 @@ y = F_{\beta} (X)
 <h2>Exemples de modèles non-supervisé (2)</h2>
 <h3 id="k-means">K-means</h3>
 
-<img data-src="./img/ml_kmeans.png" style="width:100.0%" class="r-stretch quarto-figure-center"><p class="caption">ML Kmeans</p><ul>
+<img data-src="./img/ml_kmeans.png" style="width:100.0%" class="r-stretch"><p><br></p>
+<ul>
 <li>Algorithme de clustering le plus utilisé.</li>
 <li>Regroupe les points en K groupes en minimisant l’inertie.</li>
 <li>Sensible à l’échelle → standardisation recommandée.</li>
@@ -310,7 +315,8 @@ y = F_{\beta} (X)
 <h2>Exemple de modèle de Deep Learning</h2>
 <h3 id="réseaux-de-neurones">Réseaux de neurones</h3>
 
-<img data-src="./img/ml_neural_network.png" style="width:100.0%" class="r-stretch quarto-figure-center"><p class="caption">ML Neural Network</p><ul>
+<img data-src="./img/ml_neural_network.png" style="width:100.0%" class="r-stretch"><p><br></p>
+<ul>
 <li>Empilement de couches : entrée → couches cachées → sortie.</li>
 <li>Fonction d’activation : ReLU, Sigmoid, Tanh.</li>
 <li>Apprentissage par rétropropagation du gradient.</li>
@@ -321,10 +327,10 @@ y = F_{\beta} (X)
 <section id="les-différentes-étapes-de-la-modélisation" class="slide level2">
 <h2>Les différentes étapes de la modélisation</h2>
 <ul>
-<li>Préparation des données (la moins valorisée mais la plus importante, ~80% du temps passé)</li>
-<li>Application du modèle (entraîner, ajuster paramètres).</li>
-<li>Évaluation : mesurer précision + robustesse.</li>
-<li>Itération : améliorer features, modèle, hyperparamètres.</li>
+<li><em>Préparation des données</em> (la moins valorisée mais la plus importante, ~80% du temps passé)</li>
+<li><em>Application</em> du modèle (entraîner, ajuster paramètres).</li>
+<li><em>Évaluation</em> : mesurer précision + robustesse.</li>
+<li><em>Itération(s)</em> : améliorer features, modèle, hyperparamètres.</li>
 </ul>
 </section>
 <section id="étape-1---préparation-des-données" class="slide level2">

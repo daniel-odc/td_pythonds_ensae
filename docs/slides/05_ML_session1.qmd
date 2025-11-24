@@ -86,9 +86,13 @@ $X$ et $y$ peuvent être des nombres réels, des catégories, des vecteurs, matr
 
 ![](./img/ml_linear_regression.png){width="100%"}
 
+<br>
+
 - Modèle simple, interprétable : $y = \beta_0 + \beta_1 x_1 + ...$
 - Hypothèse : relation linéaire entre features et output.
 - Utilisation : prévisions, effets marginaux, tendances.
+
+==> Estimation des paramètres $\beta$ par la méthode des **moindres carrés**.
 
 💡En économétrie, on se concentre sur l'estimation des $\beta$, en ML donne plus d'importance à l'estimation de $y$.
 
@@ -101,12 +105,15 @@ $X$ et $y$ peuvent être des nombres réels, des catégories, des vecteurs, matr
 
 ![](./img/ml_logistic_regression.jpg){width="100%"}
 
+<br>
+
 - Sortie = probabilité d’appartenir à une classe.
 - Décision : $p > 0.5$ → classe 1 (par défaut).
 - Fonction logistique :  
   $$p = \frac{1}{1 + e^{-(\beta_0 + \beta X)}}$$
 - Utilisation : scoring, détection fraude, détection mode de transport.
 
+==> Estimation des paramètres $\beta$ par la méthode du **maximum de vraisemblance**.
 
 ## Exemples de modèles non-supervisé (1)
 
@@ -125,7 +132,9 @@ $X$ et $y$ peuvent être des nombres réels, des catégories, des vecteurs, matr
 
 ### K-means
 
-![ML Kmeans](./img/ml_kmeans.png){width="100%"}
+![](./img/ml_kmeans.png){width="100%"}
+
+<br>
 
 - Algorithme de clustering le plus utilisé.
 - Regroupe les points en K groupes en minimisant l’inertie.
@@ -149,7 +158,9 @@ $X$ et $y$ peuvent être des nombres réels, des catégories, des vecteurs, matr
 
 ### Réseaux de neurones
 
-![ML Neural Network](./img/ml_neural_network.png){width="100%"}
+![](./img/ml_neural_network.png){width="100%"}
+
+<br>
 
 - Empilement de couches : entrée → couches cachées → sortie.
 - Fonction d’activation : ReLU, Sigmoid, Tanh.
@@ -160,10 +171,10 @@ $X$ et $y$ peuvent être des nombres réels, des catégories, des vecteurs, matr
 
 ## Les différentes étapes de la modélisation
 
-- Préparation des données (la moins valorisée mais la plus importante, ~80% du temps passé)
-- Application du modèle (entraîner, ajuster paramètres).
-- Évaluation : mesurer précision + robustesse.
-- Itération : améliorer features, modèle, hyperparamètres.
+- *Préparation des données* (la moins valorisée mais la plus importante, ~80% du temps passé)
+- *Application* du modèle (entraîner, ajuster paramètres).
+- *Évaluation* : mesurer précision + robustesse.
+- *Itération(s)* : améliorer features, modèle, hyperparamètres.
 
 ## Étape 1 - Préparation des données
 
