@@ -9,7 +9,7 @@
 <link href="05_ML_session1_files/libs/quarto-html/quarto-syntax-highlighting-15ea27bac76f9890c21e80949f497921.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.8.24">
 
-  <title>quarto-inpute3282a9510189d3b</title>
+  <title>Python pour la data science</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -27,9 +27,73 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  background-color: #f8f8f8; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ef2929; } /* Alert */
+    code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #204a87; } /* Attribute */
+    code span.bn { color: #0000cf; } /* BaseN */
+    code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4e9a06; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #8f5902; font-style: italic; } /* Comment */
+    code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+    code span.dt { color: #204a87; } /* DataType */
+    code span.dv { color: #0000cf; } /* DecVal */
+    code span.er { color: #a40000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #0000cf; } /* Float */
+    code span.fu { color: #204a87; font-weight: bold; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+    code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+    code span.ot { color: #8f5902; } /* Other */
+    code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+    code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+    code span.ss { color: #4e9a06; } /* SpecialString */
+    code span.st { color: #4e9a06; } /* String */
+    code span.va { color: #000000; } /* Variable */
+    code span.vs { color: #4e9a06; } /* VerbatimString */
+    code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="05_ML_session1_files/libs/revealjs/dist/theme/quarto-9bacd3158296feb21eaa887ded9f5e13.css">
-  <link rel="stylesheet" href="slides.css">
+  <link rel="stylesheet" href="05_ML_session1_files/libs/revealjs/dist/theme/quarto-05bc1c7b0f255ae508ca6f1b5f99c4f8.css">
+  <link rel="stylesheet" href="slides.scss">
   <link href="05_ML_session1_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="05_ML_session1_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="05_ML_session1_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -128,12 +192,8 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title"><div>
-Python pour la data science TD 5 - Machine learning session 1
-</div>
-<div style="text-align:center;">
-<p><img src="./img/logo_XXX.png" style="height:100px; margin-right:10px;"></p>
-</div></h1>
+  <h1 class="title">Python pour la data science</h1>
+  <p class="subtitle">TD 5 - Machine learning session 1</p>
 
 <div class="quarto-title-authors">
 </div>
@@ -141,7 +201,746 @@ Python pour la data science TD 5 - Machine learning session 1
 </section>
 <section id="intro" class="slide level2">
 <h2>Intro</h2>
-<p>TODO</p>
+<ul>
+<li><code>Data engineering</code> vs <code>data science</code></li>
+<li><code>Machine Learning</code> vs <code>économétrie</code></li>
+<li><code>Machine Learning</code> (méthodes vues dans ce cours) vs <code>Deep Learning</code> (réseaux de neurones)</li>
+<li><code>Classification</code> vs <code>Régression</code></li>
+<li><code>Entraînement</code> vs <code>inférence</code></li>
+<li><code>Supervisé</code> vs non <code>supervisé</code></li>
+</ul>
+<p>Utilisation de la bibliothèque <a href="https://scikit-learn.org/stable/index.html">Scikit learn</a></p>
+<p><br></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="op">!</span>pip install scikit<span class="op">-</span>learn</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="références-pour-aller-plus-loin" class="slide level2">
+<h2>Références pour aller plus loin</h2>
+<div class="columns">
+<div class="column">
+<p><img data-src="./img/ml_00_100pagesMLBook.jpg" style="width:30.0%"></p>
+<p><a href="http://ema.cri-info.cm/wp-content/uploads/2019/07/2019BurkovTheHundred-pageMachineLearning.pdf">The Hundred-Page Machine Learning Book</a>. <br> Andriy BurkovAndriy Burkov</p>
+</div><div class="column">
+<p><img data-src="./img/ml_00_InterpretableMBook.jpg" style="width:30.0%"></p>
+<p><a href="https://christophm.github.io/interpretable-ml-book/">Interpretable Machine Learning</a>. <br> Christoph Molnar</p>
+</div><div class="column">
+<p><img data-src="./img/ml_00_HandsOnMLBook.jpg" style="width:30.0%"></p>
+<p><a href="https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/">Hands-On Machine Learning with Scikit-Learn, Keras &amp; TensorFlow</a>. <br> Aurélien Géron</p>
+</div></div>
+</section>
+<section id="définitions-et-notations" class="slide level2">
+<h2>Définitions et notations</h2>
+<p><span class="math display">\[
+y = F_{\beta} (X)
+\]</span></p>
+<ul>
+<li><span class="math inline">\(y\)</span>: <em>Observations</em> ou <em>labels</em></li>
+<li><span class="math inline">\(F\)</span>: Règle de décision</li>
+<li><span class="math inline">\(\beta\)</span>: Ensemble de paramètres à estimer</li>
+<li><span class="math inline">\(X\)</span>: <em>Variables</em> ou <em>features</em></li>
+</ul>
+</section>
+<section id="les-principaux-types-de-modèles-ml" class="slide level2">
+<h2>Les principaux types de modèles ML</h2>
+
+<img data-src="./img/ml_02_ScikitAlgoChoiceCheatsheet.svg" style="width:100.0%" class="r-stretch quarto-figure-center"><p class="caption">ML choice cheatsheet</p><ul>
+<li><strong>Supervisé</strong> : on connaît les labels (régression, classification).</li>
+<li><strong>Non-supervisé</strong> : pas de labels (clustering, réduction dimension).</li>
+<li><strong>Semi-supervisé / auto-supervisé</strong> : hybride.</li>
+<li><strong>Deep learning</strong> : modèles à structures neuronales profondes.</li>
+</ul>
+</section>
+<section id="exemples-de-modèles-supervisé-1" class="slide level2">
+<h2>Exemples de modèles supervisé (1)</h2>
+<h3 id="les-régressions-linéaires-variables-continues">Les régressions linéaires (variables continues)</h3>
+
+<img data-src="./img/ml_linear_regression.png" class="r-stretch quarto-figure-center"><p class="caption">ML linear regression</p><ul>
+<li>Modèle simple, interprétable : <span class="math inline">\(y = \beta_0 + \beta_1 x_1 + ...\)</span></li>
+<li>Hypothèse : relation linéaire entre features et output.</li>
+<li>Utilisation : prévisions, effets marginaux, tendances.</li>
+</ul>
+<p>💡En économétrie, on se concentre sur l’estimation des <span class="math inline">\(\beta\)</span>, en ML donne plus d’importance à l’estimation de <span class="math inline">\(y\)</span>.</p>
+</section>
+<section id="exemples-de-modèles-supervisé-2" class="slide level2">
+<h2>Exemples de modèles supervisé (2)</h2>
+<h3 id="les-régressions-logistiques-variables-discrètes">Les régressions logistiques (variables discrètes)</h3>
+
+<img data-src="./img/ml_logistic_regression.jpg" class="r-stretch quarto-figure-center"><p class="caption">ML logisitc regression</p><ul>
+<li>Sortie = probabilité d’appartenir à une classe.</li>
+<li>Décision : <span class="math inline">\(p &gt; 0.5\)</span> → classe 1 (par défaut).</li>
+<li>Fonction logistique :<br>
+<span class="math display">\[p = \frac{1}{1 + e^{-(\beta_0 + \beta X)}}\]</span></li>
+<li>Utilisation : scoring, détection fraude, détection mode de transport.</li>
+</ul>
+</section>
+<section id="exemples-de-modèles-non-supervisé-1" class="slide level2">
+<h2>Exemples de modèles non-supervisé (1)</h2>
+<h3 id="svm-support-vector-machine">SVM (Support Vector Machine)</h3>
+
+<img data-src="./img/ml_svm.png" style="width:100.0%" class="r-stretch quarto-figure-center"><p class="caption">ML SVM</p><ul>
+<li>Trouve l’hyperplan séparant au mieux les classes.</li>
+<li>Version non supervisée : One-Class SVM (détection anomalies).</li>
+<li>En classification : maximise la <em>marge</em> entre classes.</li>
+<li>Peut être linéaire ou non-linéaire (kernel trick).</li>
+</ul>
+</section>
+<section id="exemples-de-modèles-non-supervisé-2" class="slide level2">
+<h2>Exemples de modèles non-supervisé (2)</h2>
+<h3 id="k-means">K-means</h3>
+
+<img data-src="./img/ml_kmeans.png" style="width:100.0%" class="r-stretch quarto-figure-center"><p class="caption">ML Kmeans</p><ul>
+<li>Algorithme de clustering le plus utilisé.</li>
+<li>Regroupe les points en K groupes en minimisant l’inertie.</li>
+<li>Sensible à l’échelle → standardisation recommandée.</li>
+<li>Utilisation : segmentation clients, analyse patterns.</li>
+</ul>
+</section>
+<section id="exemples-de-modèles-non-supervisé-3" class="slide level2">
+<h2>Exemples de modèles non-supervisé (3)</h2>
+<h3 id="knn-k-neighrest-neighbours">KNN (K Neighrest Neighbours)</h3>
+
+<img data-src="./img/ml_knn.jpg" style="width:100.0%" class="r-stretch quarto-figure-center"><p class="caption"><a href="https://www.researchgate.net/figure/K-Nearest-Neighbors-KNN-model_fig4_382849084">source</a></p><ul>
+<li>Classification ou régression par proximité.</li>
+<li>Aucune hypothèse : basé sur la distance entre points.</li>
+<li>Paramètre clé : K (nombre de voisins).</li>
+<li>Souvent utilisé comme modèle de base / benchmark.</li>
+</ul>
+</section>
+<section id="exemple-de-modèle-de-deep-learning" class="slide level2">
+<h2>Exemple de modèle de Deep Learning</h2>
+<h3 id="réseaux-de-neurones">Réseaux de neurones</h3>
+
+<img data-src="./img/ml_neural_network.png" style="width:100.0%" class="r-stretch quarto-figure-center"><p class="caption">ML Neural Network</p><ul>
+<li>Empilement de couches : entrée → couches cachées → sortie.</li>
+<li>Fonction d’activation : ReLU, Sigmoid, Tanh.</li>
+<li>Apprentissage par rétropropagation du gradient.</li>
+<li>Très performant pour vision, texte, séries temporelles.</li>
+</ul>
+<p>💡Modèles utilisés pour un grand volume de données, dont on ne maitrise pas a priori les attributs. Rarement adaptés dans le cas de jeux de données Open Data.</p>
+</section>
+<section id="les-différentes-étapes-de-la-modélisation" class="slide level2">
+<h2>Les différentes étapes de la modélisation</h2>
+<ul>
+<li>Préparation des données (la moins valorisée mais la plus importante, ~80% du temps passé)</li>
+<li>Application du modèle (entraîner, ajuster paramètres).</li>
+<li>Évaluation : mesurer précision + robustesse.</li>
+<li>Itération : améliorer features, modèle, hyperparamètres.</li>
+</ul>
+</section>
+<section id="étape-1---préparation-des-données" class="slide level2">
+<h2>Étape 1 - Préparation des données</h2>
+<ul>
+<li>Nettoyer : gérer valeurs manquantes / aberrantes.</li>
+<li>Split : train / validation / test.</li>
+<li>Transformer : encodage (valeurs discrètes), normalisation, scaling (valeurs continues).</li>
+<li>Sélectionner : réduire la dimension, garder l’essentiel.</li>
+</ul>
+</section>
+<section id="étape-1---préparation-des-données-1" class="slide level2">
+<h2>Étape 1 - Préparation des données</h2>
+<h3 id="traitement-des-valeurs-manquantes-ou-aberrantes">Traitement des valeurs manquantes ou aberrantes</h3>
+<ul>
+<li>Méthodes : suppression / imputation.</li>
+<li>Détection d’outliers : IQR, z-score, isolation forest.</li>
+<li>Impact : un mauvais traitement ⇒ biais important.</li>
+</ul>
+</section>
+<section id="méthodes-dimputation-des-valeurs-manquantes" class="slide level2">
+<h2>Méthodes d’imputation des valeurs manquantes</h2>
+<ul>
+<li>suppression,</li>
+<li>imputation (moyenne (<code>mean</code>), médiane (<code>median</code>), valeur la plus fréquente (<code>most_frequent</code>), KNN).</li>
+</ul>
+<p><em>Exemple:</em> Classe <code>SimpleImputer</code> de <code>sklearn.impute</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">from</span> sklearn.impute <span class="im">import</span> SimpleImputer</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p><br></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-3"><a href=""></a><span class="im">from</span> sklearn.impute <span class="im">import</span> SimpleImputer</span>
+<span id="cb3-4"><a href=""></a></span>
+<span id="cb3-5"><a href=""></a><span class="co"># Exemple de dataset avec valeurs manquantes</span></span>
+<span id="cb3-6"><a href=""></a>data <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb3-7"><a href=""></a>    <span class="st">'Age'</span>: [<span class="dv">25</span>, <span class="dv">30</span>, np.nan, <span class="dv">35</span>, <span class="dv">40</span>],</span>
+<span id="cb3-8"><a href=""></a>    <span class="st">'Salaire'</span>: [<span class="dv">50000</span>, np.nan, <span class="dv">60000</span>, <span class="dv">70000</span>, np.nan],</span>
+<span id="cb3-9"><a href=""></a>    <span class="st">'Sexe'</span>: [<span class="st">'M'</span>, <span class="st">'F'</span>, <span class="st">'M'</span>, np.nan, <span class="st">'F'</span>]</span>
+<span id="cb3-10"><a href=""></a>})</span>
+<span id="cb3-11"><a href=""></a></span>
+<span id="cb3-12"><a href=""></a><span class="co"># Initialisation du SimpleImputer avec la stratégie "mean"</span></span>
+<span id="cb3-13"><a href=""></a>imputer_mean <span class="op">=</span> SimpleImputer(strategy<span class="op">=</span><span class="st">'mean'</span>)</span>
+<span id="cb3-14"><a href=""></a></span>
+<span id="cb3-15"><a href=""></a><span class="co"># Imputation des colonnes numériques</span></span>
+<span id="cb3-16"><a href=""></a>data[[<span class="st">'Age'</span>, <span class="st">'Salaire'</span>]] <span class="op">=</span> imputer_mean.fit_transform(data[[<span class="st">'Age'</span>, <span class="st">'Salaire'</span>]])</span>
+<span id="cb3-17"><a href=""></a></span>
+<span id="cb3-18"><a href=""></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Données après imputation des colonnes numériques (moyenne) :</span><span class="ch">\n</span><span class="sc">{</span>data<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="méthodes-de-détection-des-valeurs-aberrantes" class="slide level2">
+<h2>Méthodes de détection des valeurs aberrantes</h2>
+<ul>
+<li>Gestion des valeurs aberrantes (outliers): observations qui se situent significativement à l’extérieur de la tendance générale des autres observations dans un ensemble de données.</li>
+<li>Renvoie 1 pour les résultats «&nbsp;normaux&nbsp;», -1 pour les anomalies.</li>
+</ul>
+<p><em>Exemple:</em> Classe <code>IsolationForest</code> de <code>sklearn.ensemble</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> IsolationForest</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p><br></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> IsolationForest</span>
+<span id="cb5-2"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-3"><a href=""></a></span>
+<span id="cb5-4"><a href=""></a><span class="co"># # Exemple de données:</span></span>
+<span id="cb5-5"><a href=""></a>data <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb5-6"><a href=""></a>    <span class="st">'Feature1'</span>: [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">100</span>],</span>
+<span id="cb5-7"><a href=""></a>    <span class="st">'Feature2'</span>: [<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">100</span>]</span>
+<span id="cb5-8"><a href=""></a>})</span>
+<span id="cb5-9"><a href=""></a></span>
+<span id="cb5-10"><a href=""></a><span class="co"># # Initialisation:</span></span>
+<span id="cb5-11"><a href=""></a>iso_forest <span class="op">=</span> IsolationForest(contamination<span class="op">=</span><span class="fl">0.1</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb5-12"><a href=""></a></span>
+<span id="cb5-13"><a href=""></a><span class="co"># # Ajustement sur les données:</span></span>
+<span id="cb5-14"><a href=""></a>iso_forest.fit(data)</span>
+<span id="cb5-15"><a href=""></a></span>
+<span id="cb5-16"><a href=""></a><span class="co"># # Prédictions: -1 pour les anomalies, 1 pour les points valides</span></span>
+<span id="cb5-17"><a href=""></a>predictions <span class="op">=</span> iso_forest.predict(data)</span>
+<span id="cb5-18"><a href=""></a></span>
+<span id="cb5-19"><a href=""></a><span class="co"># # Score d'anomalie:</span></span>
+<span id="cb5-20"><a href=""></a>anomaly_score <span class="op">=</span> iso_forest.decision_function(data)</span>
+<span id="cb5-21"><a href=""></a></span>
+<span id="cb5-22"><a href=""></a><span class="co"># # Ajout du score au df:</span></span>
+<span id="cb5-23"><a href=""></a>data[<span class="st">'anomaly'</span>] <span class="op">=</span> predictions</span>
+<span id="cb5-24"><a href=""></a>data[<span class="st">'anomaly_score'</span>] <span class="op">=</span> anomaly_score</span>
+<span id="cb5-25"><a href=""></a></span>
+<span id="cb5-26"><a href=""></a><span class="bu">print</span>(data)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="étape-1---préparation-des-données-2" class="slide level2">
+<h2>Étape 1 - Préparation des données</h2>
+<h3 id="sélection-des-variables-dintérêt">Sélection des variables d’intérêt</h3>
+<ul>
+<li>Approches : corrélation, ANOVA, mutual information.</li>
+<li>Méthodes automatiques : RFE, Lasso.</li>
+<li>Objectif : réduire la dimension, éviter le surapprentissage (overfitting).</li>
+<li>Mieux vaut une feature de qualité que 100 features inutiles.</li>
+</ul>
+<p>TODO Add simple LASSO example</p>
+</section>
+<section id="étape-1---préparation-des-données-3" class="slide level2">
+<h2>Étape 1 - Préparation des données</h2>
+<h3 id="séparation-échantillons-de-test-et-de-validation">Séparation échantillons de test et de validation</h3>
+
+<img data-src="./img/ml_01_data_prep.png" class="r-stretch"></section>
+<section class="slide level2">
+
+<ul>
+<li>Split typique : 70% train / 15% validation / 15% test.</li>
+<li>Objectif : mesurer la performance hors échantillon.</li>
+<li>Utiliser <code>sklearn.train_test_split</code>.</li>
+<li>Le test final ne doit jamais servir à ajuster le modèle.</li>
+</ul>
+<p>Exemple d’application sur une régression linéaire:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="co"># # Séparation test / validation:</span></span>
+<span id="cb6-2"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb6-3"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb6-4"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb6-5"><a href=""></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb6-6"><a href=""></a></span>
+<span id="cb6-7"><a href=""></a><span class="co"># # 1. Génération de données synthétiques</span></span>
+<span id="cb6-8"><a href=""></a>np.random.seed(<span class="dv">42</span>)  <span class="co"># Pour reproductibilité</span></span>
+<span id="cb6-9"><a href=""></a>X <span class="op">=</span> np.random.rand(<span class="dv">100</span>, <span class="dv">1</span>) <span class="op">*</span> <span class="dv">10</span>  <span class="co"># Caractéristiques</span></span>
+<span id="cb6-10"><a href=""></a>y <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> X.flatten() <span class="op">+</span> <span class="dv">5</span> <span class="op">+</span> np.random.randn(<span class="dv">100</span>) <span class="op">*</span> <span class="dv">2</span>  <span class="co"># Cible avec un peu de bruit</span></span>
+<span id="cb6-11"><a href=""></a></span>
+<span id="cb6-12"><a href=""></a><span class="co"># # 2. Division des données en ensemble d'entraînement et de test</span></span>
+<span id="cb6-13"><a href=""></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb6-14"><a href=""></a></span>
+<span id="cb6-15"><a href=""></a><span class="co"># # 3. Création et entraînement du modèle de régression linéaire</span></span>
+<span id="cb6-16"><a href=""></a>model <span class="op">=</span> LinearRegression()</span>
+<span id="cb6-17"><a href=""></a>model.fit(X_train, y_train)</span>
+<span id="cb6-18"><a href=""></a></span>
+<span id="cb6-19"><a href=""></a><span class="co"># # 4. Prédictions</span></span>
+<span id="cb6-20"><a href=""></a>y_pred <span class="op">=</span> model.predict(X_test)</span>
+<span id="cb6-21"><a href=""></a></span>
+<span id="cb6-22"><a href=""></a><span class="co"># # 5. Visualisation des résultats</span></span>
+<span id="cb6-23"><a href=""></a>plt.scatter(X_test, y_test, color<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="st">"Données réelles"</span>)</span>
+<span id="cb6-24"><a href=""></a>plt.plot(X_test, y_pred, color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">"Prédictions du modèle"</span>)</span>
+<span id="cb6-25"><a href=""></a>plt.title(<span class="st">"Régression Linéaire avec Scikit-learn"</span>)</span>
+<span id="cb6-26"><a href=""></a>plt.legend()</span>
+<span id="cb6-27"><a href=""></a>plt.show()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="étape-1---préparation-des-données-4" class="slide level2">
+<h2>Étape 1 - Préparation des données</h2>
+<h3 id="standardisation-et-normalisation">Standardisation et normalisation</h3>
+<ul>
+<li><strong>Standardisation</strong> : centrer/réduire (moy=0, std=1).</li>
+<li><strong>Normalisation</strong> : mise à l’échelle [0,1].</li>
+<li>Indispensable pour : SVM, KNN, régressions régularisées.</li>
+<li>Utiliser <code>StandardScaler</code>, <code>MinMaxScaler</code> (scikit-learn).</li>
+</ul>
+<p>💡La standardisation et normalisation des variables permet entre autres:</p>
+<ul>
+<li><p>d’assurer une échelle cohérente entre variables et d’atténuer les effets de différences de magnitudes de valeurs (ex: variable en mètres avec grande variation vs variable en kg avec petite variation)</p></li>
+<li><p>D’accélérer la convergence des algorithmes d’optimisation.</p></li>
+</ul>
+<p>💡💡Les étapes de standardisation et normalisation doivent s’appliquer <strong>après découpe</strong> du jeu de données en un échantillon de test et un de validation.</p>
+</section>
+<section class="slide level2 scrollable">
+
+<ul>
+<li>Exemple de <strong>Standardisation</strong>:</li>
+</ul>
+<p>==&gt; 2 étapes:</p>
+<ol type="1">
+<li>Création d’un <em>scaler</em> calibré sur la donnée</li>
+<li>Application du <em>scaler</em> à la plage à standardiser</li>
+</ol>
+<p>💡la méthode <code>fit_transform</code> de <code>StandardScaler()</code> combine les deux operations de calibrage et application.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p><br></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="co">## Standardisation</span></span>
+<span id="cb8-2"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb8-3"><a href=""></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb8-4"><a href=""></a></span>
+<span id="cb8-5"><a href=""></a><span class="co"># # Exemple de données:</span></span>
+<span id="cb8-6"><a href=""></a>X <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">2</span>], [<span class="dv">3</span>, <span class="dv">4</span>], [<span class="dv">5</span>, <span class="dv">6</span>]])</span>
+<span id="cb8-7"><a href=""></a></span>
+<span id="cb8-8"><a href=""></a><span class="co"># # Création d'un scaler:</span></span>
+<span id="cb8-9"><a href=""></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb8-10"><a href=""></a></span>
+<span id="cb8-11"><a href=""></a><span class="co"># # Étape 1: Apprentissage</span></span>
+<span id="cb8-12"><a href=""></a>scaler.fit(X)</span>
+<span id="cb8-13"><a href=""></a><span class="bu">print</span>(<span class="ss">f'Moyenne: </span><span class="sc">{</span>scaler<span class="sc">.</span>mean_<span class="sc">}</span><span class="ss">'</span>)  <span class="co"># notez le ".mean_"</span></span>
+<span id="cb8-14"><a href=""></a><span class="bu">print</span>(<span class="ss">f'Écart type: </span><span class="sc">{</span>scaler<span class="sc">.</span>scale_<span class="sc">}</span><span class="ss">'</span>)  <span class="co"># notez le ".scale_"</span></span>
+<span id="cb8-15"><a href=""></a></span>
+<span id="cb8-16"><a href=""></a><span class="co"># # Étape 2: Transformation</span></span>
+<span id="cb8-17"><a href=""></a>X_scaled <span class="op">=</span> scaler.transform(X)</span>
+<span id="cb8-18"><a href=""></a><span class="bu">print</span>(<span class="ss">f'Données normalisées: </span><span class="sc">{</span>X_scaled<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb8-19"><a href=""></a></span>
+<span id="cb8-20"><a href=""></a><span class="co"># # Étape combinée: apprentissage + transformation:</span></span>
+<span id="cb8-21"><a href=""></a>X_scaled_combined <span class="op">=</span> scaler.fit_transform(X)</span>
+<span id="cb8-22"><a href=""></a><span class="bu">print</span>(<span class="ss">f'Données normalisées (fit_transform): </span><span class="sc">{</span>X_scaled_combined<span class="sc">}</span><span class="ss">'</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section class="slide level2">
+
+<ul>
+<li>Exemple de <strong>Normalisation</strong>:</li>
+</ul>
+<p>==&gt; transformation des données de manière à obtenir une norme unitaire.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> Normalizer</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p><br></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a><span class="co"># # Normalisation:</span></span>
+<span id="cb10-2"><a href=""></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> Normalizer</span>
+<span id="cb10-3"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-4"><a href=""></a></span>
+<span id="cb10-5"><a href=""></a><span class="co"># # Exemple de données:</span></span>
+<span id="cb10-6"><a href=""></a>X <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">2</span>], [<span class="dv">3</span>, <span class="dv">4</span>], [<span class="dv">5</span>, <span class="dv">6</span>]])</span>
+<span id="cb10-7"><a href=""></a></span>
+<span id="cb10-8"><a href=""></a><span class="co"># # Instanciation du normaliseur:</span></span>
+<span id="cb10-9"><a href=""></a>normalizer <span class="op">=</span> Normalizer(norm<span class="op">=</span><span class="st">'l2'</span>)</span>
+<span id="cb10-10"><a href=""></a></span>
+<span id="cb10-11"><a href=""></a><span class="co"># # Calibration sur la donnée:</span></span>
+<span id="cb10-12"><a href=""></a>normalizer.fit(X)</span>
+<span id="cb10-13"><a href=""></a></span>
+<span id="cb10-14"><a href=""></a><span class="co"># # Application à la donnée:</span></span>
+<span id="cb10-15"><a href=""></a>X_normalized <span class="op">=</span> normalizer.transform(X)</span>
+<span id="cb10-16"><a href=""></a><span class="bu">print</span>(<span class="ss">f'X_normalized:</span><span class="ch">\n</span><span class="sc">{</span>X_normalized<span class="sc">}</span><span class="ss">'</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="étape-1---préparation-des-données-5" class="slide level2">
+<h2>Étape 1 - Préparation des données</h2>
+<h3 id="encodage-des-valeurs-discrètes">Encodage des valeurs discrètes</h3>
+<p>==&gt; Les données catégorielles doivent être recodées sous forme de valeurs numériques pour être intégrés aux modèles de machine learning.</p>
+<ul>
+<li>Encodage one-hot (<code>pd.get_dummies</code>, <code>OneHotEncoder</code>).</li>
+<li>OrdinalEncoder si ordre naturel.</li>
+<li>Attention au <em>curse of dimensionality</em> si trop de catégories.</li>
+<li>Astuce : grouper les catégories rares.</li>
+</ul>
+<p>Méthode <code>One Hot Encoding</code>: ==&gt; créer une colonne par valeur de variable catégorielle avec des 0 ou 1 en valeur.</p>
+
+<img data-src="./img/ml_one_hot_encoding.png" style="width:100.0%" class="r-stretch"></section>
+<section class="slide level2">
+
+<ul>
+<li>Exemple d’<strong>encodage</strong> de valeurs catégorielles:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href=""></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OrdinalEncoder</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p><br></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href=""></a><span class="co"># # OneHotEncoder:</span></span>
+<span id="cb12-2"><a href=""></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OrdinalEncoder</span>
+<span id="cb12-3"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb12-4"><a href=""></a></span>
+<span id="cb12-5"><a href=""></a><span class="co"># # Exemple de données catégorielles:</span></span>
+<span id="cb12-6"><a href=""></a>data <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb12-7"><a href=""></a>    <span class="st">'couleur'</span>: [<span class="st">'rouge'</span>, <span class="st">'bleu'</span>, <span class="st">'vert'</span>, <span class="st">'rouge'</span>, <span class="st">'bleu'</span>],</span>
+<span id="cb12-8"><a href=""></a>    <span class="st">'taille'</span>: [<span class="st">'petit'</span>, <span class="st">'grand'</span>, <span class="st">'moyen'</span>, <span class="st">'petit'</span>, <span class="st">'moyen'</span>]</span>
+<span id="cb12-9"><a href=""></a>})</span>
+<span id="cb12-10"><a href=""></a></span>
+<span id="cb12-11"><a href=""></a><span class="co"># # Instanciation du OrdinalEncoder:</span></span>
+<span id="cb12-12"><a href=""></a>ordinal_encoder <span class="op">=</span> OrdinalEncoder()</span>
+<span id="cb12-13"><a href=""></a></span>
+<span id="cb12-14"><a href=""></a><span class="co"># # Transformation:</span></span>
+<span id="cb12-15"><a href=""></a>encoded_data <span class="op">=</span> ordinal_encoder.fit_transform(data)</span>
+<span id="cb12-16"><a href=""></a></span>
+<span id="cb12-17"><a href=""></a><span class="bu">print</span>(<span class="ss">f'Données encodées:</span><span class="ch">\n</span><span class="sc">{</span>encoded_data<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb12-18"><a href=""></a><span class="bu">print</span>(<span class="st">'Mapping des catégories:'</span>)</span>
+<span id="cb12-19"><a href=""></a><span class="cf">for</span> i, cat <span class="kw">in</span> <span class="bu">enumerate</span>(ordinal_encoder.categories_):</span>
+<span id="cb12-20"><a href=""></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="ch">\t</span><span class="ss">Feature "</span><span class="sc">{</span>data<span class="sc">.</span>columns[i]<span class="sc">}</span><span class="ss">": </span><span class="sc">{</span>cat<span class="sc">}</span><span class="ss">'</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="étape-2---application-du-modèle" class="slide level2">
+<h2>Étape 2 - Application du modèle</h2>
+<h3 id="application-modèle-régression-linéaire">Application modèle Régression Linéaire</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href=""></a><span class="co"># # Regression Linéaire:</span></span>
+<span id="cb13-2"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb13-3"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt </span>
+<span id="cb13-4"><a href=""></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb13-5"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb13-6"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, r2_score</span>
+<span id="cb13-7"><a href=""></a></span>
+<span id="cb13-8"><a href=""></a><span class="co"># # 1. Génération de données synthétiques</span></span>
+<span id="cb13-9"><a href=""></a>X <span class="op">=</span> np.random.rand(<span class="dv">100</span>, <span class="dv">1</span>) <span class="op">*</span> <span class="dv">10</span>  <span class="co"># Caractéristiques</span></span>
+<span id="cb13-10"><a href=""></a>y <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> X.flatten() <span class="op">+</span> <span class="dv">5</span> <span class="op">+</span> np.random.randn(<span class="dv">100</span>) <span class="op">*</span> <span class="dv">2</span>  <span class="co"># Cible avec un peu de bruit</span></span>
+<span id="cb13-11"><a href=""></a></span>
+<span id="cb13-12"><a href=""></a><span class="co"># # 2. Division des données en ensemble d'entraînement et de test</span></span>
+<span id="cb13-13"><a href=""></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb13-14"><a href=""></a></span>
+<span id="cb13-15"><a href=""></a><span class="co"># # 3. Création et entraînement du modèle de régression linéaire</span></span>
+<span id="cb13-16"><a href=""></a>model <span class="op">=</span> LinearRegression()</span>
+<span id="cb13-17"><a href=""></a>model.fit(X_train, y_train)</span>
+<span id="cb13-18"><a href=""></a></span>
+<span id="cb13-19"><a href=""></a><span class="co"># # 4. Prédictions</span></span>
+<span id="cb13-20"><a href=""></a>y_pred <span class="op">=</span> model.predict(X_test)</span>
+<span id="cb13-21"><a href=""></a></span>
+<span id="cb13-22"><a href=""></a><span class="co"># # 5. Évaluation du modèle</span></span>
+<span id="cb13-23"><a href=""></a>mse <span class="op">=</span> mean_squared_error(y_test, y_pred)</span>
+<span id="cb13-24"><a href=""></a>r2 <span class="op">=</span> r2_score(y_test, y_pred)</span>
+<span id="cb13-25"><a href=""></a></span>
+<span id="cb13-26"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Erreur quadratique moyenne (MSE): </span><span class="sc">{</span>mse<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb13-27"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Score R²: </span><span class="sc">{</span>r2<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb13-28"><a href=""></a></span>
+<span id="cb13-29"><a href=""></a><span class="co"># # 6. Visualisation des résultats</span></span>
+<span id="cb13-30"><a href=""></a>plt.scatter(X_test, y_test, color<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="st">"Données réelles"</span>)</span>
+<span id="cb13-31"><a href=""></a>plt.plot(X_test, y_pred, color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">"Prédictions du modèle"</span>)</span>
+<span id="cb13-32"><a href=""></a>plt.xlabel(<span class="st">"X"</span>)</span>
+<span id="cb13-33"><a href=""></a>plt.ylabel(<span class="st">"y"</span>)</span>
+<span id="cb13-34"><a href=""></a>plt.title(<span class="st">"Régression Linéaire avec Scikit-learn"</span>)</span>
+<span id="cb13-35"><a href=""></a>plt.legend()</span>
+<span id="cb13-36"><a href=""></a>plt.show()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="étape-2---application-du-modèle-1" class="slide level2">
+<h2>Étape 2 - Application du modèle</h2>
+<h3 id="application-modèle-régression-logistique">Application modèle Régression Logistique</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href=""></a><span class="co"># # Régression logistique:</span></span>
+<span id="cb14-2"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb14-3"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb14-4"><a href=""></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_classification</span>
+<span id="cb14-5"><a href=""></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb14-6"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb14-7"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, confusion_matrix, classification_report, RocCurveDisplay</span>
+<span id="cb14-8"><a href=""></a></span>
+<span id="cb14-9"><a href=""></a><span class="co"># # 1. Génération de données synthétiques</span></span>
+<span id="cb14-10"><a href=""></a>X, y <span class="op">=</span> make_classification(</span>
+<span id="cb14-11"><a href=""></a>    n_samples<span class="op">=</span><span class="dv">200</span>,  <span class="co"># Nombre d'exemples</span></span>
+<span id="cb14-12"><a href=""></a>    n_features<span class="op">=</span><span class="dv">2</span>,   <span class="co"># Nombre de caractéristiques</span></span>
+<span id="cb14-13"><a href=""></a>    n_informative<span class="op">=</span><span class="dv">2</span>, <span class="co"># Caractéristiques pertinentes</span></span>
+<span id="cb14-14"><a href=""></a>    n_redundant<span class="op">=</span><span class="dv">0</span>,  <span class="co"># Aucune caractéristique redondante</span></span>
+<span id="cb14-15"><a href=""></a>    n_clusters_per_class<span class="op">=</span><span class="dv">1</span>,  <span class="co"># Un cluster par classe</span></span>
+<span id="cb14-16"><a href=""></a>    class_sep<span class="op">=</span><span class="fl">2.0</span>,  <span class="co"># Séparation entre les classes</span></span>
+<span id="cb14-17"><a href=""></a>    random_state<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb14-18"><a href=""></a>)</span>
+<span id="cb14-19"><a href=""></a></span>
+<span id="cb14-20"><a href=""></a><span class="co"># # 2. Division des données en ensemble d'entraînement et de test</span></span>
+<span id="cb14-21"><a href=""></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb14-22"><a href=""></a></span>
+<span id="cb14-23"><a href=""></a></span>
+<span id="cb14-24"><a href=""></a></span>
+<span id="cb14-25"><a href=""></a><span class="co"># # 3. Création et entraînement du modèle de régression logistique</span></span>
+<span id="cb14-26"><a href=""></a>model <span class="op">=</span> LogisticRegression()</span>
+<span id="cb14-27"><a href=""></a>model.fit(X_train, y_train)</span>
+<span id="cb14-28"><a href=""></a></span>
+<span id="cb14-29"><a href=""></a><span class="co"># # 4. Prédictions</span></span>
+<span id="cb14-30"><a href=""></a>y_pred <span class="op">=</span> model.predict(X_test)</span>
+<span id="cb14-31"><a href=""></a></span>
+<span id="cb14-32"><a href=""></a><span class="co"># # 5. Évaluation du modèle</span></span>
+<span id="cb14-33"><a href=""></a>accuracy <span class="op">=</span> accuracy_score(y_test, y_pred)</span>
+<span id="cb14-34"><a href=""></a>conf_matrix <span class="op">=</span> confusion_matrix(y_test, y_pred)</span>
+<span id="cb14-35"><a href=""></a></span>
+<span id="cb14-36"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Précision (Accuracy) : </span><span class="sc">{</span>accuracy<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb14-37"><a href=""></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Matrice de confusion :"</span>)</span>
+<span id="cb14-38"><a href=""></a><span class="bu">print</span>(conf_matrix)</span>
+<span id="cb14-39"><a href=""></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Rapport de classification :"</span>)</span>
+<span id="cb14-40"><a href=""></a><span class="bu">print</span>(classification_report(y_test, y_pred))</span>
+<span id="cb14-41"><a href=""></a></span>
+<span id="cb14-42"><a href=""></a><span class="co"># # 6. Visualisation des données et de la frontière de décision</span></span>
+<span id="cb14-43"><a href=""></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb14-44"><a href=""></a><span class="co"># # Meshgrid pour la visualisation</span></span>
+<span id="cb14-45"><a href=""></a>x_min, x_max <span class="op">=</span> X[:, <span class="dv">0</span>].<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, X[:, <span class="dv">0</span>].<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb14-46"><a href=""></a>y_min, y_max <span class="op">=</span> X[:, <span class="dv">1</span>].<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, X[:, <span class="dv">1</span>].<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb14-47"><a href=""></a>xx, yy <span class="op">=</span> np.meshgrid(np.arange(x_min, x_max, <span class="fl">0.1</span>),</span>
+<span id="cb14-48"><a href=""></a>                     np.arange(y_min, y_max, <span class="fl">0.1</span>))</span>
+<span id="cb14-49"><a href=""></a>Z <span class="op">=</span> model.predict(np.c_[xx.ravel(), yy.ravel()]).reshape(xx.shape)</span>
+<span id="cb14-50"><a href=""></a></span>
+<span id="cb14-51"><a href=""></a><span class="co"># # Contour de la frontière de décision</span></span>
+<span id="cb14-52"><a href=""></a>plt.contourf(xx, yy, Z, alpha<span class="op">=</span><span class="fl">0.8</span>, cmap<span class="op">=</span>plt.cm.Paired)</span>
+<span id="cb14-53"><a href=""></a></span>
+<span id="cb14-54"><a href=""></a><span class="co"># # Points de données</span></span>
+<span id="cb14-55"><a href=""></a>plt.scatter(X[:, <span class="dv">0</span>], X[:, <span class="dv">1</span>], c<span class="op">=</span>y, edgecolor<span class="op">=</span><span class="st">'k'</span>, cmap<span class="op">=</span>plt.cm.Paired)</span>
+<span id="cb14-56"><a href=""></a>plt.title(<span class="st">"Régression Logistique - Frontière de Décision"</span>)</span>
+<span id="cb14-57"><a href=""></a>plt.xlabel(<span class="st">"Caractéristique 1"</span>)</span>
+<span id="cb14-58"><a href=""></a>plt.ylabel(<span class="st">"Caractéristique 2"</span>)</span>
+<span id="cb14-59"><a href=""></a>plt.show()</span>
+<span id="cb14-60"><a href=""></a></span>
+<span id="cb14-61"><a href=""></a><span class="co"># # 7. Courbe ROC</span></span>
+<span id="cb14-62"><a href=""></a>RocCurveDisplay.from_estimator(model, X_test, y_test)</span>
+<span id="cb14-63"><a href=""></a>plt.show()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="étape-3---évaluation-de-la-qualité-du-modèle" class="slide level2">
+<h2>Étape 3 - Évaluation de la qualité du modèle</h2>
+<ul>
+<li>Dans le cas supervisé pour variables continues / discrètes</li>
+<li>Dans le cas non-supervisé</li>
+</ul>
+</section>
+<section id="étape-3---évaluation-de-la-qualité-du-modèle-1" class="slide level2">
+<h2>Étape 3 - Évaluation de la qualité du modèle</h2>
+<ul>
+<li>Différente selon type : régression, classification, clustering.</li>
+<li>Toujours comparer : <em>train</em> vs <em>validation</em> vs <em>test</em>.</li>
+<li>Surapprentissage : modèle trop complexe → mauvaise généralisation.</li>
+<li>Utiliser courbes d’apprentissage pour diagnostiquer.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="cas-supervisé---variables-continues">Cas supervisé - variables continues</h3>
+<p>Attention au risque d’<strong>Overfitting</strong>!</p>
+<p>Métriques appliquées = métriques des analyses de moindre carrés.</p>
+
+<img data-src="./img/ml_model_validation_linear_regression.png" style="width:100.0%" class="r-stretch"></section>
+<section class="slide level2">
+
+<p>Exemple d’analyse de qualité d’un modèle de régression <strong>linéaire</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, </span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p><br></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb16-2"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb16-3"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb16-4"><a href=""></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb16-5"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, r2_score</span>
+<span id="cb16-6"><a href=""></a></span>
+<span id="cb16-7"><a href=""></a><span class="co"># 1. Génération de données synthétiques</span></span>
+<span id="cb16-8"><a href=""></a>np.random.seed(<span class="dv">42</span>)  <span class="co"># Pour reproductibilité</span></span>
+<span id="cb16-9"><a href=""></a>X <span class="op">=</span> np.random.rand(<span class="dv">100</span>, <span class="dv">1</span>) <span class="op">*</span> <span class="dv">10</span>  <span class="co"># Caractéristiques</span></span>
+<span id="cb16-10"><a href=""></a>y <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> X.flatten() <span class="op">+</span> <span class="dv">5</span> <span class="op">+</span> np.random.randn(<span class="dv">100</span>) <span class="op">*</span> <span class="dv">2</span>  <span class="co"># Cible avec un peu de bruit</span></span>
+<span id="cb16-11"><a href=""></a></span>
+<span id="cb16-12"><a href=""></a><span class="co"># 2. Division des données en ensemble d'entraînement et de test</span></span>
+<span id="cb16-13"><a href=""></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb16-14"><a href=""></a></span>
+<span id="cb16-15"><a href=""></a><span class="co"># 3. Création et entraînement du modèle de régression linéaire</span></span>
+<span id="cb16-16"><a href=""></a>model <span class="op">=</span> LinearRegression()</span>
+<span id="cb16-17"><a href=""></a>model.fit(X_train, y_train)</span>
+<span id="cb16-18"><a href=""></a></span>
+<span id="cb16-19"><a href=""></a><span class="co"># 4. Prédictions</span></span>
+<span id="cb16-20"><a href=""></a>y_pred <span class="op">=</span> model.predict(X_test)</span>
+<span id="cb16-21"><a href=""></a></span>
+<span id="cb16-22"><a href=""></a><span class="co"># 5. Évaluation du modèle</span></span>
+<span id="cb16-23"><a href=""></a>mse <span class="op">=</span> mean_squared_error(y_test, y_pred)</span>
+<span id="cb16-24"><a href=""></a>r2 <span class="op">=</span> r2_score(y_test, y_pred)</span>
+<span id="cb16-25"><a href=""></a></span>
+<span id="cb16-26"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Erreur quadratique moyenne (MSE): </span><span class="sc">{</span>mse<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb16-27"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Score R²: </span><span class="sc">{</span>r2<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb16-28"><a href=""></a></span>
+<span id="cb16-29"><a href=""></a><span class="co"># 6. Visualisation des résultats</span></span>
+<span id="cb16-30"><a href=""></a>plt.scatter(X_test, y_test, color<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="st">"Données réelles"</span>)</span>
+<span id="cb16-31"><a href=""></a>plt.plot(X_test, y_pred, color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">"Prédictions du modèle"</span>)</span>
+<span id="cb16-32"><a href=""></a>plt.xlabel(<span class="st">"X"</span>)</span>
+<span id="cb16-33"><a href=""></a>plt.ylabel(<span class="st">"y"</span>)</span>
+<span id="cb16-34"><a href=""></a>plt.title(<span class="st">"Régression Linéaire avec Scikit-learn"</span>)</span>
+<span id="cb16-35"><a href=""></a>plt.legend()</span>
+<span id="cb16-36"><a href=""></a>plt.show()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section class="slide level2">
+
+<h3 id="cas-supervisé---variables-discrètes">Cas supervisé - variables discrètes</h3>
+<p>Matrices de confusion:</p>
+
+<img data-src="./img/ml_model_validation_logistic_regression.png" style="width:100.0%" class="r-stretch"><table class="caption-top">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 41%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Terme</th>
+<th>Définition</th>
+<th>Formulation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Exactitude (<strong>Accuracy</strong>)</td>
+<td>Proportion de prédictions correctes</td>
+<td><span class="math inline">\(𝑎𝑐𝑐=\frac{(𝑉𝑃+𝑉𝑁)}{𝑇𝑜𝑡𝑎𝑙}\)</span></td>
+</tr>
+<tr class="even">
+<td>Précision (<strong>Precision</strong>)</td>
+<td>Proportion de vrais positifs parmi tous les positifs prédits</td>
+<td><span class="math inline">\(𝑝𝑟𝑒𝑐=\frac{𝑉𝑃}{(𝑉𝑃 + 𝐹𝑃)}\)</span></td>
+</tr>
+<tr class="odd">
+<td>Rappel (<strong>Recall</strong>) ou Sensibilité</td>
+<td>Proportion de vrais positifs parmi tous les positifs réels</td>
+<td><span class="math inline">\(𝑟𝑒𝑐=\frac{𝑉𝑃}{(𝑉𝑃+ 𝐹𝑁)}\)</span></td>
+</tr>
+<tr class="even">
+<td><strong>F1-Score</strong></td>
+<td>Moyenne harmonique entre précision et rappel</td>
+<td><span class="math inline">\(𝑓1_{𝑠𝑐𝑜𝑟𝑒}=2∗\frac{(𝑝𝑟𝑒𝑐 ∗𝑟𝑒𝑐)}{(𝑝𝑟𝑒𝑐+𝑟𝑒𝑐)}\)</span></td>
+</tr>
+<tr class="odd">
+<td><strong>Spécificité</strong></td>
+<td>Proportion de vrais négatifs parmi tous les négatifs réels</td>
+<td><span class="math inline">\(𝑠𝑝𝑒𝑐=\frac{𝑉𝑁}{(𝑉𝑁+𝐹𝑃)}\)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="slide level2">
+
+<p>Exemple d’analyse de qualité d’un modèle de régression <strong>logistique</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix, classification_report </span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p><br></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href=""></a><span class="co"># # Évaluer la qualité d'un modèle: régression logistique:</span></span>
+<span id="cb18-2"><a href=""></a></span>
+<span id="cb18-3"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix, classification_report</span>
+<span id="cb18-4"><a href=""></a></span>
+<span id="cb18-5"><a href=""></a><span class="co"># # Valeurs réelles et prédictions du modèle:</span></span>
+<span id="cb18-6"><a href=""></a>y_true <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>]  <span class="co"># 1 = Spam, 0 = Non Spam</span></span>
+<span id="cb18-7"><a href=""></a>y_pred <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>]</span>
+<span id="cb18-8"><a href=""></a></span>
+<span id="cb18-9"><a href=""></a><span class="co"># # Génération de la matrice de confusion:</span></span>
+<span id="cb18-10"><a href=""></a>cm <span class="op">=</span> confusion_matrix(y_true, y_pred)</span>
+<span id="cb18-11"><a href=""></a></span>
+<span id="cb18-12"><a href=""></a><span class="bu">print</span>(<span class="ss">f'Matrice de confusion:</span><span class="ch">\n</span><span class="sc">{</span>cm<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb18-13"><a href=""></a></span>
+<span id="cb18-14"><a href=""></a><span class="co"># # Rapport de classification (précision, rappel, F1-score)</span></span>
+<span id="cb18-15"><a href=""></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Rapport de classification :</span><span class="ch">\n</span><span class="sc">{</span>classification_report(y_true, y_pred)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="application" class="slide level2">
+<h2>Application</h2>
+<p>Analyse des résultats des élections US 2020.</p>
+<summary>
+Code complet de récupération des données:
+</summary>
+<details>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href=""></a><span class="im">import</span> urllib</span>
+<span id="cb19-2"><a href=""></a><span class="im">import</span> urllib.request</span>
+<span id="cb19-3"><a href=""></a><span class="im">import</span> os</span>
+<span id="cb19-4"><a href=""></a><span class="im">import</span> zipfile</span>
+<span id="cb19-5"><a href=""></a><span class="im">from</span> urllib.request <span class="im">import</span> Request, urlopen</span>
+<span id="cb19-6"><a href=""></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb19-7"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb19-8"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb19-9"><a href=""></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb19-10"><a href=""></a></span>
+<span id="cb19-11"><a href=""></a></span>
+<span id="cb19-12"><a href=""></a><span class="kw">def</span> download_url(url, save_path):</span>
+<span id="cb19-13"><a href=""></a>    <span class="cf">with</span> urllib.request.urlopen(url) <span class="im">as</span> dl_file:</span>
+<span id="cb19-14"><a href=""></a>        <span class="cf">with</span> <span class="bu">open</span>(save_path, <span class="st">"wb"</span>) <span class="im">as</span> out_file:</span>
+<span id="cb19-15"><a href=""></a>            out_file.write(dl_file.read())</span>
+<span id="cb19-16"><a href=""></a></span>
+<span id="cb19-17"><a href=""></a></span>
+<span id="cb19-18"><a href=""></a><span class="kw">def</span> create_votes_dataframes():</span>
+<span id="cb19-19"><a href=""></a>    </span>
+<span id="cb19-20"><a href=""></a>    Path(<span class="st">"data"</span>).mkdir(parents<span class="op">=</span><span class="va">True</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-21"><a href=""></a></span>
+<span id="cb19-22"><a href=""></a>    <span class="co"># Backup de "https://www2.census.gov/geo/tiger/GENZ2019/shp/cb_2019_us_county_20m.zip",</span></span>
+<span id="cb19-23"><a href=""></a>    download_url(</span>
+<span id="cb19-24"><a href=""></a>        <span class="st">"https://minio.lab.sspcloud.fr/lgaliana/data/python-ENSAE/shapefile_county_us_2019.zip"</span>,</span>
+<span id="cb19-25"><a href=""></a>        <span class="st">"data/shapefile"</span>,</span>
+<span id="cb19-26"><a href=""></a>    )</span>
+<span id="cb19-27"><a href=""></a></span>
+<span id="cb19-28"><a href=""></a>    <span class="cf">with</span> zipfile.ZipFile(<span class="st">"data/shapefile"</span>, <span class="st">"r"</span>) <span class="im">as</span> zip_ref:</span>
+<span id="cb19-29"><a href=""></a>        zip_ref.extractall(<span class="st">"data/counties"</span>)</span>
+<span id="cb19-30"><a href=""></a></span>
+<span id="cb19-31"><a href=""></a>    shp <span class="op">=</span> gpd.read_file(<span class="st">"data/counties/cb_2019_us_county_20m.shp"</span>)</span>
+<span id="cb19-32"><a href=""></a>    shp <span class="op">=</span> shp[<span class="op">~</span>shp[<span class="st">"STATEFP"</span>].isin([<span class="st">"02"</span>, <span class="st">"69"</span>, <span class="st">"66"</span>, <span class="st">"78"</span>, <span class="st">"60"</span>, <span class="st">"72"</span>, <span class="st">"15"</span>])]</span>
+<span id="cb19-33"><a href=""></a>    shp</span>
+<span id="cb19-34"><a href=""></a></span>
+<span id="cb19-35"><a href=""></a>    df_election <span class="op">=</span> pd.read_csv(</span>
+<span id="cb19-36"><a href=""></a>        <span class="st">"https://raw.githubusercontent.com/tonmcg/US_County_Level_Election_Results_08-20/master/2020_US_County_Level_Presidential_Results.csv"</span></span>
+<span id="cb19-37"><a href=""></a>    )</span>
+<span id="cb19-38"><a href=""></a>    df_election.head(<span class="dv">2</span>)</span>
+<span id="cb19-39"><a href=""></a>    population <span class="op">=</span> pd.read_excel(</span>
+<span id="cb19-40"><a href=""></a>        <span class="st">"https://ers.usda.gov/sites/default/files/_laserfiche/DataFiles/48747/PopulationEstimates.xlsx?v=85724"</span>,</span>
+<span id="cb19-41"><a href=""></a>        header<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb19-42"><a href=""></a>    ).rename(columns<span class="op">=</span>{<span class="st">"FIPStxt"</span>: <span class="st">"FIPS"</span>})</span>
+<span id="cb19-43"><a href=""></a>    education <span class="op">=</span> pd.read_excel(</span>
+<span id="cb19-44"><a href=""></a>        <span class="st">"https://ers.usda.gov/sites/default/files/_laserfiche/DataFiles/48747/Education.xlsx?v=34502"</span>,</span>
+<span id="cb19-45"><a href=""></a>        header<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb19-46"><a href=""></a>    ).rename(columns<span class="op">=</span>{<span class="st">"FIPS Code"</span>: <span class="st">"FIPS"</span>, <span class="st">"Area name"</span>: <span class="st">"Area_Name"</span>})</span>
+<span id="cb19-47"><a href=""></a>    unemployment <span class="op">=</span> pd.read_excel(</span>
+<span id="cb19-48"><a href=""></a>        <span class="st">"https://ers.usda.gov/sites/default/files/_laserfiche/DataFiles/48747/Unemployment.xlsx?v=35579"</span>,</span>
+<span id="cb19-49"><a href=""></a>        header<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb19-50"><a href=""></a>    ).rename(columns<span class="op">=</span>{<span class="st">"FIPS_Code"</span>: <span class="st">"FIPS"</span>, <span class="st">"area_name"</span>: <span class="st">"Area_Name"</span>, <span class="st">"Stabr"</span>: <span class="st">"State"</span>})</span>
+<span id="cb19-51"><a href=""></a>    income <span class="op">=</span> pd.read_excel(</span>
+<span id="cb19-52"><a href=""></a>        <span class="st">"https://ers.usda.gov/sites/default/files/_laserfiche/DataFiles/48747/PovertyEstimates.xlsx?v=36737"</span>,</span>
+<span id="cb19-53"><a href=""></a>        header<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb19-54"><a href=""></a>    ).rename(columns<span class="op">=</span>{<span class="st">"FIPS_Code"</span>: <span class="st">"FIPS"</span>, <span class="st">"Stabr"</span>: <span class="st">"State"</span>, <span class="st">"Area_name"</span>: <span class="st">"Area_Name"</span>})</span>
+<span id="cb19-55"><a href=""></a></span>
+<span id="cb19-56"><a href=""></a>    dfs <span class="op">=</span> [</span>
+<span id="cb19-57"><a href=""></a>        df.set_index([<span class="st">"FIPS"</span>, <span class="st">"State"</span>])</span>
+<span id="cb19-58"><a href=""></a>        <span class="cf">for</span> df <span class="kw">in</span> [population, education, unemployment, income]</span>
+<span id="cb19-59"><a href=""></a>    ]</span>
+<span id="cb19-60"><a href=""></a>    data_county <span class="op">=</span> pd.concat(dfs, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb19-61"><a href=""></a>    df_election <span class="op">=</span> df_election.merge(</span>
+<span id="cb19-62"><a href=""></a>        data_county.reset_index(), left_on<span class="op">=</span><span class="st">"county_fips"</span>, right_on<span class="op">=</span><span class="st">"FIPS"</span></span>
+<span id="cb19-63"><a href=""></a>    )</span>
+<span id="cb19-64"><a href=""></a>    df_election[<span class="st">"county_fips"</span>] <span class="op">=</span> df_election[<span class="st">"county_fips"</span>].astype(<span class="bu">str</span>).<span class="bu">str</span>.lstrip(<span class="st">"0"</span>)</span>
+<span id="cb19-65"><a href=""></a>    shp[<span class="st">"FIPS"</span>] <span class="op">=</span> shp[<span class="st">"GEOID"</span>].astype(<span class="bu">str</span>).<span class="bu">str</span>.lstrip(<span class="st">"0"</span>)</span>
+<span id="cb19-66"><a href=""></a>    votes <span class="op">=</span> shp.merge(df_election, left_on<span class="op">=</span><span class="st">"FIPS"</span>, right_on<span class="op">=</span><span class="st">"county_fips"</span>)</span>
+<span id="cb19-67"><a href=""></a></span>
+<span id="cb19-68"><a href=""></a>    req <span class="op">=</span> Request(</span>
+<span id="cb19-69"><a href=""></a>        <span class="st">"https://dataverse.harvard.edu/api/access/datafile/3641280?gbrecs=false"</span></span>
+<span id="cb19-70"><a href=""></a>    )</span>
+<span id="cb19-71"><a href=""></a>    req.add_header(</span>
+<span id="cb19-72"><a href=""></a>        <span class="st">"User-Agent"</span>,</span>
+<span id="cb19-73"><a href=""></a>        <span class="st">"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:77.0) Gecko/20100101 Firefox/77.0"</span>,</span>
+<span id="cb19-74"><a href=""></a>    )</span>
+<span id="cb19-75"><a href=""></a>    content <span class="op">=</span> urlopen(req)</span>
+<span id="cb19-76"><a href=""></a>    df_historical <span class="op">=</span> pd.read_csv(content, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
+<span id="cb19-77"><a href=""></a>    <span class="co"># df_historical = pd.read_csv('https://dataverse.harvard.edu/api/access/datafile/3641280?gbrecs=false', sep = "\t")</span></span>
+<span id="cb19-78"><a href=""></a></span>
+<span id="cb19-79"><a href=""></a>    df_historical <span class="op">=</span> df_historical.dropna(subset<span class="op">=</span>[<span class="st">"FIPS"</span>])</span>
+<span id="cb19-80"><a href=""></a>    df_historical[<span class="st">"FIPS"</span>] <span class="op">=</span> df_historical[<span class="st">"FIPS"</span>].astype(<span class="bu">int</span>)</span>
+<span id="cb19-81"><a href=""></a>    df_historical[<span class="st">"share"</span>] <span class="op">=</span> (</span>
+<span id="cb19-82"><a href=""></a>        df_historical[<span class="st">"candidatevotes"</span>] <span class="op">/</span> df_historical[<span class="st">"totalvotes"</span>]</span>
+<span id="cb19-83"><a href=""></a>    )</span>
+<span id="cb19-84"><a href=""></a>    df_historical <span class="op">=</span> df_historical[[<span class="st">"year"</span>, <span class="st">"FIPS"</span>, <span class="st">"party"</span>, <span class="st">"candidatevotes"</span>, <span class="st">"share"</span>]]</span>
+<span id="cb19-85"><a href=""></a>    df_historical[<span class="st">"party"</span>] <span class="op">=</span> df_historical[<span class="st">"party"</span>].fillna(<span class="st">"other"</span>)</span>
+<span id="cb19-86"><a href=""></a></span>
+<span id="cb19-87"><a href=""></a>    df_historical_wide <span class="op">=</span> df_historical.pivot_table(</span>
+<span id="cb19-88"><a href=""></a>        index<span class="op">=</span><span class="st">"FIPS"</span>, values<span class="op">=</span>[<span class="st">"candidatevotes"</span>, <span class="st">"share"</span>], columns<span class="op">=</span>[<span class="st">"year"</span>, <span class="st">"party"</span>]</span>
+<span id="cb19-89"><a href=""></a>    )</span>
+<span id="cb19-90"><a href=""></a>    df_historical_wide.columns <span class="op">=</span> [</span>
+<span id="cb19-91"><a href=""></a>        <span class="st">"_"</span>.join(<span class="bu">map</span>(<span class="bu">str</span>, s)) <span class="cf">for</span> s <span class="kw">in</span> df_historical_wide.columns.values</span>
+<span id="cb19-92"><a href=""></a>    ]</span>
+<span id="cb19-93"><a href=""></a>    df_historical_wide <span class="op">=</span> df_historical_wide.reset_index()</span>
+<span id="cb19-94"><a href=""></a>    df_historical_wide[<span class="st">"FIPS"</span>] <span class="op">=</span> df_historical_wide[<span class="st">"FIPS"</span>].astype(<span class="bu">str</span>).<span class="bu">str</span>.lstrip(<span class="st">"0"</span>)</span>
+<span id="cb19-95"><a href=""></a>    votes[<span class="st">"FIPS"</span>] <span class="op">=</span> votes[<span class="st">"GEOID"</span>].astype(<span class="bu">str</span>).<span class="bu">str</span>.lstrip(<span class="st">"0"</span>)</span>
+<span id="cb19-96"><a href=""></a>    votes <span class="op">=</span> votes.merge(df_historical_wide, on<span class="op">=</span><span class="st">"FIPS"</span>)</span>
+<span id="cb19-97"><a href=""></a>    votes[<span class="st">"winner"</span>] <span class="op">=</span> np.where(</span>
+<span id="cb19-98"><a href=""></a>        votes[<span class="st">"votes_gop"</span>] <span class="op">&gt;</span> votes[<span class="st">"votes_dem"</span>], <span class="st">"republican"</span>, <span class="st">"democrats"</span></span>
+<span id="cb19-99"><a href=""></a>    )</span>
+<span id="cb19-100"><a href=""></a></span>
+<span id="cb19-101"><a href=""></a>    <span class="cf">return</span> votes</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<h3 id="exercice-1-révisions-pandas">Exercice 1: Révisions <code>Pandas</code></h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href=""></a><span class="op">!</span>pip install <span class="op">--</span>upgrade xlrd</span>
+<span id="cb20-2"><a href=""></a><span class="op">!</span>pip install geopandas</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p><a href="https://pythonds.linogaliana.fr/content/modelisation/0_preprocessing.html#:~:text=Exercice%201%20(optionnel)">Détail des questions</a></p>
+<h4 id="récupération-des-données-si-pas-dexercice-1">Récupération des données si pas d’exercice 1:</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href=""></a><span class="im">import</span> requests</span>
+<span id="cb21-2"><a href=""></a></span>
+<span id="cb21-3"><a href=""></a>url <span class="op">=</span> <span class="st">'https://raw.githubusercontent.com/linogaliana/python-datascientist/main/content/modelisation/get_data.py'</span></span>
+<span id="cb21-4"><a href=""></a>r <span class="op">=</span> requests.get(url, allow_redirects<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb21-5"><a href=""></a><span class="bu">open</span>(<span class="st">'getdata.py'</span>, <span class="st">'wb'</span>).write(r.content)</span>
+<span id="cb21-6"><a href=""></a></span>
+<span id="cb21-7"><a href=""></a><span class="im">import</span> getdata</span>
+<span id="cb21-8"><a href=""></a>votes <span class="op">=</span> getdata.create_votes_dataframes()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section class="slide level2">
 
@@ -150,6 +949,7 @@ Python pour la data science TD 5 - Machine learning session 1
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="img/logo_ensae.png" class="slide-logo"></p>
 <div class="footer footer-default">
 <p><span style="font-size:12px; line-height:1.2; color:#888;"> TD ENSAE Python pour la data science – <a href="https://pythonds.linogaliana.fr/">pythonds.linogaliana.fr</a> </span></p>
 </div>
