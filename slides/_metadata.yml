@@ -16,6 +16,10 @@ format:
         TD ENSAE Python pour la data science – 
         <a href="https://pythonds.linogaliana.fr/">pythonds.linogaliana.fr</a>
       </span>
+      <span style="font-size:12px; line-height:1.2; color:#888;">
+        -    - 
+        <a href="https://daniel-odc.github.io/td_pythonds_ensae/">Sommaire</a>
+      </span>
     width: 1280
     height: 720
     minScale: 0.02

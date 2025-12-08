@@ -484,8 +484,8 @@ y = F_{\beta} (X)
 </ul>
 <p>💡💡Les étapes de standardisation et normalisation doivent s’appliquer <strong>après découpe</strong> du jeu de données en un échantillon de test et un de validation.</p>
 </section>
-<section class="slide level2 scrollable">
-
+<section id="la-normalisation-est-préférée-dans-les-cas-où-les-données-doivent-être-bornées-réseaux-de-neurones-modèles-sensibles-aux-amplitudes-etc.-tandis-que-la-standardisation-est-préférée-dans-les-alogorithmes-basés-sur-la-distance-et-sensibles-aux-écarts-type-régressions-k-means-knn-etc." class="slide level2 scrollable">
+<h2>💡💡💡La <em>normalisation</em> est préférée dans les cas où les données doivent être bornées (réseaux de neurones, modèles sensibles aux amplitudes etc.) tandis que la <em>standardisation</em> est préférée dans les alogorithmes basés sur la distance et sensibles aux écarts-type (régressions, K-means, KNN etc.)</h2>
 <ul>
 <li>Exemple de <strong>Standardisation</strong>:</li>
 </ul>
@@ -761,9 +761,36 @@ y = F_{\beta} (X)
 <section class="slide level2">
 
 <h3 id="cas-supervisé---variables-discrètes">Cas supervisé - variables discrètes</h3>
-<p>Matrices de confusion:</p>
-
-<img data-src="./img/ml_model_validation_logistic_regression.png" style="width:100.0%" class="r-stretch"><table class="caption-top">
+<h4 id="matrices-de-confusion">Matrices de confusion:</h4>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Classe réelle: Positif</th>
+<th>Classe réelle: Négatif</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Prédit: Positif</td>
+<td><strong>VP</strong></td>
+<td><strong>FP</strong></td>
+</tr>
+<tr class="even">
+<td>Prédit: Négatif</td>
+<td><strong>FN</strong></td>
+<td><strong>VN</strong></td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<h4 id="métriques-de-qualité">Métriques de qualité:</h4>
+<table class="caption-top">
 <colgroup>
 <col style="width: 21%">
 <col style="width: 41%">

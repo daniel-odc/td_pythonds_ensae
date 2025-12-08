@@ -344,6 +344,7 @@ plt.show()
 
 💡💡Les étapes de standardisation et normalisation doivent s'appliquer **après découpe** du jeu de données en un échantillon de test et un de validation.
 
+💡💡💡La *normalisation* est préférée dans les cas où les données doivent être bornées (réseaux de neurones, modèles sensibles aux amplitudes etc.) tandis que la *standardisation* est préférée dans les alogorithmes basés sur la distance et sensibles aux écarts-type (régressions, K-means, KNN etc.)
 ---
 
 - Exemple de **Standardisation**:
@@ -664,11 +665,17 @@ plt.show()
 
 ### Cas supervisé -  variables discrètes
 
-Matrices de confusion:
-
-![](./img/ml_model_validation_logistic_regression.png){width="100%"}
+#### Matrices de confusion:
 
 
+|                   | Classe réelle: Positif    | Classe réelle: Négatif    |
+| ---               | ---                       | ---                       |
+| Prédit: Positif   | **VP**                    | **FP**                    |
+| Prédit: Négatif   | **FN**                    | **VN**                    |
+
+<br>
+
+#### Métriques de qualité:
 
 | Terme                          | Définition                                                   | Formulation                                          |
 |--------------------------------|--------------------------------------------------------------|------------------------------------------------------|
