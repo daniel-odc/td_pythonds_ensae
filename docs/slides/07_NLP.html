@@ -9,7 +9,7 @@
 <link href="07_NLP_files/libs/quarto-html/quarto-syntax-highlighting-15ea27bac76f9890c21e80949f497921.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.8.24">
 
-  <title>quarto-inpute0f035fb91c18983</title>
+  <title>Python pour la data science</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -27,9 +27,73 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  background-color: #f8f8f8; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ef2929; } /* Alert */
+    code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #204a87; } /* Attribute */
+    code span.bn { color: #0000cf; } /* BaseN */
+    code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4e9a06; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #8f5902; font-style: italic; } /* Comment */
+    code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+    code span.dt { color: #204a87; } /* DataType */
+    code span.dv { color: #0000cf; } /* DecVal */
+    code span.er { color: #a40000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #0000cf; } /* Float */
+    code span.fu { color: #204a87; font-weight: bold; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+    code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+    code span.ot { color: #8f5902; } /* Other */
+    code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+    code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+    code span.ss { color: #4e9a06; } /* SpecialString */
+    code span.st { color: #4e9a06; } /* String */
+    code span.va { color: #000000; } /* Variable */
+    code span.vs { color: #4e9a06; } /* VerbatimString */
+    code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="07_NLP_files/libs/revealjs/dist/theme/quarto-9bacd3158296feb21eaa887ded9f5e13.css">
-  <link rel="stylesheet" href="slides.css">
+  <link rel="stylesheet" href="07_NLP_files/libs/revealjs/dist/theme/quarto-05bc1c7b0f255ae508ca6f1b5f99c4f8.css">
+  <link rel="stylesheet" href="slides.scss">
   <link href="07_NLP_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="07_NLP_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="07_NLP_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -128,12 +192,8 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title"><div>
-Python pour la data science TD 7 - Natural Language Processing
-</div>
-<div style="text-align:center;">
-<p><img src="./img/logo_XXX.png" style="height:100px; margin-right:10px;"></p>
-</div></h1>
+  <h1 class="title">Python pour la data science</h1>
+  <p class="subtitle">TD 7 - Intro au Natural Language Processing (NLP)</p>
 
 <div class="quarto-title-authors">
 </div>
@@ -141,7 +201,160 @@ Python pour la data science TD 7 - Natural Language Processing
 </section>
 <section id="intro" class="slide level2">
 <h2>Intro</h2>
-<p>TODO</p>
+<p><code>NLP</code>: méthodes à la base des <code>LLM</code> (Large Language Models) tels que <code>GPT</code> (OpenAI) our <code>BERT</code> (Google)</p>
+<ul>
+<li>Nettoyage des données textuelles</li>
+<li>Modélisation du langage:
+<ul>
+<li>Approche fréquentiste</li>
+<li>Intro aux <em>Embeddings</em></li>
+</ul></li>
+</ul>
+<p>💡Le traitement des données textuelles est une des applications pour lesquelles <code>Python</code> est mieux outillé que <code>R</code>.</p>
+<p>💡💡Pour aller plus loin:</p>
+<ul>
+<li><a href="https://huggingface.co/learn/nlp-course/chapter1/2?fw=pt">Cours huggingface</a></li>
+<li><a href="https://magazine.sebastianraschka.com/p/understanding-encoder-and-decoder">Architecture interne d’un LLM</a></li>
+<li><a href="https://www.deeplearning.ai/short-courses/langchain-chat-with-your-data/">Créez votre propre chatbot</a></li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="op">!</span>pip install spacy        <span class="co"># NLP (`!pip install nltk` pour NLTK)</span></span>
+<span id="cb1-2"><a href=""></a><span class="op">!</span>pip install plotnine     <span class="co"># visualisations</span></span>
+<span id="cb1-3"><a href=""></a><span class="op">!</span>pip install great_tables <span class="co"># visualisations</span></span>
+<span id="cb1-4"><a href=""></a><span class="op">!</span>pip install wordcloud    <span class="co"># visualisations</span></span>
+<span id="cb1-5"><a href=""></a><span class="op">!</span>python <span class="op">-</span>m spacy download en_core_web_sm</span>
+<span id="cb1-6"><a href=""></a><span class="op">!</span>python <span class="op">-</span>m spacy download fr_core_news_sm</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="nettoyage" class="slide level2">
+<h2>Nettoyage</h2>
+<h3 id="défis">Défis:</h3>
+<p>Les données textuelles sont par nature:</p>
+<ul>
+<li><em>bruitées</em> : orthographe, fautes de frappe…</li>
+<li><em>changeantes</em> : la langue évolue avec de nouveaux mots, sens…</li>
+<li><em>complexes</em> : structures variables, accords…</li>
+<li><em>ambiguës</em> : synonymie, polysémie, sens caché…</li>
+<li><em>propres à chaque langue</em> : il n’existe pas de règle de passage unique entre deux langues.</li>
+<li><em>de grande dimension</em> : des combinaisons infinies de séquences de mots.</li>
+</ul>
+</section>
+<section id="outils-de-modélisation-des-données-textuelles" class="slide level2">
+<h2>Outils de modélisation des données textuelles</h2>
+<ul>
+<li><code>NLTK</code>: Librairie historique mais limitée</li>
+</ul>
+<pre><code>pip install nltk</code></pre>
+<ul>
+<li><code>Spacy</code>: Plus moderne et plusa adaptées aux languages non anglo-saxons</li>
+</ul>
+<pre><code>pip install spacy</code></pre>
+</section>
+<section id="méthodes" class="slide level2">
+<h2>Méthodes</h2>
+<p>Transformation de données textuelles en données numériques décomposabes en unités sémantiques minimales: les <code>tokens</code>.</p>
+<p>Exemples du cours basés sur les oeuvres:</p>
+<ul>
+<li>Le comte de Monte Cristo (Alexandre Dumas)</li>
+<li>Diverses oeuvres de Allan Poe, Mary Shelley et H.P. Lovecraft.</li>
+</ul>
+</section>
+<section id="téléchargement-des-oeuvres" class="slide level2">
+<h2>Téléchargement des oeuvres</h2>
+<h3 id="dumas">Dumas</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">import</span> requests</span>
+<span id="cb4-2"><a href=""></a></span>
+<span id="cb4-3"><a href=""></a>url <span class="op">=</span> <span class="st">"https://www.gutenberg.org/files/17989/17989-0.txt"</span></span>
+<span id="cb4-4"><a href=""></a>response <span class="op">=</span> requests.get(url)</span>
+<span id="cb4-5"><a href=""></a>response.encoding <span class="op">=</span> <span class="st">'utf-8'</span>  <span class="co"># Assure le bon décodage</span></span>
+<span id="cb4-6"><a href=""></a>raw <span class="op">=</span> response.text</span>
+<span id="cb4-7"><a href=""></a></span>
+<span id="cb4-8"><a href=""></a>dumas <span class="op">=</span> (</span>
+<span id="cb4-9"><a href=""></a>  raw</span>
+<span id="cb4-10"><a href=""></a>  .split(<span class="st">"*** START OF THE PROJECT GUTENBERG EBOOK 17989 ***"</span>)[<span class="dv">1</span>]</span>
+<span id="cb4-11"><a href=""></a>  .split(<span class="st">"*** END OF THE PROJECT GUTENBERG EBOOK 17989 ***"</span>)[<span class="dv">0</span>]</span>
+<span id="cb4-12"><a href=""></a>)</span>
+<span id="cb4-13"><a href=""></a></span>
+<span id="cb4-14"><a href=""></a></span>
+<span id="cb4-15"><a href=""></a><span class="kw">def</span> clean_text(text):</span>
+<span id="cb4-16"><a href=""></a>    text <span class="op">=</span> text.lower() <span class="co"># mettre les mots en minuscule</span></span>
+<span id="cb4-17"><a href=""></a>    text <span class="op">=</span> <span class="st">" "</span>.join(text.split())</span>
+<span id="cb4-18"><a href=""></a>    <span class="cf">return</span> text</span>
+<span id="cb4-19"><a href=""></a></span>
+<span id="cb4-20"><a href=""></a>dumas <span class="op">=</span> clean_text(dumas)</span>
+<span id="cb4-21"><a href=""></a></span>
+<span id="cb4-22"><a href=""></a>dumas[<span class="dv">10000</span>:<span class="dv">10500</span>]</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section class="slide level2">
+
+<h3 id="corpus-anglo-saxon">Corpus anglo-saxon</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-2"><a href=""></a></span>
+<span id="cb5-3"><a href=""></a>url<span class="op">=</span><span class="st">'https://github.com/GU4243-ADS/spring2018-project1-ginnyqg/raw/master/data/spooky.csv'</span></span>
+<span id="cb5-4"><a href=""></a><span class="co">#1. Import des données</span></span>
+<span id="cb5-5"><a href=""></a>horror <span class="op">=</span> pd.read_csv(url,encoding<span class="op">=</span><span class="st">'latin-1'</span>)</span>
+<span id="cb5-6"><a href=""></a><span class="co">#2. Majuscules aux noms des colonnes</span></span>
+<span id="cb5-7"><a href=""></a>horror.columns <span class="op">=</span> horror.columns.<span class="bu">str</span>.capitalize()</span>
+<span id="cb5-8"><a href=""></a><span class="co">#3. Retirer le prefixe id</span></span>
+<span id="cb5-9"><a href=""></a>horror[<span class="st">'ID'</span>] <span class="op">=</span> horror[<span class="st">'Id'</span>].<span class="bu">str</span>.replace(<span class="st">"id"</span>,<span class="st">""</span>)</span>
+<span id="cb5-10"><a href=""></a>horror <span class="op">=</span> horror.set_index(<span class="st">'Id'</span>)</span>
+<span id="cb5-11"><a href=""></a>horror.head()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section class="slide level2">
+
+<h3 id="exercices-analyses-fréquentistes-basiques">Exercices analyses fréquentistes basiques</h3>
+<p><a href="https://pythonds.linogaliana.fr/content/NLP/01_intro.html#:~:text=Exercice%201%20%3A%20Fr%C3%A9quence%20d%E2%80%99un%20mot">Exercices analyses de fréquence basiques</a></p>
+<p>💡Vous pouvez ne faire que les exemples basés sur <code>spacy</code> et laisser <code>NLTK</code> de côté.</p>
+</section>
+<section id="analyses-fréquentistes-bags-of-words" class="slide level2">
+<h2>Analyses fréquentistes <code>bags-of-words</code></h2>
+<ul>
+<li>Mesure <code>TF-IDF</code> (Term Frequency – Inverse Document Frequency) ==&gt; création d’une <strong>matrice documents – termes</strong>.</li>
+</ul>
+
+<img data-src="./img/ml_term_doc_matrix.png" class="r-stretch"></section>
+<section class="slide level2">
+
+
+<img data-src="./img/ml_term_doc_matrix.png" class="r-stretch"><ul>
+<li><code>TF</code>: fréquence d’un terme dans un document donné:</li>
+</ul>
+<p><span class="math display">\[
+tf(t, d) = \frac{f_{t,d}}{\sum_{t'\in d}f_{t',d}}
+\]</span></p>
+<ul>
+<li><code>IDF</code>: Indice de rareté du termes sur l’ensemble des documents.</li>
+</ul>
+<p><span class="math display">\[
+idf(t, D) = log(\frac{N}{|{d \in D: t \in d}|})
+\]</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="exercices-bags-of_words">Exercices <code>bags-of_words</code></h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="op">!</span>pip install spacy</span>
+<span id="cb6-2"><a href=""></a><span class="op">!</span>python <span class="op">-</span>m spacy download en_core_web_sm</span>
+<span id="cb6-3"><a href=""></a><span class="op">!</span>python <span class="op">-</span>m spacy download fr_core_news_sm</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p><br></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="kw">def</span> clean_text(doc):</span>
+<span id="cb7-2"><a href=""></a>    <span class="co"># Tokenize, remove stop words and punctuation, and lemmatize</span></span>
+<span id="cb7-3"><a href=""></a>    cleaned_tokens <span class="op">=</span> [token.lemma_ <span class="cf">for</span> token <span class="kw">in</span> doc <span class="cf">if</span> <span class="kw">not</span> token.is_stop <span class="kw">and</span> <span class="kw">not</span> token.is_punct]</span>
+<span id="cb7-4"><a href=""></a>    <span class="co"># Join tokens back into a single string</span></span>
+<span id="cb7-5"><a href=""></a>    cleaned_text <span class="op">=</span> <span class="st">' '</span>.join(cleaned_tokens)</span>
+<span id="cb7-6"><a href=""></a>    <span class="cf">return</span> cleaned_text</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p><a href="https://pythonds.linogaliana.fr/content/NLP/02_exoclean.html#:~:text=Exercice%201%20%3A%20TF%2DIDF%20%3A%20calcul%20de%20fr%C3%A9quence">Exercice</a></p>
+</section>
+<section id="embddings" class="slide level2">
+<h2>Embddings</h2>
+<p>Représentations du langage au fondement des modèles de langage actuels utilisés par des outils entrés dans notre quotidien (<code>DeepL</code>, <code>ChatGPT</code>…).</p>
+<h3 id="modèle-word2vec">Modèle <code>Word2Vec</code></h3>
+<p>==&gt; Représentation synthétique du language. Permet de passer de 60 000 mots dans la langue française à environ 300 concepts.</p>
+<p><img data-src="./img/ml_word2vec.png"> <a href="https://jalammar.github.io/illustrated-word2vec/">source</a></p>
+</section>
+<section class="slide level2">
+
+<h3 id="réduction-de-la-dimension">Réduction de la dimension</h3>
+<p><img data-src="./img/ml_word2vec_dim_reduc.png"> <a href="https://medium.com/@hari4om/word-embedding-d816f643140">source</a></p>
+<p>💡L’approche <code>Word2Vec</code> permet un transfert entre les langues de même racine.</p>
+<p><a href="https://pythonds.linogaliana.fr/content/NLP/03_embedding.html#:~:text=un%20autre%20corpus.-,Astuce,Exercice%203,-R%C3%A9ponse%20%C3%A0%20la">Exercice</a></p>
 </section>
 <section class="slide level2">
 
@@ -150,8 +363,9 @@ Python pour la data science TD 7 - Natural Language Processing
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="img/logo_ensae.png" class="slide-logo"></p>
 <div class="footer footer-default">
-<p><span style="font-size:12px; line-height:1.2; color:#888;"> TD ENSAE Python pour la data science – <a href="https://pythonds.linogaliana.fr/">pythonds.linogaliana.fr</a> </span></p>
+<p><span style="font-size:12px; line-height:1.2; color:#888;"> TD ENSAE Python pour la data science – <a href="https://pythonds.linogaliana.fr/">pythonds.linogaliana.fr</a> </span> <span style="font-size:12px; line-height:1.2; color:#888;"> - - <a href="https://daniel-odc.github.io/td_pythonds_ensae/">Sommaire</a> </span></p>
 </div>
 </div></div>
 
