@@ -144,8 +144,8 @@ df.loc['nom_index', 'nom_colonne']  # accès par nom d'index
 ![](./img/pandas_dataframe_simple.jpg)
 
 ```python
-df = pd.DataFrame({'year': [2012, 2014, 2013, 2014], 'month'=[1, 4, 7, 10], 'sale': [55, 40, 84, 31]})
-df.set_index(month, inplace=True, drop=True)
+df = pd.DataFrame({'year': [2012, 2014, 2013, 2014], 'month': [1, 4, 7, 10], 'sale': [55, 40, 84, 31]})
+df.set_index('month', inplace=True, drop=True)
 
 df.loc[10, 'year']
 df.iloc[0, 1]
