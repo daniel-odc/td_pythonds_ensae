@@ -11,7 +11,8 @@ venv/
 *.parquet
 *.xlsx
 *.xls
-*notebooks/03_Modelisation/data/
+notebooks/03_Modelisation/data/
+notebooks/data/
 
 # corrections:
 notebooks/_corrections/
@@ -19,4 +20,3 @@ notebooks/_corrections/
 /.quarto/
 **/*.quarto_ipynb
 
-/notebooks/03_Modelisation/data/
