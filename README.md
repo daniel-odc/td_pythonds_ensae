@@ -1,8 +1,3 @@
-TODO:
-
-- Add invite collaborators slides
-- change order commands `push` `pull`
-
 # TD ENSAE - Python pour la data science
 
 Ce repo comporte des supports de présentation pour la conduite des TD du
