@@ -31,9 +31,10 @@ Pour programmer en `Python` on a besoin:
 
 * d'un exécutable `Python` (installé par défaut sur Linux et Mac), à installer sur Windows pour un environnement local.
 
+* d'un gestionnaire de modules (`pip`, `conda`)
+
 * d'un environnement de développement: IDE (`VS Code`, `PyCharm`, `Spyder` etc.)
 
-* d'un gestionnaire de modules (`pip`, `conda`)
 
 Cet écosystème peut être local ou dans le cloud (`Google Colab`, `SSP Cloud`).
 
@@ -76,6 +77,108 @@ Dans le cadre du cours ==> écosystème **cloud** sous **`SSP Cloud`** avec IDE 
 
 ---
 
+## Développer avec les Notebook Jupyter
+
+
+[Jupyter](https://en.wikipedia.org/wiki/Project_Jupyter) est un environnement interactif qui permet d’écrire et d’exécuter du code (en `Python` mais aussi en `R`, `Julia` etc.), tout en combinant du texte, des images et des visualisations dans un même document.
+
+Il est particulièrement utile pour :
+
+- l’analyse de données et la visualisation,
+- l’apprentissage et la pédagogie,
+- le prototypage rapide et reproductible.
+
+Il permet à la fois de rédiger du code, d'observer les résultats de sortie et de formatter ses commentaires au moyen de la syntaxe [`Markdown`](https://www.markdownguide.org/cheat-sheet/)
+
+Son principal intérêt est de faciliter la compréhension et le partage du travail en mêlant **code, résultats et explications** dans un format lisible.
+
+
+---
+
+### Mode édition
+
+<img src="./img/ex_notebook_md.png" style="max-width: 75%;"><br><br>
+
+### Mode rendu
+
+<img src="./img/ex_notebook_output.png" style="max-width: 75%;">
+
+[*Source*](https://d2l.ai/chapter_appendix-tools-for-deep-learning/jupyter.html)
+
+## Rapide présentation du format `Markdown`
+
+* Language de balisage simpifié permettant de générer du code `html` à partir d'une syntaxe allégée.
+
+::: columns
+::: column
+
+- Syntaxe `Markdown`:
+
+```text
+# Titre 1
+# # Titre 2
+
+paragraphe
+
+* bullet 1
+  - sous-bullet 1
+  - sous-bullet 2
+* bullet 2
+```
+
+:::
+::: column
+
+- Syntaxe équivalente `HTML`:
+
+```html
+<h1>Titre 1</h1>
+<h2>Titre 2</h2>
+
+<p>paragraphe</p>
+
+<ul>
+    <li>bullet 1
+        <ul>
+            <li>sous-bullet 1</li>
+            <li>sous-bullet 2</li>
+        </ul>
+    </li>
+    <li>bullet 2</li>
+</ul>
+```
+
+:::
+:::
+
+* Language utilisé sur `GitHub` pour la rédaction des fichiers `README.md` et pour les échanges entre contributeurs.
+* Language utilisé dans Jupyter pour créer des cellules de commentaires et analyses (à utiliser pour le projet!)
+* Permet de générer des pages web de façon rapide et maintenables.
+* Utilisé pour la rédaction de ces slides et du cours [Python pour la data science](https://pythonds.linogaliana.fr/).
+* [Documentation](https://commonmark.org/help/).
+
+## Markdown Cheatsheet {.tight-table}
+
+
+| Type                                                                              | Or …                                                                            | Get                                                                                       |
+|-----------------------------------------------------------------------------------|---------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| `*Italic*`                                                                        | `_Italic_`                                                                      | *Italic*                                                                                  |
+| `**Bold**`                                                                        | `__Bold__`                                                                      | **Bold**                                                                                  |
+| `# Heading 1`                                                                     | `Heading 1`<br>`=========`                                                      | ![](./img/markdown_heading1.jpg)                                                        |
+| `## Heading 2`                                                                    | `Heading 2`<br>`---------`                                                      | ![](./img/markdown_heading2.jpg)                                                       |
+| `[Link](http://a.com)`                                                            | `[Link][1]`<br>`[1]: http://b.org`                                              | <a href="http://a.com">Link</a>                                                           |
+| `![Image](http://url/a.png)`                                                      | `![Image][1]`<br>`[1]: http://url/b.jpg`                                        | ![](./img/markdown_image.jpg)                                       |
+| `> Blockquote`                                                                    |                                                                                 | ![](./img/markdown_blockquote.jpg)                                       |
+| `* List`<br>`* List`<br>`* List`                                                  | `- List`<br>`- List`<br>`- List`                                                | ![](./img/markdown_list.jpg)                                           |
+| `1. One`<br>`2. Two`<br>`3. Three`                                                | `1) One`<br>`2) Two`<br>`3) Three`                                              | ![](./img/markdown_ordered_list.jpg)                                            |
+| `horizontal rule` <br> `---`                                                      | `horizontal rule` <br> `***`                                                    | ![](./img/markdown_horizontal_rule.jpg)                                                                 |
+| ``Inline `code` with backticks``                                                  |                                                                                 | ![](./img/markdown_inline_code.jpg)                                                                             |
+| \`\`\` <br># code block<br>print '3 backticks or'<br>print 'indent 4 spaces'<br>```  | ····# code block<br>····print '3 backticks or'<br>····print 'indent 4 spaces'   | ![](./img/markdown_code_block.jpg) |	
+
+
+[Source: https://commonmark.org/help/]{.legend}
+
+
 ## Rappel des bases du langage Python
 
 *Note: * On ne revient pas ici sur les notions de base de programmation telles que les variables, fonctions, boucles, conditions. On se concentre sur les spécificités de `Python` par rapport aux autres langages.
@@ -94,7 +197,7 @@ a = 'texte'  # a passe de int à str sans problème
 
 ---
 
-### Listes, dictionnaires et tuples
+### Listes, dictionnaires, tuples et sets
 
 ---
 
@@ -146,6 +249,37 @@ tu = (49.4545, 2.4545)  # tuple à 2 éléments
 print(f'{tu[0]}, {tu[1]}')
 # tu[2] = 0               # le nombre d'éléments d'un tuple est invariable (pas de méthodes `append` ou `pop`)
 # tu[1] = 0               # le contenu d'un tuple n'est pas modifiable
+```
+
+
+---
+
+#### Sets:
+
+Ensemble unique d'éléments non-ordonné.
+
+```python
+st = {1, 2, 2, 3}
+
+print(st)  # pas de doublon dans le set
+
+st.add(4)
+st.remove(2)       # lève une erreur si absent
+st.discard(2)      # ne lève pas d'erreur si absent
+
+# Opérations ensemblistes
+a = {1, 2, 3}
+b = {2, 3, 4}
+
+a | b   # union → {1, 2, 3, 4}
+a & b   # intersection → {2, 3}
+a - b   # différence → {1}
+a ^ b   # différence symétrique → {1, 4}
+
+# Comparaisons
+a.issubset(b)      # a ⊆ b ?
+a.issuperset(b)    # a ⊇ b ?
+a.isdisjoint(b)     # aucun élément commun ?
 ```
 
 ---

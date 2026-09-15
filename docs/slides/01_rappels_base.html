@@ -9,7 +9,7 @@
 <link href="01_rappels_base_files/libs/quarto-html/quarto-syntax-highlighting-15ea27bac76f9890c21e80949f497921.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.8.24">
 
-  <title>quarto-inputaa850ee0a83852ee</title>
+  <title>quarto-inputfe76a8e4dfe82c32</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -92,7 +92,8 @@
     code span.vs { color: #4e9a06; } /* VerbatimString */
     code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="01_rappels_base_files/libs/revealjs/dist/theme/quarto-9bacd3158296feb21eaa887ded9f5e13.css">
+  <link rel="stylesheet" href="01_rappels_base_files/libs/revealjs/dist/theme/quarto-05bc1c7b0f255ae508ca6f1b5f99c4f8.css">
+  <link rel="stylesheet" href="slides.scss">
   <link rel="stylesheet" href="slides.css">
   <link href="01_rappels_base_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="01_rappels_base_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -225,8 +226,8 @@ Python pour la data science TD 1 - Rappel des bases
 <p>Pour programmer en <code>Python</code> on a besoin:</p>
 <ul>
 <li><p>d’un exécutable <code>Python</code> (installé par défaut sur Linux et Mac), à installer sur Windows pour un environnement local.</p></li>
-<li><p>d’un environnement de développement: IDE (<code>VS Code</code>, <code>PyCharm</code>, <code>Spyder</code> etc.)</p></li>
 <li><p>d’un gestionnaire de modules (<code>pip</code>, <code>conda</code>)</p></li>
+<li><p>d’un environnement de développement: IDE (<code>VS Code</code>, <code>PyCharm</code>, <code>Spyder</code> etc.)</p></li>
 </ul>
 <p>Cet écosystème peut être local ou dans le cloud (<code>Google Colab</code>, <code>SSP Cloud</code>).</p>
 </section>
@@ -252,6 +253,152 @@ Python pour la data science TD 1 - Rappel des bases
 
 <p><img src="img/01_ssp_cloud_02_services.jpg" width="25%"> <img src="img/01_ssp_cloud_03_vscode.jpg" width="25%"> <img src="img/01_ssp_cloud_04_link.jpg" width="25%"> <img src="img/01_ssp_cloud_05_new_file.jpg" width="25%"> <img src="img/01_ssp_cloud_06_notebook_example.jpg" width="25%"> <img src="img/01_ssp_cloud_07_suppresion.jpg" width="25%"></p>
 </section>
+<section id="développer-avec-les-notebook-jupyter" class="slide level2">
+<h2>Développer avec les Notebook Jupyter</h2>
+<p><a href="https://en.wikipedia.org/wiki/Project_Jupyter">Jupyter</a> est un environnement interactif qui permet d’écrire et d’exécuter du code (en <code>Python</code> mais aussi en <code>R</code>, <code>Julia</code> etc.), tout en combinant du texte, des images et des visualisations dans un même document.</p>
+<p>Il est particulièrement utile pour :</p>
+<ul>
+<li>l’analyse de données et la visualisation,</li>
+<li>l’apprentissage et la pédagogie,</li>
+<li>le prototypage rapide et reproductible.</li>
+</ul>
+<p>Il permet à la fois de rédiger du code, d’observer les résultats de sortie et de formatter ses commentaires au moyen de la syntaxe <a href="https://www.markdownguide.org/cheat-sheet/"><code>Markdown</code></a></p>
+<p>Son principal intérêt est de faciliter la compréhension et le partage du travail en mêlant <strong>code, résultats et explications</strong> dans un format lisible.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="mode-édition">Mode édition</h3>
+<p><img src="./img/ex_notebook_md.png" style="max-width: 75%;"><br><br></p>
+<h3 id="mode-rendu">Mode rendu</h3>
+<p><img src="./img/ex_notebook_output.png" style="max-width: 75%;"></p>
+<p><a href="https://d2l.ai/chapter_appendix-tools-for-deep-learning/jupyter.html"><em>Source</em></a></p>
+</section>
+<section id="rapide-présentation-du-format-markdown" class="slide level2">
+<h2>Rapide présentation du format <code>Markdown</code></h2>
+<ul>
+<li>Language de balisage simpifié permettant de générer du code <code>html</code> à partir d’une syntaxe allégée.</li>
+</ul>
+<div class="columns">
+<div class="column">
+<ul>
+<li>Syntaxe <code>Markdown</code>:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href=""></a># Titre 1</span>
+<span id="cb1-2"><a href=""></a># # Titre 2</span>
+<span id="cb1-3"><a href=""></a></span>
+<span id="cb1-4"><a href=""></a>paragraphe</span>
+<span id="cb1-5"><a href=""></a></span>
+<span id="cb1-6"><a href=""></a>* bullet 1</span>
+<span id="cb1-7"><a href=""></a>  - sous-bullet 1</span>
+<span id="cb1-8"><a href=""></a>  - sous-bullet 2</span>
+<span id="cb1-9"><a href=""></a>* bullet 2</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<ul>
+<li>Syntaxe équivalente <code>HTML</code>:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb2-1"><a href=""></a><span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>Titre 1<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb2-2"><a href=""></a><span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>Titre 2<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb2-3"><a href=""></a></span>
+<span id="cb2-4"><a href=""></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>paragraphe<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb2-5"><a href=""></a></span>
+<span id="cb2-6"><a href=""></a><span class="dt">&lt;</span><span class="kw">ul</span><span class="dt">&gt;</span></span>
+<span id="cb2-7"><a href=""></a>    <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>bullet 1</span>
+<span id="cb2-8"><a href=""></a>        <span class="dt">&lt;</span><span class="kw">ul</span><span class="dt">&gt;</span></span>
+<span id="cb2-9"><a href=""></a>            <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>sous-bullet 1<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb2-10"><a href=""></a>            <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>sous-bullet 2<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb2-11"><a href=""></a>        <span class="dt">&lt;/</span><span class="kw">ul</span><span class="dt">&gt;</span></span>
+<span id="cb2-12"><a href=""></a>    <span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb2-13"><a href=""></a>    <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>bullet 2<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb2-14"><a href=""></a><span class="dt">&lt;/</span><span class="kw">ul</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+<ul>
+<li>Language utilisé sur <code>GitHub</code> pour la rédaction des fichiers <code>README.md</code> et pour les échanges entre contributeurs.</li>
+<li>Language utilisé dans Jupyter pour créer des cellules de commentaires et analyses (à utiliser pour le projet!)</li>
+<li>Permet de générer des pages web de façon rapide et maintenables.</li>
+<li>Utilisé pour la rédaction de ces slides et du cours <a href="https://pythonds.linogaliana.fr/">Python pour la data science</a>.</li>
+<li><a href="https://commonmark.org/help/">Documentation</a>.</li>
+</ul>
+</section>
+<section id="markdown-cheatsheet" class="slide level2 tight-table">
+<h2>Markdown Cheatsheet</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 32%">
+<col style="width: 31%">
+<col style="width: 35%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Or …</th>
+<th>Get</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>*Italic*</code></td>
+<td><code>_Italic_</code></td>
+<td><em>Italic</em></td>
+</tr>
+<tr class="even">
+<td><code>**Bold**</code></td>
+<td><code>__Bold__</code></td>
+<td><strong>Bold</strong></td>
+</tr>
+<tr class="odd">
+<td><code># Heading 1</code></td>
+<td><code>Heading 1</code><br><code>=========</code></td>
+<td><img data-src="./img/markdown_heading1.jpg"></td>
+</tr>
+<tr class="even">
+<td><code>## Heading 2</code></td>
+<td><code>Heading 2</code><br><code>---------</code></td>
+<td><img data-src="./img/markdown_heading2.jpg"></td>
+</tr>
+<tr class="odd">
+<td><code>[Link](http://a.com)</code></td>
+<td><code>[Link][1]</code><br><code>[1]: http://b.org</code></td>
+<td><a href="http://a.com">Link</a></td>
+</tr>
+<tr class="even">
+<td><code>![Image](http://url/a.png)</code></td>
+<td><code>![Image][1]</code><br><code>[1]: http://url/b.jpg</code></td>
+<td><img data-src="./img/markdown_image.jpg"></td>
+</tr>
+<tr class="odd">
+<td><code>&gt; Blockquote</code></td>
+<td></td>
+<td><img data-src="./img/markdown_blockquote.jpg"></td>
+</tr>
+<tr class="even">
+<td><code>* List</code><br><code>* List</code><br><code>* List</code></td>
+<td><code>- List</code><br><code>- List</code><br><code>- List</code></td>
+<td><img data-src="./img/markdown_list.jpg"></td>
+</tr>
+<tr class="odd">
+<td><code>1. One</code><br><code>2. Two</code><br><code>3. Three</code></td>
+<td><code>1) One</code><br><code>2) Two</code><br><code>3) Three</code></td>
+<td><img data-src="./img/markdown_ordered_list.jpg"></td>
+</tr>
+<tr class="even">
+<td><code>horizontal rule</code> <br> <code>---</code></td>
+<td><code>horizontal rule</code> <br> <code>***</code></td>
+<td><img data-src="./img/markdown_horizontal_rule.jpg"></td>
+</tr>
+<tr class="odd">
+<td><code>Inline `code` with backticks</code></td>
+<td></td>
+<td><img data-src="./img/markdown_inline_code.jpg"></td>
+</tr>
+<tr class="even">
+<td>``` <br># code block<br>print ‘3 backticks or’<br>print ‘indent 4 spaces’<br>```</td>
+<td>····# code block<br>····print ‘3 backticks or’<br>····print ‘indent 4 spaces’</td>
+<td><img data-src="./img/markdown_code_block.jpg"></td>
+</tr>
+</tbody>
+</table>
+<p><span class="legend">Source: https://commonmark.org/help/</span></p>
+</section>
 <section id="rappel-des-bases-du-langage-python" class="slide level2">
 <h2>Rappel des bases du langage Python</h2>
 <p><em>Note: </em> On ne revient pas ici sur les notions de base de programmation telles que les variables, fonctions, boucles, conditions. On se concentre sur les spécificités de <code>Python</code> par rapport aux autres langages.</p>
@@ -259,68 +406,94 @@ Python pour la data science TD 1 - Rappel des bases
 </section>
 <section class="slide level2">
 
-<h3 id="listes-dictionnaires-et-tuples">Listes, dictionnaires et tuples</h3>
+<h3 id="listes-dictionnaires-tuples-et-sets">Listes, dictionnaires, tuples et sets</h3>
 </section>
 <section class="slide level2">
 
 <h4 id="listes">Listes:</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a>li <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>]      <span class="co"># liste de 3 éléments</span></span>
-<span id="cb1-2"><a href=""></a><span class="bu">print</span>(<span class="ss">f'1ère valeur: </span><span class="sc">{</span>li[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>)        <span class="co"># l'index commence à 0</span></span>
-<span id="cb1-3"><a href=""></a>li.append(<span class="dv">5</span>)        <span class="co"># ajoute un élément</span></span>
-<span id="cb1-4"><a href=""></a><span class="bu">print</span>(li)</span>
-<span id="cb1-5"><a href=""></a>li.extend([<span class="dv">6</span>, <span class="dv">7</span>])   <span class="co"># ajoute une liste à la liste</span></span>
-<span id="cb1-6"><a href=""></a><span class="bu">print</span>(li)</span>
-<span id="cb1-7"><a href=""></a>li.pop(<span class="dv">4</span>)           <span class="co"># retire le 4ème élément de la liste (et non l'élément 4 de la liste!)</span></span>
-<span id="cb1-8"><a href=""></a><span class="bu">print</span>(li)</span>
-<span id="cb1-9"><a href=""></a></span>
-<span id="cb1-10"><a href=""></a><span class="co"># # boucle sur les éléments:</span></span>
-<span id="cb1-11"><a href=""></a><span class="cf">for</span> el <span class="kw">in</span> li:</span>
-<span id="cb1-12"><a href=""></a>    <span class="bu">print</span>(el)</span>
-<span id="cb1-13"><a href=""></a></span>
-<span id="cb1-14"><a href=""></a><span class="co"># # boucle avec conservation des index:</span></span>
-<span id="cb1-15"><a href=""></a><span class="cf">for</span> ix, el <span class="kw">in</span> <span class="bu">enumerate</span>(li):</span>
-<span id="cb1-16"><a href=""></a>    <span class="bu">print</span>(<span class="ss">f'index </span><span class="sc">{</span>ix<span class="sc">}</span><span class="ss">, valeur: </span><span class="sc">{</span>el<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb1-17"><a href=""></a></span>
-<span id="cb1-18"><a href=""></a><span class="co"># # Comprehension lists:</span></span>
-<span id="cb1-19"><a href=""></a>li <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>) <span class="cf">if</span> i<span class="op">%</span><span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>]</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a>li <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>]      <span class="co"># liste de 3 éléments</span></span>
+<span id="cb3-2"><a href=""></a><span class="bu">print</span>(<span class="ss">f'1ère valeur: </span><span class="sc">{</span>li[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>)        <span class="co"># l'index commence à 0</span></span>
+<span id="cb3-3"><a href=""></a>li.append(<span class="dv">5</span>)        <span class="co"># ajoute un élément</span></span>
+<span id="cb3-4"><a href=""></a><span class="bu">print</span>(li)</span>
+<span id="cb3-5"><a href=""></a>li.extend([<span class="dv">6</span>, <span class="dv">7</span>])   <span class="co"># ajoute une liste à la liste</span></span>
+<span id="cb3-6"><a href=""></a><span class="bu">print</span>(li)</span>
+<span id="cb3-7"><a href=""></a>li.pop(<span class="dv">4</span>)           <span class="co"># retire le 4ème élément de la liste (et non l'élément 4 de la liste!)</span></span>
+<span id="cb3-8"><a href=""></a><span class="bu">print</span>(li)</span>
+<span id="cb3-9"><a href=""></a></span>
+<span id="cb3-10"><a href=""></a><span class="co"># # boucle sur les éléments:</span></span>
+<span id="cb3-11"><a href=""></a><span class="cf">for</span> el <span class="kw">in</span> li:</span>
+<span id="cb3-12"><a href=""></a>    <span class="bu">print</span>(el)</span>
+<span id="cb3-13"><a href=""></a></span>
+<span id="cb3-14"><a href=""></a><span class="co"># # boucle avec conservation des index:</span></span>
+<span id="cb3-15"><a href=""></a><span class="cf">for</span> ix, el <span class="kw">in</span> <span class="bu">enumerate</span>(li):</span>
+<span id="cb3-16"><a href=""></a>    <span class="bu">print</span>(<span class="ss">f'index </span><span class="sc">{</span>ix<span class="sc">}</span><span class="ss">, valeur: </span><span class="sc">{</span>el<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb3-17"><a href=""></a></span>
+<span id="cb3-18"><a href=""></a><span class="co"># # Comprehension lists:</span></span>
+<span id="cb3-19"><a href=""></a>li <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>) <span class="cf">if</span> i<span class="op">%</span><span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>]</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section class="slide level2">
 
 <h4 id="dictionnaires">Dictionnaires</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a>di <span class="op">=</span> {<span class="st">'nom'</span>: <span class="st">'Crusoé'</span>, <span class="st">'prénom'</span>: <span class="st">'Robinson'</span>, <span class="st">'âge'</span>: <span class="dv">42</span>}</span>
-<span id="cb2-2"><a href=""></a><span class="bu">print</span>(di)</span>
-<span id="cb2-3"><a href=""></a>di[<span class="st">'nom'</span>] <span class="op">=</span> <span class="st">'Stévenin'</span>  <span class="co"># les clés sont uniques</span></span>
-<span id="cb2-4"><a href=""></a><span class="bu">print</span>(di) </span>
-<span id="cb2-5"><a href=""></a>prenom <span class="op">=</span> di.get(<span class="st">'prénom'</span>, <span class="st">'???'</span>)        <span class="co"># clé existante</span></span>
-<span id="cb2-6"><a href=""></a>adresse <span class="op">=</span> di.get(<span class="st">'adresse'</span>, <span class="st">'???'</span>)      <span class="co"># clé manquante</span></span>
-<span id="cb2-7"><a href=""></a><span class="bu">print</span>(<span class="ss">f'prénom:</span><span class="ch">\t</span><span class="sc">{</span>prenom<span class="sc">}</span><span class="ss">,</span><span class="ch">\n</span><span class="ss">adresse:</span><span class="ch">\t</span><span class="sc">{</span>adresse<span class="sc">}</span><span class="ss">'</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a>di <span class="op">=</span> {<span class="st">'nom'</span>: <span class="st">'Crusoé'</span>, <span class="st">'prénom'</span>: <span class="st">'Robinson'</span>, <span class="st">'âge'</span>: <span class="dv">42</span>}</span>
+<span id="cb4-2"><a href=""></a><span class="bu">print</span>(di)</span>
+<span id="cb4-3"><a href=""></a>di[<span class="st">'nom'</span>] <span class="op">=</span> <span class="st">'Stévenin'</span>  <span class="co"># les clés sont uniques</span></span>
+<span id="cb4-4"><a href=""></a><span class="bu">print</span>(di) </span>
+<span id="cb4-5"><a href=""></a>prenom <span class="op">=</span> di.get(<span class="st">'prénom'</span>, <span class="st">'???'</span>)        <span class="co"># clé existante</span></span>
+<span id="cb4-6"><a href=""></a>adresse <span class="op">=</span> di.get(<span class="st">'adresse'</span>, <span class="st">'???'</span>)      <span class="co"># clé manquante</span></span>
+<span id="cb4-7"><a href=""></a><span class="bu">print</span>(<span class="ss">f'prénom:</span><span class="ch">\t</span><span class="sc">{</span>prenom<span class="sc">}</span><span class="ss">,</span><span class="ch">\n</span><span class="ss">adresse:</span><span class="ch">\t</span><span class="sc">{</span>adresse<span class="sc">}</span><span class="ss">'</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section class="slide level2">
 
 <h4 id="tuples">Tuples:</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a>tu <span class="op">=</span> (<span class="fl">49.4545</span>, <span class="fl">2.4545</span>)  <span class="co"># tuple à 2 éléments</span></span>
-<span id="cb3-2"><a href=""></a><span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>tu[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>tu[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb3-3"><a href=""></a><span class="co"># tu[2] = 0               # le nombre d'éléments d'un tuple est invariable (pas de méthodes `append` ou `pop`)</span></span>
-<span id="cb3-4"><a href=""></a><span class="co"># tu[1] = 0               # le contenu d'un tuple n'est pas modifiable</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a>tu <span class="op">=</span> (<span class="fl">49.4545</span>, <span class="fl">2.4545</span>)  <span class="co"># tuple à 2 éléments</span></span>
+<span id="cb5-2"><a href=""></a><span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>tu[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>tu[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb5-3"><a href=""></a><span class="co"># tu[2] = 0               # le nombre d'éléments d'un tuple est invariable (pas de méthodes `append` ou `pop`)</span></span>
+<span id="cb5-4"><a href=""></a><span class="co"># tu[1] = 0               # le contenu d'un tuple n'est pas modifiable</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section class="slide level2">
+
+<h4 id="sets">Sets:</h4>
+<p>Ensemble unique d’éléments non-ordonné.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a>st <span class="op">=</span> {<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>}</span>
+<span id="cb6-2"><a href=""></a></span>
+<span id="cb6-3"><a href=""></a><span class="bu">print</span>(st)  <span class="co"># pas de doublon dans le set</span></span>
+<span id="cb6-4"><a href=""></a></span>
+<span id="cb6-5"><a href=""></a>st.add(<span class="dv">4</span>)</span>
+<span id="cb6-6"><a href=""></a>st.remove(<span class="dv">2</span>)       <span class="co"># lève une erreur si absent</span></span>
+<span id="cb6-7"><a href=""></a>st.discard(<span class="dv">2</span>)      <span class="co"># ne lève pas d'erreur si absent</span></span>
+<span id="cb6-8"><a href=""></a></span>
+<span id="cb6-9"><a href=""></a><span class="co"># Opérations ensemblistes</span></span>
+<span id="cb6-10"><a href=""></a>a <span class="op">=</span> {<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>}</span>
+<span id="cb6-11"><a href=""></a>b <span class="op">=</span> {<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>}</span>
+<span id="cb6-12"><a href=""></a></span>
+<span id="cb6-13"><a href=""></a>a <span class="op">|</span> b   <span class="co"># union → {1, 2, 3, 4}</span></span>
+<span id="cb6-14"><a href=""></a>a <span class="op">&amp;</span> b   <span class="co"># intersection → {2, 3}</span></span>
+<span id="cb6-15"><a href=""></a>a <span class="op">-</span> b   <span class="co"># différence → {1}</span></span>
+<span id="cb6-16"><a href=""></a>a <span class="op">^</span> b   <span class="co"># différence symétrique → {1, 4}</span></span>
+<span id="cb6-17"><a href=""></a></span>
+<span id="cb6-18"><a href=""></a><span class="co"># Comparaisons</span></span>
+<span id="cb6-19"><a href=""></a>a.issubset(b)      <span class="co"># a ⊆ b ?</span></span>
+<span id="cb6-20"><a href=""></a>a.issuperset(b)    <span class="co"># a ⊇ b ?</span></span>
+<span id="cb6-21"><a href=""></a>a.isdisjoint(b)     <span class="co"># aucun élément commun ?</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="mutabilité" class="slide level2">
 <h2>Mutabilité</h2>
 <p>En <code>Python</code>, seuls les types de base <code>int</code>, <code>float</code> et <code>str</code> ne sont pas mutables.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a>a <span class="op">=</span> <span class="dv">2</span></span>
-<span id="cb4-2"><a href=""></a>b <span class="op">=</span> a</span>
-<span id="cb4-3"><a href=""></a>b <span class="op">=</span> <span class="dv">3</span></span>
-<span id="cb4-4"><a href=""></a><span class="bu">print</span>(<span class="ss">f'a: </span><span class="sc">{</span>a<span class="sc">}</span><span class="ss">, b: </span><span class="sc">{</span>b<span class="sc">}</span><span class="ss">'</span>)  <span class="co"># le contenu de a n'a pas changé: une copie de a a été réalisée pour être alouée à b (idem si a est un float ou str)</span></span>
-<span id="cb4-5"><a href=""></a></span>
-<span id="cb4-6"><a href=""></a>li1 <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>]</span>
-<span id="cb4-7"><a href=""></a><span class="bu">print</span>(<span class="ss">f'li1: </span><span class="sc">{</span>li1<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb4-8"><a href=""></a>li2 <span class="op">=</span> li1</span>
-<span id="cb4-9"><a href=""></a>li2[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb4-10"><a href=""></a><span class="bu">print</span>(<span class="ss">f'li2: </span><span class="sc">{</span>li2<span class="sc">}</span><span class="ch">\n</span><span class="ss">li1: </span><span class="sc">{</span>li1<span class="sc">}</span><span class="ss">'</span>)  <span class="co"># le contenu de li1 a été modifié lorsque li2 a été modifié</span></span>
-<span id="cb4-11"><a href=""></a></span>
-<span id="cb4-12"><a href=""></a><span class="co"># # Solution: créer une copie de l'objet mutable:</span></span>
-<span id="cb4-13"><a href=""></a>li3 <span class="op">=</span> li1.copy()</span>
-<span id="cb4-14"><a href=""></a>li3[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">30</span></span>
-<span id="cb4-15"><a href=""></a><span class="bu">print</span>(<span class="ss">f'li3: </span><span class="sc">{</span>li3<span class="sc">}</span><span class="ch">\n</span><span class="ss">li1: </span><span class="sc">{</span>li1<span class="sc">}</span><span class="ss">'</span>)  <span class="co"># le contenu de li1 n'a pas été modifié lorsque li3 a été modifié</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a>a <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb7-2"><a href=""></a>b <span class="op">=</span> a</span>
+<span id="cb7-3"><a href=""></a>b <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb7-4"><a href=""></a><span class="bu">print</span>(<span class="ss">f'a: </span><span class="sc">{</span>a<span class="sc">}</span><span class="ss">, b: </span><span class="sc">{</span>b<span class="sc">}</span><span class="ss">'</span>)  <span class="co"># le contenu de a n'a pas changé: une copie de a a été réalisée pour être alouée à b (idem si a est un float ou str)</span></span>
+<span id="cb7-5"><a href=""></a></span>
+<span id="cb7-6"><a href=""></a>li1 <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>]</span>
+<span id="cb7-7"><a href=""></a><span class="bu">print</span>(<span class="ss">f'li1: </span><span class="sc">{</span>li1<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb7-8"><a href=""></a>li2 <span class="op">=</span> li1</span>
+<span id="cb7-9"><a href=""></a>li2[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb7-10"><a href=""></a><span class="bu">print</span>(<span class="ss">f'li2: </span><span class="sc">{</span>li2<span class="sc">}</span><span class="ch">\n</span><span class="ss">li1: </span><span class="sc">{</span>li1<span class="sc">}</span><span class="ss">'</span>)  <span class="co"># le contenu de li1 a été modifié lorsque li2 a été modifié</span></span>
+<span id="cb7-11"><a href=""></a></span>
+<span id="cb7-12"><a href=""></a><span class="co"># # Solution: créer une copie de l'objet mutable:</span></span>
+<span id="cb7-13"><a href=""></a>li3 <span class="op">=</span> li1.copy()</span>
+<span id="cb7-14"><a href=""></a>li3[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb7-15"><a href=""></a><span class="bu">print</span>(<span class="ss">f'li3: </span><span class="sc">{</span>li3<span class="sc">}</span><span class="ch">\n</span><span class="ss">li1: </span><span class="sc">{</span>li1<span class="sc">}</span><span class="ss">'</span>)  <span class="co"># le contenu de li1 n'a pas été modifié lorsque li3 a été modifié</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="imports-de-modules" class="slide level2">
 <h2>Imports de modules</h2>
@@ -329,18 +502,18 @@ Python pour la data science TD 1 - Rappel des bases
 <blockquote>
 <p>Dans le terminal:</p>
 </blockquote>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource shell number-lines code-with-copy"><code class="sourceCode"><span id="cb5-1"><a href=""></a>pip install mon_module  # example: pip install pandas</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource shell number-lines code-with-copy"><code class="sourceCode"><span id="cb8-1"><a href=""></a>pip install mon_module  # example: pip install pandas</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <blockquote>
 <p>Dans jupyter:</p>
 </blockquote>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="op">!</span>pip install mon_module  <span class="co"># notez le "!"</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="op">!</span>pip install mon_module  <span class="co"># notez le "!"</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <h3 id="import-de-modules">Import de modules</h3>
 <p>==&gt; Toujours en tête de fichier</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np  <span class="co"># et jamais "from numpy import *"!</span></span>
-<span id="cb7-2"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb7-3"><a href=""></a></span>
-<span id="cb7-4"><a href=""></a>df <span class="op">=</span> pd.read_csv(<span class="st">'https://www.insee.fr/fr/statistiques/fichier/6800675/v_commune_2023.csv'</span>)</span>
-<span id="cb7-5"><a href=""></a><span class="co"># reste du code...</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np  <span class="co"># et jamais "from numpy import *"!</span></span>
+<span id="cb10-2"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb10-3"><a href=""></a></span>
+<span id="cb10-4"><a href=""></a>df <span class="op">=</span> pd.read_csv(<span class="st">'https://www.insee.fr/fr/statistiques/fichier/6800675/v_commune_2023.csv'</span>)</span>
+<span id="cb10-5"><a href=""></a><span class="co"># reste du code...</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section class="slide level2">
 
@@ -350,32 +523,32 @@ Python pour la data science TD 1 - Rappel des bases
 <h2>Arborescence de projet</h2>
 <p>Dans un projet, maintenir l’ensemble du code dans un notebook n’est pas maintenable. Le code est déporté sur des fichiers dédiés, modules.</p>
 <p><em>Arborescence classique de projet:</em></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource shell number-lines code-with-copy"><code class="sourceCode"><span id="cb8-1"><a href=""></a>mon_projet/</span>
-<span id="cb8-2"><a href=""></a>    - `main.py`             # fonction principale</span>
-<span id="cb8-3"><a href=""></a>    - `requirements.txt`    # liste des modules et numéros de version à utiliser</span>
-<span id="cb8-4"><a href=""></a>    - mes_modules/          # répertoire où les modules externes sont créés</span>
-<span id="cb8-5"><a href=""></a>        `module1.py`        # module pour tâche 1</span>
-<span id="cb8-6"><a href=""></a>        `module2.py`        # module pour tâche 2</span>
-<span id="cb8-7"><a href=""></a>        ...</span>
-<span id="cb8-8"><a href=""></a>    - venv/                 # environnement Python virtuel</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource shell number-lines code-with-copy"><code class="sourceCode"><span id="cb11-1"><a href=""></a>mon_projet/</span>
+<span id="cb11-2"><a href=""></a>    - `main.py`             # fonction principale</span>
+<span id="cb11-3"><a href=""></a>    - `requirements.txt`    # liste des modules et numéros de version à utiliser</span>
+<span id="cb11-4"><a href=""></a>    - mes_modules/          # répertoire où les modules externes sont créés</span>
+<span id="cb11-5"><a href=""></a>        `module1.py`        # module pour tâche 1</span>
+<span id="cb11-6"><a href=""></a>        `module2.py`        # module pour tâche 2</span>
+<span id="cb11-7"><a href=""></a>        ...</span>
+<span id="cb11-8"><a href=""></a>    - venv/                 # environnement Python virtuel</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <p><br></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="co"># # Fichier `main.py`:</span></span>
-<span id="cb9-2"><a href=""></a><span class="im">import</span> mes_modules.module1 <span class="im">as</span> m1</span>
-<span id="cb9-3"><a href=""></a><span class="im">import</span> mes_modules.module2 <span class="im">as</span> m2</span>
-<span id="cb9-4"><a href=""></a></span>
-<span id="cb9-5"><a href=""></a>m1.print_msg(<span class="st">'msg appelé depuis main...'</span>)</span>
-<span id="cb9-6"><a href=""></a></span>
-<span id="cb9-7"><a href=""></a><span class="co"># Fichier module1.py</span></span>
-<span id="cb9-8"><a href=""></a><span class="kw">def</span> print_msg(msg):</span>
-<span id="cb9-9"><a href=""></a>    <span class="bu">print</span>(msg)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href=""></a><span class="co"># # Fichier `main.py`:</span></span>
+<span id="cb12-2"><a href=""></a><span class="im">import</span> mes_modules.module1 <span class="im">as</span> m1</span>
+<span id="cb12-3"><a href=""></a><span class="im">import</span> mes_modules.module2 <span class="im">as</span> m2</span>
+<span id="cb12-4"><a href=""></a></span>
+<span id="cb12-5"><a href=""></a>m1.print_msg(<span class="st">'msg appelé depuis main...'</span>)</span>
+<span id="cb12-6"><a href=""></a></span>
+<span id="cb12-7"><a href=""></a><span class="co"># Fichier module1.py</span></span>
+<span id="cb12-8"><a href=""></a><span class="kw">def</span> print_msg(msg):</span>
+<span id="cb12-9"><a href=""></a>    <span class="bu">print</span>(msg)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Note:</em> Utiliser la librairie <code>importlib</code> pour recharger les modifications du fichier externe dans l’appel du fichier principal.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a><span class="co"># # Fichier `main.py`:</span></span>
-<span id="cb10-2"><a href=""></a><span class="im">import</span> importlib</span>
-<span id="cb10-3"><a href=""></a><span class="im">import</span> mes_modules.module1 <span class="im">as</span> m1</span>
-<span id="cb10-4"><a href=""></a></span>
-<span id="cb10-5"><a href=""></a>importlib.relaod(m1)  <span class="co"># permet de recharger les modifications dans `module1` sans avoir à relancer Jupyter</span></span>
-<span id="cb10-6"><a href=""></a></span>
-<span id="cb10-7"><a href=""></a>m1.print_msg(<span class="st">'msg appelé depuis main...'</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href=""></a><span class="co"># # Fichier `main.py`:</span></span>
+<span id="cb13-2"><a href=""></a><span class="im">import</span> importlib</span>
+<span id="cb13-3"><a href=""></a><span class="im">import</span> mes_modules.module1 <span class="im">as</span> m1</span>
+<span id="cb13-4"><a href=""></a></span>
+<span id="cb13-5"><a href=""></a>importlib.relaod(m1)  <span class="co"># permet de recharger les modifications dans `module1` sans avoir à relancer Jupyter</span></span>
+<span id="cb13-6"><a href=""></a></span>
+<span id="cb13-7"><a href=""></a>m1.print_msg(<span class="st">'msg appelé depuis main...'</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="classes-et-programmation-orientée-objet-poo-ou-oop" class="slide level2">
 <h2>Classes et programmation orientée objet (POO ou OOP)</h2>
@@ -383,25 +556,25 @@ Python pour la data science TD 1 - Rappel des bases
 <p>Permet de structurer des logiques de code par types de données / manipulation <br> Rend le code maintenable et scalable <br> Tous les modules <code>Python</code> sont des classes!</p>
 </blockquote>
 <p><em>Exemple:</em></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href=""></a><span class="co"># # Classe principale:</span></span>
-<span id="cb11-2"><a href=""></a><span class="kw">class</span> Mother:</span>
-<span id="cb11-3"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, param):</span>
-<span id="cb11-4"><a href=""></a>        <span class="va">self</span>.param <span class="op">=</span> param</span>
-<span id="cb11-5"><a href=""></a>        <span class="va">self</span>._attribut_prive <span class="op">=</span> <span class="dv">2</span></span>
-<span id="cb11-6"><a href=""></a></span>
-<span id="cb11-7"><a href=""></a>    <span class="kw">def</span> action(<span class="va">self</span>):</span>
-<span id="cb11-8"><a href=""></a>        <span class="bu">print</span>(<span class="va">self</span>.param)</span>
-<span id="cb11-9"><a href=""></a></span>
-<span id="cb11-10"><a href=""></a><span class="co"># # Classe fille (hérite de la classe principale):</span></span>
-<span id="cb11-11"><a href=""></a><span class="kw">class</span> Daughter(Mother):</span>
-<span id="cb11-12"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, param):</span>
-<span id="cb11-13"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(param<span class="op">=</span>param)       <span class="co"># initialisation des attributs et méthodes de la classe mère, transmis à la fille</span></span>
-<span id="cb11-14"><a href=""></a>        <span class="va">self</span>.param_fille <span class="op">=</span> <span class="st">'param fille'</span>    <span class="co"># définition des attributs et méthodes propres à la fille</span></span>
-<span id="cb11-15"><a href=""></a>        </span>
-<span id="cb11-16"><a href=""></a><span class="co"># # Instanciation d'un objet de la classe fille:</span></span>
-<span id="cb11-17"><a href=""></a>d <span class="op">=</span> Daughter(param<span class="op">=</span><span class="st">'param entrée'</span>)</span>
-<span id="cb11-18"><a href=""></a>d.action() <span class="co"># la fille hérite des actions implémentées dans la classe mère</span></span>
-<span id="cb11-19"><a href=""></a></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href=""></a><span class="co"># # Classe principale:</span></span>
+<span id="cb14-2"><a href=""></a><span class="kw">class</span> Mother:</span>
+<span id="cb14-3"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, param):</span>
+<span id="cb14-4"><a href=""></a>        <span class="va">self</span>.param <span class="op">=</span> param</span>
+<span id="cb14-5"><a href=""></a>        <span class="va">self</span>._attribut_prive <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb14-6"><a href=""></a></span>
+<span id="cb14-7"><a href=""></a>    <span class="kw">def</span> action(<span class="va">self</span>):</span>
+<span id="cb14-8"><a href=""></a>        <span class="bu">print</span>(<span class="va">self</span>.param)</span>
+<span id="cb14-9"><a href=""></a></span>
+<span id="cb14-10"><a href=""></a><span class="co"># # Classe fille (hérite de la classe principale):</span></span>
+<span id="cb14-11"><a href=""></a><span class="kw">class</span> Daughter(Mother):</span>
+<span id="cb14-12"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, param):</span>
+<span id="cb14-13"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(param<span class="op">=</span>param)       <span class="co"># initialisation des attributs et méthodes de la classe mère, transmis à la fille</span></span>
+<span id="cb14-14"><a href=""></a>        <span class="va">self</span>.param_fille <span class="op">=</span> <span class="st">'param fille'</span>    <span class="co"># définition des attributs et méthodes propres à la fille</span></span>
+<span id="cb14-15"><a href=""></a>        </span>
+<span id="cb14-16"><a href=""></a><span class="co"># # Instanciation d'un objet de la classe fille:</span></span>
+<span id="cb14-17"><a href=""></a>d <span class="op">=</span> Daughter(param<span class="op">=</span><span class="st">'param entrée'</span>)</span>
+<span id="cb14-18"><a href=""></a>d.action() <span class="co"># la fille hérite des actions implémentées dans la classe mère</span></span>
+<span id="cb14-19"><a href=""></a></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="conventions-pep-8" class="slide level2">
 <h2>Conventions PEP-8</h2>
@@ -417,8 +590,9 @@ Python pour la data science TD 1 - Rappel des bases
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="img/logo_ensae.png" class="slide-logo"></p>
 <div class="footer footer-default">
-<p><span style="font-size:12px; line-height:1.2; color:#888;"> TD ENSAE Python pour la data science – <a href="https://pythonds.linogaliana.fr/">pythonds.linogaliana.fr</a> </span></p>
+<p><span style="font-size:12px; line-height:1.2; color:#888;"> TD ENSAE Python pour la data science – <a href="https://pythonds.linogaliana.fr/">pythonds.linogaliana.fr</a> </span> <span style="font-size:12px; line-height:1.2; color:#888;"> - - <a href="https://daniel-odc.github.io/td_pythonds_ensae/">Slides</a> </span></p>
 </div>
 </div></div>
 
