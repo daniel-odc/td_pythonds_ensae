@@ -6,9 +6,6 @@ title: |
     <img src="./img/logo_pandas.png" style="height:100px; margin-right:10px;">
     <img src="./img/logo_geopandas.png" style="height:100px;">
   </div>
-format:
-  revealjs:
-    css: slides.css   # ensure the CSS is loaded even if _metadata.yml isn't picked up
 ---
 
 ## Intro

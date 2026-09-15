@@ -6,7 +6,6 @@ title: >
   </div>
 format:
   revealjs:
-    css: slides.css   # ensure the CSS is loaded even if _metadata.yml isn't picked up
     title-slide: false
 ---
 

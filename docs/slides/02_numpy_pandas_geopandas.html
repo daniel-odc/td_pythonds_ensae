@@ -9,7 +9,7 @@
 <link href="02_numpy_pandas_geopandas_files/libs/quarto-html/quarto-syntax-highlighting-15ea27bac76f9890c21e80949f497921.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.8.24">
 
-  <title>quarto-inputcc87647990b0725a</title>
+  <title>quarto-input4034f4a0fdae482f</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -92,8 +92,7 @@
     code span.vs { color: #4e9a06; } /* VerbatimString */
     code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="02_numpy_pandas_geopandas_files/libs/revealjs/dist/theme/quarto-9bacd3158296feb21eaa887ded9f5e13.css">
-  <link rel="stylesheet" href="slides.css">
+  <link rel="stylesheet" href="02_numpy_pandas_geopandas_files/libs/revealjs/dist/theme/quarto-05bc1c7b0f255ae508ca6f1b5f99c4f8.css">
   <link href="02_numpy_pandas_geopandas_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="02_numpy_pandas_geopandas_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="02_numpy_pandas_geopandas_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -304,8 +303,8 @@ Python pour la data science TD 2
 <section class="slide level2">
 
 
-<img data-src="./img/pandas_dataframe_simple.jpg" class="r-stretch"><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a>df <span class="op">=</span> pd.DataFrame({<span class="st">'year'</span>: [<span class="dv">2012</span>, <span class="dv">2014</span>, <span class="dv">2013</span>, <span class="dv">2014</span>], <span class="st">'month'</span><span class="op">=</span>[<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">10</span>], <span class="st">'sale'</span>: [<span class="dv">55</span>, <span class="dv">40</span>, <span class="dv">84</span>, <span class="dv">31</span>]})</span>
-<span id="cb5-2"><a href=""></a>df.set_index(month, inplace<span class="op">=</span><span class="va">True</span>, drop<span class="op">=</span><span class="va">True</span>)</span>
+<img data-src="./img/pandas_dataframe_simple.jpg" class="r-stretch"><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a>df <span class="op">=</span> pd.DataFrame({<span class="st">'year'</span>: [<span class="dv">2012</span>, <span class="dv">2014</span>, <span class="dv">2013</span>, <span class="dv">2014</span>], <span class="st">'month'</span>: [<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">10</span>], <span class="st">'sale'</span>: [<span class="dv">55</span>, <span class="dv">40</span>, <span class="dv">84</span>, <span class="dv">31</span>]})</span>
+<span id="cb5-2"><a href=""></a>df.set_index(<span class="st">'month'</span>, inplace<span class="op">=</span><span class="va">True</span>, drop<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb5-3"><a href=""></a></span>
 <span id="cb5-4"><a href=""></a>df.loc[<span class="dv">10</span>, <span class="st">'year'</span>]</span>
 <span id="cb5-5"><a href=""></a>df.iloc[<span class="dv">0</span>, <span class="dv">1</span>]</span>
@@ -443,8 +442,10 @@ Python pour la data science TD 2
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="img/logo_ensae.png" class="slide-logo"></p>
 <div class="footer footer-default">
-<p><span style="font-size:12px; line-height:1.2; color:#888;"> TD ENSAE Python pour la data science – <a href="https://pythonds.linogaliana.fr/">pythonds.linogaliana.fr</a> </span></p>
+<p><span style="font-size:12px; line-height:1.2; color:#888;"> TD ENSAE Python pour la data science – <a href="https://pythonds.linogaliana.fr/">pythonds.linogaliana.fr</a> </span> <span style="font-size:12px; line-height:1.2; color:#888;"> -<br>
+<a href="https://daniel-odc.github.io/td_pythonds_ensae/">Slides</a> </span></p>
 </div>
 </div></div>
 
