@@ -13,16 +13,14 @@ format:
 ## Intro
 
 * Cours `Python` de [Lino Galiana](https://github.com/linogaliana/python-datascientist/tree/main), sous environnement [SSP Cloud](https://www.sspcloud.fr/)
-* Questions à dmarin@open-dc.com
+* Questions à [dmarin@open-dc.com](mailto:dmarin@open-dc.com)
 * Programme:
     * TD 01 - Rappels de base
     * TD 02 - `Numpy`, `Pandas` et `GeoPandas`
     * TD 03 - `Git`
     * TD 04 - API et webscrapping
-    * TD 05 - Machine learning
-    * TD 06 - Machine learning (2)
-    * TD 07 - Introduction au NLP
-
+    * TD 05 - Stockage de données dans le cloud et préparation projet 
+  
 ---
 
 ## Environnements Python, gestionnaire de modules et IDE
