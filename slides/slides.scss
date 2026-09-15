@@ -32,6 +32,13 @@ $code-block-font-size: 0.9em;
 
 /*  Sections: -------------------------- */
 
+/* reveal.js's core CSS sets .reveal .slides { text-align: center }; reset it
+   here so slide content is left-aligned by default (title slide stays
+   centered via the more specific .quarto-title-block rule below). */
+.reveal .slides section {
+  text-align: left;
+}
+
 /* Reduce top & bottom padding inside slides */
 .reveal .slides section {
   padding-top: 10px !important;
