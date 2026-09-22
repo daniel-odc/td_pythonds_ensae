@@ -6,3 +6,5 @@ de [Lino Galiana](https://github.com/linogaliana).
 
 [Sildes](https://daniel-odc.github.io/td_pythonds_ensae/)
 
+Mise à jour 2026
+
