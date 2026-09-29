@@ -8,3 +8,4 @@ de [Lino Galiana](https://github.com/linogaliana).
 
 Mise à jour 2026
 updated in main
+updated issue1 from main
