@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>nlp</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="08_NLP_files/libs/clipboard/clipboard.min.js"></script>
+<script src="08_NLP_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="08_NLP_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="08_NLP_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="08_NLP_files/libs/quarto-html/popper.min.js"></script>
+<script src="08_NLP_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="08_NLP_files/libs/quarto-html/anchor.min.js"></script>
+<link href="08_NLP_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="08_NLP_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="08_NLP_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="08_NLP_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="08_NLP_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+
+<div id="initial_id" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T16:47:16.536837Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T16:46:39.789692Z&quot;}}" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">Natural Language Processing</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install pywaffle</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install spacy</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install plotnine</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install great_tables</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install wordcloud</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install nltk</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Requirement already satisfied: pywaffle in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (1.1.1)
+Requirement already satisfied: fontawesomefree in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from pywaffle) (6.6.0)
+Requirement already satisfied: matplotlib in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from pywaffle) (3.9.2)
+Requirement already satisfied: contourpy&gt;=1.0.1 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib-&gt;pywaffle) (1.3.0)
+Requirement already satisfied: cycler&gt;=0.10 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib-&gt;pywaffle) (0.12.1)
+Requirement already satisfied: fonttools&gt;=4.22.0 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib-&gt;pywaffle) (4.54.1)
+Requirement already satisfied: kiwisolver&gt;=1.3.1 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib-&gt;pywaffle) (1.4.7)
+Requirement already satisfied: numpy&gt;=1.23 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib-&gt;pywaffle) (2.0.2)
+Requirement already satisfied: packaging&gt;=20.0 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib-&gt;pywaffle) (24.1)
+Requirement already satisfied: pillow&gt;=8 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib-&gt;pywaffle) (11.0.0)
+Requirement already satisfied: pyparsing&gt;=2.3.1 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib-&gt;pywaffle) (3.2.0)
+Requirement already satisfied: python-dateutil&gt;=2.7 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib-&gt;pywaffle) (2.9.0.post0)
+Requirement already satisfied: six&gt;=1.5 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from python-dateutil&gt;=2.7-&gt;matplotlib-&gt;pywaffle) (1.16.0)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+[notice] A new release of pip available: 22.3.1 -&gt; 24.3.1
+[notice] To update, run: C:\Users\dmarin\AppData\Local\Programs\Python\Python311\python.exe -m pip install --upgrade pip</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Collecting spacy
+  Using cached spacy-3.8.2-cp311-cp311-win_amd64.whl (12.2 MB)
+Requirement already satisfied: spacy-legacy&lt;3.1.0,&gt;=3.0.11 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from spacy) (3.0.12)
+Requirement already satisfied: spacy-loggers&lt;2.0.0,&gt;=1.0.0 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from spacy) (1.0.5)
+Collecting murmurhash&lt;1.1.0,&gt;=0.28.0
+  Using cached murmurhash-1.0.11-cp311-cp311-win_amd64.whl (25 kB)
+Requirement already satisfied: cymem&lt;2.1.0,&gt;=2.0.2 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from spacy) (2.0.10)
+Collecting preshed&lt;3.1.0,&gt;=3.0.2
+  Using cached preshed-3.0.9-cp311-cp311-win_amd64.whl (122 kB)
+Collecting thinc&lt;8.4.0,&gt;=8.3.0
+  Using cached thinc-8.3.2-cp311-cp311-win_amd64.whl (1.5 MB)
+Requirement already satisfied: wasabi&lt;1.2.0,&gt;=0.9.1 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from spacy) (1.1.3)
+Collecting srsly&lt;3.0.0,&gt;=2.4.3
+  Using cached srsly-2.4.8-cp311-cp311-win_amd64.whl (479 kB)
+Collecting catalogue&lt;2.1.0,&gt;=2.0.6
+  Using cached catalogue-2.0.10-py3-none-any.whl (17 kB)
+Collecting weasel&lt;0.5.0,&gt;=0.1.0
+  Using cached weasel-0.4.1-py3-none-any.whl (50 kB)
+Collecting typer&lt;1.0.0,&gt;=0.3.0
+  Using cached typer-0.15.1-py3-none-any.whl (44 kB)
+Requirement already satisfied: tqdm&lt;5.0.0,&gt;=4.38.0 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from spacy) (4.67.1)
+Requirement already satisfied: requests&lt;3.0.0,&gt;=2.13.0 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from spacy) (2.32.3)
+Collecting pydantic!=1.8,!=1.8.1,&lt;3.0.0,&gt;=1.7.4
+  Using cached pydantic-2.10.3-py3-none-any.whl (456 kB)
+Requirement already satisfied: jinja2 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from spacy) (3.1.4)
+Requirement already satisfied: setuptools in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from spacy) (65.5.0)
+Requirement already satisfied: packaging&gt;=20.0 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from spacy) (24.1)
+Collecting langcodes&lt;4.0.0,&gt;=3.2.0
+  Using cached langcodes-3.5.0-py3-none-any.whl (182 kB)
+Requirement already satisfied: numpy&gt;=1.19.0 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from spacy) (2.0.2)
+Collecting language-data&gt;=1.2
+  Using cached language_data-1.3.0-py3-none-any.whl (5.4 MB)
+Collecting annotated-types&gt;=0.6.0
+  Using cached annotated_types-0.7.0-py3-none-any.whl (13 kB)
+Requirement already satisfied: pydantic-core==2.27.1 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from pydantic!=1.8,!=1.8.1,&lt;3.0.0,&gt;=1.7.4-&gt;spacy) (2.27.1)
+Requirement already satisfied: typing-extensions&gt;=4.12.2 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from pydantic!=1.8,!=1.8.1,&lt;3.0.0,&gt;=1.7.4-&gt;spacy) (4.12.2)
+Requirement already satisfied: charset-normalizer&lt;4,&gt;=2 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy) (3.3.2)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy) (3.10)
+Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy) (2.2.3)
+Requirement already satisfied: certifi&gt;=2017.4.17 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy) (2024.8.30)
+Collecting blis&lt;1.1.0,&gt;=1.0.0
+  Using cached blis-1.0.1-cp311-cp311-win_amd64.whl (6.3 MB)
+Collecting confection&lt;1.0.0,&gt;=0.0.1
+  Using cached confection-0.1.5-py3-none-any.whl (35 kB)
+Requirement already satisfied: colorama in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from tqdm&lt;5.0.0,&gt;=4.38.0-&gt;spacy) (0.4.6)
+Collecting click&gt;=8.0.0
+  Using cached click-8.1.7-py3-none-any.whl (97 kB)
+Requirement already satisfied: shellingham&gt;=1.3.0 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from typer&lt;1.0.0,&gt;=0.3.0-&gt;spacy) (1.5.4)
+Collecting rich&gt;=10.11.0
+  Using cached rich-13.9.4-py3-none-any.whl (242 kB)
+Collecting cloudpathlib&lt;1.0.0,&gt;=0.7.0
+  Using cached cloudpathlib-0.20.0-py3-none-any.whl (52 kB)
+Collecting smart-open&lt;8.0.0,&gt;=5.2.1
+  Using cached smart_open-7.0.5-py3-none-any.whl (61 kB)
+Requirement already satisfied: MarkupSafe&gt;=2.0 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from jinja2-&gt;spacy) (3.0.0)
+Collecting marisa-trie&gt;=1.1.0
+  Using cached marisa_trie-1.2.1-cp311-cp311-win_amd64.whl (152 kB)
+Collecting markdown-it-py&gt;=2.2.0
+  Using cached markdown_it_py-3.0.0-py3-none-any.whl (87 kB)
+Requirement already satisfied: pygments&lt;3.0.0,&gt;=2.13.0 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from rich&gt;=10.11.0-&gt;typer&lt;1.0.0,&gt;=0.3.0-&gt;spacy) (2.18.0)
+Requirement already satisfied: wrapt in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from smart-open&lt;8.0.0,&gt;=5.2.1-&gt;weasel&lt;0.5.0,&gt;=0.1.0-&gt;spacy) (1.17.0)
+Collecting mdurl~=0.1
+  Using cached mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+Installing collected packages: smart-open, murmurhash, mdurl, marisa-trie, cloudpathlib, click, catalogue, blis, annotated-types, srsly, pydantic, preshed, markdown-it-py, language-data, rich, langcodes, confection, typer, thinc, weasel, spacy
+Successfully installed annotated-types-0.7.0 blis-1.0.1 catalogue-2.0.10 click-8.1.7 cloudpathlib-0.20.0 confection-0.1.5 langcodes-3.5.0 language-data-1.3.0 marisa-trie-1.2.1 markdown-it-py-3.0.0 mdurl-0.1.2 murmurhash-1.0.11 preshed-3.0.9 pydantic-2.10.3 rich-13.9.4 smart-open-7.0.5 spacy-3.8.2 srsly-2.4.8 thinc-8.3.2 typer-0.15.1 weasel-0.4.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+[notice] A new release of pip available: 22.3.1 -&gt; 24.3.1
+[notice] To update, run: C:\Users\dmarin\AppData\Local\Programs\Python\Python311\python.exe -m pip install --upgrade pip</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Requirement already satisfied: plotnine in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (0.14.2)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+[notice] A new release of pip available: 22.3.1 -&gt; 24.3.1
+[notice] To update, run: C:\Users\dmarin\AppData\Local\Programs\Python\Python311\python.exe -m pip install --upgrade pip</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Requirement already satisfied: matplotlib&gt;=3.8.0 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from plotnine) (3.9.2)
+Requirement already satisfied: pandas&gt;=2.2.0 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from plotnine) (2.2.3)
+Requirement already satisfied: mizani~=0.13.0 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from plotnine) (0.13.0)
+Requirement already satisfied: numpy&gt;=1.23.5 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from plotnine) (2.0.2)
+Requirement already satisfied: scipy&gt;=1.8.0 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from plotnine) (1.14.1)
+Requirement already satisfied: statsmodels&gt;=0.14.0 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from plotnine) (0.14.4)
+Requirement already satisfied: contourpy&gt;=1.0.1 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib&gt;=3.8.0-&gt;plotnine) (1.3.0)
+Requirement already satisfied: cycler&gt;=0.10 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib&gt;=3.8.0-&gt;plotnine) (0.12.1)
+Requirement already satisfied: fonttools&gt;=4.22.0 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib&gt;=3.8.0-&gt;plotnine) (4.54.1)
+Requirement already satisfied: kiwisolver&gt;=1.3.1 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib&gt;=3.8.0-&gt;plotnine) (1.4.7)
+Requirement already satisfied: packaging&gt;=20.0 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib&gt;=3.8.0-&gt;plotnine) (24.1)
+Requirement already satisfied: pillow&gt;=8 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib&gt;=3.8.0-&gt;plotnine) (11.0.0)
+Requirement already satisfied: pyparsing&gt;=2.3.1 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib&gt;=3.8.0-&gt;plotnine) (3.2.0)
+Requirement already satisfied: python-dateutil&gt;=2.7 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib&gt;=3.8.0-&gt;plotnine) (2.9.0.post0)
+Requirement already satisfied: tzdata in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from mizani~=0.13.0-&gt;plotnine) (2024.2)
+Requirement already satisfied: pytz&gt;=2020.1 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from pandas&gt;=2.2.0-&gt;plotnine) (2024.2)
+Requirement already satisfied: patsy&gt;=0.5.6 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from statsmodels&gt;=0.14.0-&gt;plotnine) (1.0.1)
+Requirement already satisfied: six&gt;=1.5 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from python-dateutil&gt;=2.7-&gt;matplotlib&gt;=3.8.0-&gt;plotnine) (1.16.0)
+Requirement already satisfied: great_tables in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (0.14.0)
+Requirement already satisfied: commonmark&gt;=0.9.1 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from great_tables) (0.9.1)
+Requirement already satisfied: htmltools&gt;=0.4.1 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from great_tables) (0.6.0)
+Requirement already satisfied: importlib-metadata in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from great_tables) (8.5.0)
+Requirement already satisfied: typing-extensions&gt;=3.10.0.0 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from great_tables) (4.12.2)
+Requirement already satisfied: numpy&gt;=1.22.4 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from great_tables) (2.0.2)
+Requirement already satisfied: Babel&gt;=2.13.1 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from great_tables) (2.16.0)
+Requirement already satisfied: importlib-resources in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from great_tables) (6.4.5)
+Requirement already satisfied: packaging&gt;=20.9 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from htmltools&gt;=0.4.1-&gt;great_tables) (24.1)
+Requirement already satisfied: zipp&gt;=3.20 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from importlib-metadata-&gt;great_tables) (3.21.0)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+[notice] A new release of pip available: 22.3.1 -&gt; 24.3.1
+[notice] To update, run: C:\Users\dmarin\AppData\Local\Programs\Python\Python311\python.exe -m pip install --upgrade pip</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Requirement already satisfied: wordcloud in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (1.9.4)
+Requirement already satisfied: numpy&gt;=1.6.1 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from wordcloud) (2.0.2)
+Requirement already satisfied: pillow in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from wordcloud) (11.0.0)
+Requirement already satisfied: matplotlib in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from wordcloud) (3.9.2)
+Requirement already satisfied: contourpy&gt;=1.0.1 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib-&gt;wordcloud) (1.3.0)
+Requirement already satisfied: cycler&gt;=0.10 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib-&gt;wordcloud) (0.12.1)
+Requirement already satisfied: fonttools&gt;=4.22.0 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib-&gt;wordcloud) (4.54.1)
+Requirement already satisfied: kiwisolver&gt;=1.3.1 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib-&gt;wordcloud) (1.4.7)
+Requirement already satisfied: packaging&gt;=20.0 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib-&gt;wordcloud) (24.1)
+Requirement already satisfied: pyparsing&gt;=2.3.1 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib-&gt;wordcloud) (3.2.0)
+Requirement already satisfied: python-dateutil&gt;=2.7 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from matplotlib-&gt;wordcloud) (2.9.0.post0)
+Requirement already satisfied: six&gt;=1.5 in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from python-dateutil&gt;=2.7-&gt;matplotlib-&gt;wordcloud) (1.16.0)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+[notice] A new release of pip available: 22.3.1 -&gt; 24.3.1
+[notice] To update, run: C:\Users\dmarin\AppData\Local\Programs\Python\Python311\python.exe -m pip install --upgrade pip</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Collecting nltk
+  Downloading nltk-3.9.1-py3-none-any.whl (1.5 MB)
+     ---------------------------------------- 1.5/1.5 MB 6.8 MB/s eta 0:00:00
+Requirement already satisfied: click in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from nltk) (8.1.7)
+Requirement already satisfied: joblib in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from nltk) (1.4.2)
+Collecting regex&gt;=2021.8.3
+  Downloading regex-2024.11.6-cp311-cp311-win_amd64.whl (274 kB)
+     ------------------------------------- 274.1/274.1 kB 17.6 MB/s eta 0:00:00
+Requirement already satisfied: tqdm in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from nltk) (4.67.1)
+Requirement already satisfied: colorama in c:\users\dmarin\appdata\local\programs\python\python311\lib\site-packages (from click-&gt;nltk) (0.4.6)
+Installing collected packages: regex, nltk
+Successfully installed nltk-3.9.1 regex-2024.11.6</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+[notice] A new release of pip available: 22.3.1 -&gt; 24.3.1
+[notice] To update, run: C:\Users\dmarin\AppData\Local\Programs\Python\Python311\python.exe -m pip install --upgrade pip</code></pre>
+</div>
+</div>
+<div id="531551bd1ed46136" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-12-15T11:58:15.438383Z&quot;,&quot;start_time&quot;:&quot;2025-12-15T11:58:14.299339Z&quot;}}" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Intro: Nettoyer et structurer l’information dans les données textuelles</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># # Data Comte de Monte Cristo</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://www.gutenberg.org/files/17989/17989-0.txt"</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>response.encoding <span class="op">=</span> <span class="st">'utf-8'</span>  <span class="co"># Assure le bon décodage</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>raw <span class="op">=</span> response.text</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>dumas <span class="op">=</span> (</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  raw</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  .split(<span class="st">"*** START OF THE PROJECT GUTENBERG EBOOK 17989 ***"</span>)[<span class="dv">1</span>]</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  .split(<span class="st">"*** END OF THE PROJECT GUTENBERG EBOOK 17989 ***"</span>)[<span class="dv">0</span>]</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> clean_text(text):</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.lower() <span class="co"># mettre les mots en minuscule</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> <span class="st">" "</span>.join(text.split())</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> text</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>dumas <span class="op">=</span> clean_text(dumas)</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>dumas[<span class="dv">10000</span>:<span class="dv">10500</span>]</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>" mes yeux. --vous avez donc vu l'empereur aussi? --il est entré chez le maréchal pendant que j'y étais. --et vous lui avez parlé? --c'est-à-dire que c'est lui qui m'a parlé, monsieur, dit dantès en souriant. --et que vous a-t-il dit? --il m'a fait des questions sur le bâtiment, sur l'époque de son départ pour marseille, sur la route qu'il avait suivie et sur la cargaison qu'il portait. je crois que s'il eût été vide, et que j'en eusse été le maître, son intention eût été de l'acheter; mais je lu"</code></pre>
+</div>
+</div>
+<div id="9308219c203d194" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-12-15T11:59:36.158518Z&quot;,&quot;start_time&quot;:&quot;2025-12-15T11:59:34.764822Z&quot;}}" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Data corpus anglo saxon:</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">Edgar Allan Poe, (EAP) ;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">HP Lovecraft (HPL) ;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">Mary Wollstonecraft Shelley (MWS).</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>url<span class="op">=</span><span class="st">'https://github.com/GU4243-ADS/spring2018-project1-ginnyqg/raw/master/data/spooky.csv'</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">#1. Import des données</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>horror <span class="op">=</span> pd.read_csv(url,encoding<span class="op">=</span><span class="st">'latin-1'</span>)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co">#2. Majuscules aux noms des colonnes</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>horror.columns <span class="op">=</span> horror.columns.<span class="bu">str</span>.capitalize()</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co">#3. Retirer le prefixe id</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>horror[<span class="st">'ID'</span>] <span class="op">=</span> horror[<span class="st">'Id'</span>].<span class="bu">str</span>.replace(<span class="st">"id"</span>,<span class="st">""</span>)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>horror <span class="op">=</span> horror.set_index(<span class="st">'Id'</span>)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>horror.head()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Text</th>
+<th data-quarto-table-cell-role="th">Author</th>
+<th data-quarto-table-cell-role="th">ID</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Id</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">id26305</th>
+<td>This process, however, afforded me no means of...</td>
+<td>EAP</td>
+<td>26305</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">id17569</th>
+<td>It never once occurred to me that the fumbling...</td>
+<td>HPL</td>
+<td>17569</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">id11008</th>
+<td>In his left hand was a gold snuff box, from wh...</td>
+<td>EAP</td>
+<td>11008</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">id27763</th>
+<td>How lovely is spring As we looked from Windsor...</td>
+<td>MWS</td>
+<td>27763</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">id12958</th>
+<td>Finding nothing else, not even gold, the Super...</td>
+<td>HPL</td>
+<td>12958</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="2cd4c0aeca3c5764" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T16:43:49.211253Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T16:43:49.185287Z&quot;}}" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Exercice 1: Analyses de fréquence</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1.1. Compter le nombre de phrase pour chaque auteur avec fear</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> nb_occurrences(word, train_data):</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    train_data[<span class="st">"wordtoplot"</span>] <span class="op">=</span> train_data[<span class="st">"Text"</span>].<span class="bu">str</span>.contains(word).astype(<span class="bu">int</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    table <span class="op">=</span> train_data.groupby(<span class="st">"Author"</span>).<span class="bu">sum</span>(numeric_only<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> table.to_dict()[<span class="st">"wordtoplot"</span>]</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> table</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> nb_occurrences(<span class="st">"fear"</span>, horror)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>table.head()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">wordtoplot</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Author</th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">EAP</th>
+<td>70</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">HPL</th>
+<td>160</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">MWS</th>
+<td>211</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="9989dd0123448955" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T16:44:37.419194Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T16:44:35.925250Z&quot;}}" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # 1.2 Résumé du nb d'occurence du mot "fear"</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pywaffle <span class="im">import</span> Waffle</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> graph_occurrence(word, train_data):</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    table <span class="op">=</span> nb_occurrences(word, train_data)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> table.to_dict()[<span class="st">"wordtoplot"</span>]</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    fig <span class="op">=</span> plt.figure(</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>        FigureClass<span class="op">=</span>Waffle,</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>        rows<span class="op">=</span><span class="dv">15</span>,</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>        values<span class="op">=</span>data,</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>        title<span class="op">=</span>{</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">"label"</span>: <span class="st">'Utilisation du mot "</span><span class="sc">%s</span><span class="st">" par les auteurs'</span> <span class="op">%</span> word,</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">"loc"</span>: <span class="st">"left"</span>,</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>        labels<span class="op">=</span>[<span class="ss">f"</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>v<span class="sc">}</span><span class="ss">)"</span> <span class="cf">for</span> k, v <span class="kw">in</span> data.items()],</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fig</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> graph_occurrence(<span class="st">"fear"</span>, horror)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_NLP_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="9645509fda644c68" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T16:47:23.906433Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T16:47:16.543205Z&quot;}}" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # 1.3 Transformation d'un texte en tokens</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">"stopwords"</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">"punkt"</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">"punkt_tab"</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">"genesis"</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">"wordnet"</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">"omw-1.4"</span>)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>python <span class="op">-</span>m spacy download fr_core_news_sm</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>python <span class="op">-</span>m spacy download en_core_web_sm</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.tokenize <span class="im">import</span> word_tokenize</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>word_tokenize(dumas[<span class="dv">10000</span>:<span class="dv">10500</span>])</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[nltk_data] Downloading package stopwords to
+[nltk_data]     C:\Users\dmarin\AppData\Roaming\nltk_data...
+[nltk_data]   Unzipping corpora\stopwords.zip.
+[nltk_data] Downloading package punkt to
+[nltk_data]     C:\Users\dmarin\AppData\Roaming\nltk_data...
+[nltk_data]   Unzipping tokenizers\punkt.zip.
+[nltk_data] Downloading package punkt_tab to
+[nltk_data]     C:\Users\dmarin\AppData\Roaming\nltk_data...
+[nltk_data]   Unzipping tokenizers\punkt_tab.zip.
+[nltk_data] Downloading package genesis to
+[nltk_data]     C:\Users\dmarin\AppData\Roaming\nltk_data...
+[nltk_data]   Unzipping corpora\genesis.zip.
+[nltk_data] Downloading package wordnet to
+[nltk_data]     C:\Users\dmarin\AppData\Roaming\nltk_data...
+[nltk_data] Downloading package omw-1.4 to
+[nltk_data]     C:\Users\dmarin\AppData\Roaming\nltk_data...
+C:\Python310\python.exe: No module named spacy
+C:\Python310\python.exe: No module named spacy</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>['mes',
+ 'yeux',
+ '.',
+ '--',
+ 'vous',
+ 'avez',
+ 'donc',
+ 'vu',
+ "l'empereur",
+ 'aussi',
+ '?',
+ '--',
+ 'il',
+ 'est',
+ 'entré',
+ 'chez',
+ 'le',
+ 'maréchal',
+ 'pendant',
+ 'que',
+ 'j',
+ "'",
+ 'y',
+ 'étais',
+ '.',
+ '--',
+ 'et',
+ 'vous',
+ 'lui',
+ 'avez',
+ 'parlé',
+ '?',
+ '--',
+ "c'est-à-dire",
+ 'que',
+ "c'est",
+ 'lui',
+ 'qui',
+ 'm',
+ "'",
+ 'a',
+ 'parlé',
+ ',',
+ 'monsieur',
+ ',',
+ 'dit',
+ 'dantès',
+ 'en',
+ 'souriant',
+ '.',
+ '--',
+ 'et',
+ 'que',
+ 'vous',
+ 'a-t-il',
+ 'dit',
+ '?',
+ '--',
+ 'il',
+ 'm',
+ "'",
+ 'a',
+ 'fait',
+ 'des',
+ 'questions',
+ 'sur',
+ 'le',
+ 'bâtiment',
+ ',',
+ 'sur',
+ "l'époque",
+ 'de',
+ 'son',
+ 'départ',
+ 'pour',
+ 'marseille',
+ ',',
+ 'sur',
+ 'la',
+ 'route',
+ "qu'il",
+ 'avait',
+ 'suivie',
+ 'et',
+ 'sur',
+ 'la',
+ 'cargaison',
+ "qu'il",
+ 'portait',
+ '.',
+ 'je',
+ 'crois',
+ 'que',
+ "s'il",
+ 'eût',
+ 'été',
+ 'vide',
+ ',',
+ 'et',
+ 'que',
+ "j'en",
+ 'eusse',
+ 'été',
+ 'le',
+ 'maître',
+ ',',
+ 'son',
+ 'intention',
+ 'eût',
+ 'été',
+ 'de',
+ "l'acheter",
+ ';',
+ 'mais',
+ 'je',
+ 'lu']</code></pre>
+</div>
+</div>
+<div id="b04e3889a68cee75" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T16:48:06.665406Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T16:48:03.909373Z&quot;}}" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Tokenizer:</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> spacy</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> spacy.tokenizer <span class="im">import</span> Tokenizer</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>nlp <span class="op">=</span> spacy.load(<span class="st">"fr_core_news_sm"</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> nlp(dumas[<span class="dv">10000</span>:<span class="dv">10500</span>])</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>text_tokenized <span class="op">=</span> []</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> token <span class="kw">in</span> doc:</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    text_tokenized <span class="op">+=</span> [token.text]</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co">", "</span>.join(text_tokenized)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg ansi-bold">OSError</span>                                   Traceback (most recent call last)
+Cell <span class="ansi-green-fg ansi-bold">In[10], line 5</span>
+<span class="ansi-green-fg">      2</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span> <span style="font-weight:bold;color:rgb(0,0,255)">spacy</span>
+<span class="ansi-green-fg">      3</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span> <span style="font-weight:bold;color:rgb(0,0,255)">spacy</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">tokenizer</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span> Tokenizer
+<span class="ansi-green-fg ansi-bold">----&gt; 5</span> nlp <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">spacy</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">load</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">"</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">fr_core_news_sm</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">"</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg">      6</span> doc <span style="color:rgb(98,98,98)">=</span> nlp(dumas[<span style="color:rgb(98,98,98)">10000</span>:<span style="color:rgb(98,98,98)">10500</span>])
+<span class="ansi-green-fg">      8</span> text_tokenized <span style="color:rgb(98,98,98)">=</span> []
+
+File <span class="ansi-green-fg ansi-bold">~\AppData\Local\Programs\Python\Python311\Lib\site-packages\spacy\__init__.py:51</span>, in <span class="ansi-cyan-fg">load</span><span class="ansi-blue-fg ansi-bold">(name, vocab, disable, enable, exclude, config)</span>
+<span class="ansi-green-fg">     27</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span> <span style="color:rgb(0,0,255)">load</span>(
+<span class="ansi-green-fg">     28</span>     name: Union[<span style="color:rgb(0,135,0)">str</span>, Path],
+<span class="ansi-green-fg">     29</span>     <span style="color:rgb(98,98,98)">*</span>,
+<span class="ansi-green-fg ansi-bold">   (...)</span>
+<span class="ansi-green-fg">     34</span>     config: Union[Dict[<span style="color:rgb(0,135,0)">str</span>, Any], Config] <span style="color:rgb(98,98,98)">=</span> util<span style="color:rgb(98,98,98)">.</span>SimpleFrozenDict(),
+<span class="ansi-green-fg">     35</span> ) <span style="color:rgb(98,98,98)">-</span><span style="color:rgb(98,98,98)">&gt;</span> Language:
+<span class="ansi-green-fg">     36</span> <span style="color:rgb(188,188,188)">    </span><span style="font-style:italic;color:rgb(175,0,0)">"""Load a spaCy model from an installed package or a local path.</span>
+<span class="ansi-green-fg">     37</span> 
+<span class="ansi-green-fg">     38</span> <span style="font-style:italic;color:rgb(175,0,0)">    name (str): Package name or model path.</span>
+<span class="ansi-green-fg ansi-bold">   (...)</span>
+<span class="ansi-green-fg">     49</span> <span style="font-style:italic;color:rgb(175,0,0)">    RETURNS (Language): The loaded nlp object.</span>
+<span class="ansi-green-fg">     50</span> <span style="font-style:italic;color:rgb(175,0,0)">    """</span>
+<span class="ansi-green-fg ansi-bold">---&gt; 51</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">util</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">load_model</span><span class="ansi-yellow-bg">(</span>
+<span class="ansi-green-fg">     52</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">name</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">     53</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">vocab</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">vocab</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">     54</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">disable</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">disable</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">     55</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">enable</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">enable</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">     56</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">exclude</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">exclude</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">     57</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">config</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">config</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">     58</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
+
+File <span class="ansi-green-fg ansi-bold">~\AppData\Local\Programs\Python\Python311\Lib\site-packages\spacy\util.py:472</span>, in <span class="ansi-cyan-fg">load_model</span><span class="ansi-blue-fg ansi-bold">(name, vocab, disable, enable, exclude, config)</span>
+<span class="ansi-green-fg">    470</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> name <span style="font-weight:bold;color:rgb(175,0,255)">in</span> OLD_MODEL_SHORTCUTS:
+<span class="ansi-green-fg">    471</span>     <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> <span style="font-weight:bold;color:rgb(215,95,95)">IOError</span>(Errors<span style="color:rgb(98,98,98)">.</span>E941<span style="color:rgb(98,98,98)">.</span>format(name<span style="color:rgb(98,98,98)">=</span>name, full<span style="color:rgb(98,98,98)">=</span>OLD_MODEL_SHORTCUTS[name]))  <span style="font-style:italic;color:rgb(95,135,135)"># type: ignore[index]</span>
+<span class="ansi-green-fg ansi-bold">--&gt; 472</span> <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> <span style="font-weight:bold;color:rgb(215,95,95)">IOError</span>(Errors<span style="color:rgb(98,98,98)">.</span>E050<span style="color:rgb(98,98,98)">.</span>format(name<span style="color:rgb(98,98,98)">=</span>name))
+
+<span class="ansi-red-fg ansi-bold">OSError</span>: [E050] Can't find model 'fr_core_news_sm'. It doesn't seem to be a Python package or a valid path to a data directory.</pre>
+</div>
+</div>
+</div>
+<div id="e8dc138c687a727e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T16:51:29.688767Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T16:51:29.663421Z&quot;}}" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # 3.3 Nuage de mots</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> nlp(dumas[:<span class="dv">30000</span>])</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract tokens, convert to lowercase and filter out punctuation and spaces</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> [</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    token.text.lower() <span class="cf">for</span> token <span class="kw">in</span> doc <span class="cf">if</span> <span class="kw">not</span> token.is_punct <span class="kw">and</span> <span class="kw">not</span> token.is_space</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the frequency of each token</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>token_counts <span class="op">=</span> Counter(tokens)</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'len(token_counts): </span><span class="sc">{:,}</span><span class="st">'</span>.<span class="bu">format</span>(<span class="bu">len</span>(token_counts)))</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>token_count_all <span class="op">=</span> <span class="bu">list</span>(token_counts.items())</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a DataFrame from the list of tuples</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>token_count_all <span class="op">=</span> pd.DataFrame(token_count_all, columns<span class="op">=</span>[<span class="st">"word"</span>, <span class="st">"count"</span>])</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg ansi-bold">NameError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg ansi-bold">In[11], line 4</span>
+<span class="ansi-green-fg">      1</span> <span style="font-style:italic;color:rgb(95,135,135)"># # 3.3 Nuage de mots</span>
+<span class="ansi-green-fg">      2</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span> <span style="font-weight:bold;color:rgb(0,0,255)">collections</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span> Counter
+<span class="ansi-green-fg ansi-bold">----&gt; 4</span> doc <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">nlp</span>(dumas[:<span style="color:rgb(98,98,98)">30000</span>])
+<span class="ansi-green-fg">      6</span> <span style="font-style:italic;color:rgb(95,135,135)"># Extract tokens, convert to lowercase and filter out punctuation and spaces</span>
+<span class="ansi-green-fg">      7</span> tokens <span style="color:rgb(98,98,98)">=</span> [
+<span class="ansi-green-fg">      8</span>     token<span style="color:rgb(98,98,98)">.</span>text<span style="color:rgb(98,98,98)">.</span>lower() <span style="font-weight:bold;color:rgb(0,135,0)">for</span> token <span style="font-weight:bold;color:rgb(175,0,255)">in</span> doc <span style="font-weight:bold;color:rgb(0,135,0)">if</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> token<span style="color:rgb(98,98,98)">.</span>is_punct <span style="font-weight:bold;color:rgb(175,0,255)">and</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> token<span style="color:rgb(98,98,98)">.</span>is_space
+<span class="ansi-green-fg">      9</span> ]
+
+<span class="ansi-red-fg ansi-bold">NameError</span>: name 'nlp' is not defined</pre>
+</div>
+</div>
+</div>
+<div id="ce251c36212dbe7a" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Distribution de la fréquence des mots</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotnine <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>(ggplot(token_count_all) <span class="op">+</span> geom_histogram(aes(x<span class="op">=</span><span class="st">"count"</span>)) <span class="op">+</span> scale_x_log10())</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="42ce6652759a948b" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT, md</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the tokens by frequency in descending order</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>sorted_token_counts <span class="op">=</span> token_counts.most_common(<span class="dv">25</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>sorted_token_counts <span class="op">=</span> pd.DataFrame(sorted_token_counts, columns<span class="op">=</span>[<span class="st">"word"</span>, <span class="st">"count"</span>])</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_bar(prop_fill: <span class="bu">float</span>, max_width: <span class="bu">int</span>, height: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Create divs to represent prop_fill as a bar."""</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    width <span class="op">=</span> <span class="bu">round</span>(max_width <span class="op">*</span> prop_fill, <span class="dv">2</span>)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    px_width <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>width<span class="sc">}</span><span class="ss">px"</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="ss">f"""</span><span class="op">\</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="ss">    &lt;div style="width: </span><span class="sc">{</span>max_width<span class="sc">}</span><span class="ss">px; background-color: lightgrey;"&gt;</span><span class="op">\</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="ss">        &lt;div style="height:</span><span class="sc">{</span>height<span class="sc">}</span><span class="ss">px;width:</span><span class="sc">{</span>px_width<span class="sc">}</span><span class="ss">;background-color:green;"&gt;&lt;/div&gt;</span><span class="op">\</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="ss">    &lt;/div&gt;</span><span class="op">\</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="ss">    """</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>sorted_token_counts[<span class="st">"count_pct"</span>] <span class="op">=</span> (</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>    sorted_token_counts[<span class="st">"count"</span>] <span class="op">/</span> sorted_token_counts[<span class="st">"count"</span>].<span class="bu">max</span>()</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> (</span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>    pl.from_pandas(sorted_token_counts)</span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>    .with_columns(</span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>        pl.col(<span class="st">"count_pct"</span>)</span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>        .map_elements(<span class="kw">lambda</span> x: create_bar(x, max_width<span class="op">=</span><span class="dv">75</span>, height<span class="op">=</span><span class="dv">20</span>))</span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>        .alias(<span class="st">"count_pct_bar"</span>)</span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>    .with_columns(</span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>        pl.col(<span class="st">"count_pct"</span>).map_elements(<span class="kw">lambda</span> x: <span class="ss">f"__</span><span class="sc">{</span>x<span class="sc">}</span><span class="ss">__"</span>).alias(<span class="st">"count_pct"</span>)</span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a>    GT(df)</span>
+<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a>    .cols_hide(<span class="st">"count_pct"</span>)</span>
+<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a>    .cols_label(<span class="op">**</span>{<span class="st">"count_pct_bar"</span>: <span class="st">""</span>, <span class="st">"word"</span>: <span class="st">"Mot"</span>, <span class="st">"count"</span>: <span class="st">"Nombre d'occurrences"</span>})</span>
+<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a>    .tab_source_note(</span>
+<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a>        md(</span>
+<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>            <span class="st">"_Nombre d'apparitions sur les 30 000 premiers caractères du Comte de Monte Cristo_"</span></span>
+<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a>    .fmt_markdown(<span class="st">"word"</span>)</span>
+<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-47"><a href="#cb25-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-48"><a href="#cb25-48" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb25-49"><a href="#cb25-49" aria-hidden="true" tabindex="-1"></a>    ggplot(sorted_token_counts, aes(x<span class="op">=</span><span class="st">"word"</span>, y<span class="op">=</span><span class="st">"count"</span>))</span>
+<span id="cb25-50"><a href="#cb25-50" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> geom_point(stat<span class="op">=</span><span class="st">"identity"</span>, size<span class="op">=</span><span class="dv">3</span>, color<span class="op">=</span><span class="st">"red"</span>)</span>
+<span id="cb25-51"><a href="#cb25-51" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> scale_x_discrete(limits<span class="op">=</span>sorted_token_counts.sort_values(<span class="st">"count"</span>)[<span class="st">"word"</span>].tolist())</span>
+<span id="cb25-52"><a href="#cb25-52" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> coord_flip()</span>
+<span id="cb25-53"><a href="#cb25-53" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> theme_minimal()</span>
+<span id="cb25-54"><a href="#cb25-54" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> labs(title<span class="op">=</span><span class="st">"Word Frequency"</span>, x<span class="op">=</span><span class="st">"Word"</span>, y<span class="op">=</span><span class="st">"Count"</span>)</span>
+<span id="cb25-55"><a href="#cb25-55" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="f8dccec5f29c5797" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T16:57:29.509669Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T16:57:20.470762Z&quot;}}" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Exercice 3: Wordcloud</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> wordcloud <span class="im">import</span> WordCloud</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 3.1. Wordclouds trois auteurs anglo saxons</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> graph_wordcloud(author, train_data, varname<span class="op">=</span><span class="st">"Text"</span>):</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    txt <span class="op">=</span> train_data.loc[train_data[<span class="st">"Author"</span>] <span class="op">==</span> author, varname]</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    all_text <span class="op">=</span> <span class="st">" "</span>.join([text <span class="cf">for</span> text <span class="kw">in</span> txt])</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    wordcloud <span class="op">=</span> WordCloud(</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>        width<span class="op">=</span><span class="dv">800</span>,</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>        height<span class="op">=</span><span class="dv">500</span>,</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>        random_state<span class="op">=</span><span class="dv">21</span>,</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>        max_words<span class="op">=</span><span class="dv">2000</span>,</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>        background_color<span class="op">=</span><span class="st">"white"</span>,</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>        colormap<span class="op">=</span><span class="st">"Set2"</span>,</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>    ).generate(all_text)</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wordcloud</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>n_topics <span class="op">=</span> [<span class="st">"HPL"</span>, <span class="st">"EAP"</span>, <span class="st">"MWS"</span>]</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(n_topics)):</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>    wordcloud <span class="op">=</span> graph_wordcloud(n_topics[i], horror)</span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>    plt.imshow(wordcloud)</span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>    plt.axis(<span class="st">"off"</span>)</span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_NLP_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_NLP_files/figure-html/cell-12-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_NLP_files/figure-html/cell-12-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="d820c9236d2f18a4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T16:58:25.628596Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T16:58:11.033073Z&quot;}}" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Wordcloud Dumas</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> wordcloud</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> io</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> PIL</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> <span class="st">"https://minio.lab.sspcloud.fr/lgaliana/generative-art/pythonds/book.png"</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>book_mask <span class="op">=</span> np.array(PIL.Image.<span class="bu">open</span>(io.BytesIO(requests.get(img).content)))</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_wordcloud(corpus):</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    wc <span class="op">=</span> wordcloud.WordCloud(</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>        background_color<span class="op">=</span><span class="st">"white"</span>,</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>        max_words<span class="op">=</span><span class="dv">2000</span>,</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>        mask<span class="op">=</span>book_mask,</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>        contour_width<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>        contour_color<span class="op">=</span><span class="st">"steelblue"</span>,</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>    wc.generate(corpus)</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wc</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>wordcloud_dumas <span class="op">=</span> make_wordcloud(dumas)</span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>plt.imshow(wordcloud_dumas, interpolation<span class="op">=</span><span class="st">"bilinear"</span>)</span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">"off"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_NLP_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="249ec1eea4ce1f5a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T16:59:53.262698Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T16:59:49.631787Z&quot;}}" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Relation rang frequence d'un mot: Loi de Zipf</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotnine <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>count_words <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"counter"</span>: horror.groupby(<span class="st">"Author"</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>        .<span class="bu">apply</span>(<span class="kw">lambda</span> s: <span class="st">" "</span>.join(s[<span class="st">"Text"</span>]).split())</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>        .<span class="bu">apply</span>(<span class="kw">lambda</span> s: Counter(s))</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>        .<span class="bu">apply</span>(<span class="kw">lambda</span> s: s.most_common())</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>        .explode()</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>count_words[[<span class="st">"word"</span>, <span class="st">"count"</span>]] <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    count_words[<span class="st">"counter"</span>].tolist(), index<span class="op">=</span>count_words.index</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>count_words <span class="op">=</span> count_words.reset_index()</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>count_words <span class="op">=</span> count_words.assign(</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>    tot_mots_auteur<span class="op">=</span><span class="kw">lambda</span> x: (x.groupby(<span class="st">"Author"</span>)[<span class="st">"count"</span>].transform(<span class="st">"sum"</span>)),</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>    freq<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="st">"count"</span>] <span class="op">/</span> x[<span class="st">"tot_mots_auteur"</span>],</span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>    rank<span class="op">=</span><span class="kw">lambda</span> x: x.groupby(<span class="st">"Author"</span>)[<span class="st">"count"</span>].transform(<span class="st">"rank"</span>, ascending<span class="op">=</span><span class="va">False</span>),</span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> (</span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>    ggplot(count_words)</span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> geom_point(aes(y<span class="op">=</span><span class="st">"freq"</span>, x<span class="op">=</span><span class="st">"rank"</span>, color<span class="op">=</span><span class="st">"Author"</span>), alpha<span class="op">=</span><span class="fl">0.4</span>)</span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> scale_x_log10()</span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> scale_y_log10()</span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> theme_minimal()</span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>g</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\dmarin\AppData\Local\Temp\ipykernel_18896\543368801.py:6: DeprecationWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_NLP_files/figure-html/cell-14-output-2.png" width="640" height="480" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="4f696d7d4a5dbd30" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T17:00:51.401871Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T17:00:46.719010Z&quot;}}" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Formalisation de la relation:</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>exog <span class="op">=</span> sm.add_constant(np.log(count_words[<span class="st">"rank"</span>].astype(<span class="bu">float</span>)))</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.GLM(</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    count_words[<span class="st">"freq"</span>].astype(<span class="bu">float</span>), exog, family<span class="op">=</span>sm.families.Poisson()</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>).fit()</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Afficher les résultats du modèle</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model.summary())</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a><span class="co">==&gt; Le coefficient de la régression est presque 1 ce qui suggère bien une relation quasiment log-linéaire entre le rang et la fréquence d’occurrence d’un mot. Dit autrement, le mot le plus utilisé l’est deux fois plus que le deuxième mot le plus fréquent qui l’est trois plus que le troisième, etc. On retrouve bien empiriquement cette loi sur ce corpus de trois auteurs.</span></span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 Generalized Linear Model Regression Results                  
+==============================================================================
+Dep. Variable:                   freq   No. Observations:                69301
+Model:                            GLM   Df Residuals:                    69299
+Model Family:                 Poisson   Df Model:                            1
+Link Function:                    Log   Scale:                          1.0000
+Method:                          IRLS   Log-Likelihood:                -23.011
+Date:                Mon, 09 Dec 2024   Deviance:                     0.065676
+Time:                        18:00:51   Pearson chi2:                   0.0656
+No. Iterations:                     5   Pseudo R-squ. (CS):          0.0002431
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         -2.4388      1.089     -2.239      0.025      -4.574      -0.303
+rank          -0.9831      0.189     -5.196      0.000      -1.354      -0.612
+==============================================================================</code></pre>
+</div>
+</div>
+<div id="758476aa11f335ce" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T17:03:18.235857Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T17:03:18.219749Z&quot;}}" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # 4. Nettoyage de texte:</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co"># # 4.1: Retrait des stop words</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">"stopwords"</span>)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.corpus <span class="im">import</span> stopwords</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="co">", "</span>.join(stopwords.words(<span class="st">"english"</span>))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[nltk_data] Downloading package stopwords to
+[nltk_data]     C:\Users\dmarin\AppData\Roaming\nltk_data...
+[nltk_data]   Package stopwords is already up-to-date!</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>"i, me, my, myself, we, our, ours, ourselves, you, you're, you've, you'll, you'd, your, yours, yourself, yourselves, he, him, his, himself, she, she's, her, hers, herself, it, it's, its, itself, they, them, their, theirs, themselves, what, which, who, whom, this, that, that'll, these, those, am, is, are, was, were, be, been, being, have, has, had, having, do, does, did, doing, a, an, the, and, but, if, or, because, as, until, while, of, at, by, for, with, about, against, between, into, through, during, before, after, above, below, to, from, up, down, in, out, on, off, over, under, again, further, then, once, here, there, when, where, why, how, all, any, both, each, few, more, most, other, some, such, no, nor, not, only, own, same, so, than, too, very, s, t, can, will, just, don, don't, should, should've, now, d, ll, m, o, re, ve, y, ain, aren, aren't, couldn, couldn't, didn, didn't, doesn, doesn't, hadn, hadn't, hasn, hasn't, haven, haven't, isn, isn't, ma, mightn, mightn't, mustn, mustn't, needn, needn't, shan, shan't, shouldn, shouldn't, wasn, wasn't, weren, weren't, won, won't, wouldn, wouldn't"</code></pre>
+</div>
+</div>
+<div id="1fb07545b7e0718e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T17:03:38.788163Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T17:03:38.591407Z&quot;}}" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Version `SpaCy`:</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>nlp_english <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>stop_words_english <span class="op">=</span> nlp_english.Defaults.stop_words</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co">", "</span>.join(stop_words_english)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg ansi-bold">OSError</span>                                   Traceback (most recent call last)
+Cell <span class="ansi-green-fg ansi-bold">In[19], line 1</span>
+<span class="ansi-green-fg ansi-bold">----&gt; 1</span> nlp_english <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">spacy</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">load</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">"</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">en_core_web_sm</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">"</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg">      2</span> stop_words_english <span style="color:rgb(98,98,98)">=</span> nlp_english<span style="color:rgb(98,98,98)">.</span>Defaults<span style="color:rgb(98,98,98)">.</span>stop_words
+<span class="ansi-green-fg">      3</span> <span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">, </span><span style="color:rgb(175,0,0)">"</span><span style="color:rgb(98,98,98)">.</span>join(stop_words_english)
+
+File <span class="ansi-green-fg ansi-bold">~\AppData\Local\Programs\Python\Python311\Lib\site-packages\spacy\__init__.py:51</span>, in <span class="ansi-cyan-fg">load</span><span class="ansi-blue-fg ansi-bold">(name, vocab, disable, enable, exclude, config)</span>
+<span class="ansi-green-fg">     27</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span> <span style="color:rgb(0,0,255)">load</span>(
+<span class="ansi-green-fg">     28</span>     name: Union[<span style="color:rgb(0,135,0)">str</span>, Path],
+<span class="ansi-green-fg">     29</span>     <span style="color:rgb(98,98,98)">*</span>,
+<span class="ansi-green-fg ansi-bold">   (...)</span>
+<span class="ansi-green-fg">     34</span>     config: Union[Dict[<span style="color:rgb(0,135,0)">str</span>, Any], Config] <span style="color:rgb(98,98,98)">=</span> util<span style="color:rgb(98,98,98)">.</span>SimpleFrozenDict(),
+<span class="ansi-green-fg">     35</span> ) <span style="color:rgb(98,98,98)">-</span><span style="color:rgb(98,98,98)">&gt;</span> Language:
+<span class="ansi-green-fg">     36</span> <span style="color:rgb(188,188,188)">    </span><span style="font-style:italic;color:rgb(175,0,0)">"""Load a spaCy model from an installed package or a local path.</span>
+<span class="ansi-green-fg">     37</span> 
+<span class="ansi-green-fg">     38</span> <span style="font-style:italic;color:rgb(175,0,0)">    name (str): Package name or model path.</span>
+<span class="ansi-green-fg ansi-bold">   (...)</span>
+<span class="ansi-green-fg">     49</span> <span style="font-style:italic;color:rgb(175,0,0)">    RETURNS (Language): The loaded nlp object.</span>
+<span class="ansi-green-fg">     50</span> <span style="font-style:italic;color:rgb(175,0,0)">    """</span>
+<span class="ansi-green-fg ansi-bold">---&gt; 51</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">util</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">load_model</span><span class="ansi-yellow-bg">(</span>
+<span class="ansi-green-fg">     52</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">name</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">     53</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">vocab</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">vocab</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">     54</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">disable</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">disable</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">     55</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">enable</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">enable</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">     56</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">exclude</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">exclude</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">     57</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">config</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">config</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">     58</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
+
+File <span class="ansi-green-fg ansi-bold">~\AppData\Local\Programs\Python\Python311\Lib\site-packages\spacy\util.py:472</span>, in <span class="ansi-cyan-fg">load_model</span><span class="ansi-blue-fg ansi-bold">(name, vocab, disable, enable, exclude, config)</span>
+<span class="ansi-green-fg">    470</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> name <span style="font-weight:bold;color:rgb(175,0,255)">in</span> OLD_MODEL_SHORTCUTS:
+<span class="ansi-green-fg">    471</span>     <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> <span style="font-weight:bold;color:rgb(215,95,95)">IOError</span>(Errors<span style="color:rgb(98,98,98)">.</span>E941<span style="color:rgb(98,98,98)">.</span>format(name<span style="color:rgb(98,98,98)">=</span>name, full<span style="color:rgb(98,98,98)">=</span>OLD_MODEL_SHORTCUTS[name]))  <span style="font-style:italic;color:rgb(95,135,135)"># type: ignore[index]</span>
+<span class="ansi-green-fg ansi-bold">--&gt; 472</span> <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> <span style="font-weight:bold;color:rgb(215,95,95)">IOError</span>(Errors<span style="color:rgb(98,98,98)">.</span>E050<span style="color:rgb(98,98,98)">.</span>format(name<span style="color:rgb(98,98,98)">=</span>name))
+
+<span class="ansi-red-fg ansi-bold">OSError</span>: [E050] Can't find model 'en_core_web_sm'. It doesn't seem to be a Python package or a valid path to a data directory.</pre>
+</div>
+</div>
+</div>
+<div id="1647272f146c960b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T17:04:04.753025Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T17:04:04.738482Z&quot;}}" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Français:</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co">", "</span>.join(stopwords.words(<span class="st">"french"</span>))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<pre><code>'au, aux, avec, ce, ces, dans, de, des, du, elle, en, et, eux, il, ils, je, la, le, les, leur, lui, ma, mais, me, même, mes, moi, mon, ne, nos, notre, nous, on, ou, par, pas, pour, qu, que, qui, sa, se, ses, son, sur, ta, te, tes, toi, ton, tu, un, une, vos, votre, vous, c, d, j, l, à, m, n, s, t, y, été, étée, étées, étés, étant, étante, étants, étantes, suis, es, est, sommes, êtes, sont, serai, seras, sera, serons, serez, seront, serais, serait, serions, seriez, seraient, étais, était, étions, étiez, étaient, fus, fut, fûmes, fûtes, furent, sois, soit, soyons, soyez, soient, fusse, fusses, fût, fussions, fussiez, fussent, ayant, ayante, ayantes, ayants, eu, eue, eues, eus, ai, as, avons, avez, ont, aurai, auras, aura, aurons, aurez, auront, aurais, aurait, aurions, auriez, auraient, avais, avait, avions, aviez, avaient, eut, eûmes, eûtes, eurent, aie, aies, ait, ayons, ayez, aient, eusse, eusses, eût, eussions, eussiez, eussent'</code></pre>
+</div>
+</div>
+<div id="4855a80cefe27e6b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T17:04:29.460001Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T17:04:29.432830Z&quot;}}" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Version `SpaCy`:</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>stop_words_french <span class="op">=</span> nlp.Defaults.stop_words</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co">", "</span>.join(stop_words_french)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg ansi-bold">NameError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg ansi-bold">In[21], line 2</span>
+<span class="ansi-green-fg">      1</span> <span style="font-style:italic;color:rgb(95,135,135)"># # Version `SpaCy`:</span>
+<span class="ansi-green-fg ansi-bold">----&gt; 2</span> stop_words_french <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">nlp</span><span style="color:rgb(98,98,98)">.</span>Defaults<span style="color:rgb(98,98,98)">.</span>stop_words
+<span class="ansi-green-fg">      3</span> <span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">, </span><span style="color:rgb(175,0,0)">"</span><span style="color:rgb(98,98,98)">.</span>join(stop_words_french)
+
+<span class="ansi-red-fg ansi-bold">NameError</span>: name 'nlp' is not defined</pre>
+</div>
+</div>
+</div>
+<div id="afb8e47d7cf3fca3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T17:05:50.780535Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T17:05:50.753376Z&quot;}}" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Reprise des analyses de texte sans les stop words</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> clean_text</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> clean_text(doc):</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Tokenize, remove stop words and punctuation, and lemmatize</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    cleaned_tokens <span class="op">=</span> [</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>        token.lemma_ <span class="cf">for</span> token <span class="kw">in</span> doc <span class="cf">if</span> <span class="kw">not</span> token.is_stop <span class="kw">and</span> <span class="kw">not</span> token.is_punct</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Join tokens back into a single string</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>    cleaned_text <span class="op">=</span> <span class="st">" "</span>.join(cleaned_tokens)</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> cleaned_text</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Process the text with spaCy</span></span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> nlp(dumas[:<span class="dv">30000</span>], disable<span class="op">=</span>[<span class="st">"ner"</span>, <span class="st">"textcat"</span>])</span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean the text</span></span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>cleaned_dumas <span class="op">=</span> clean_text(doc)</span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>wordcloud_dumas_nostop <span class="op">=</span> make_wordcloud(cleaned_dumas)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg ansi-bold">NameError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg ansi-bold">In[22], line 15</span>
+<span class="ansi-green-fg">     12</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> cleaned_text
+<span class="ansi-green-fg">     14</span> <span style="font-style:italic;color:rgb(95,135,135)"># Process the text with spaCy</span>
+<span class="ansi-green-fg ansi-bold">---&gt; 15</span> doc <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">nlp</span>(dumas[:<span style="color:rgb(98,98,98)">30000</span>], disable<span style="color:rgb(98,98,98)">=</span>[<span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">ner</span><span style="color:rgb(175,0,0)">"</span>, <span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">textcat</span><span style="color:rgb(175,0,0)">"</span>])
+<span class="ansi-green-fg">     17</span> <span style="font-style:italic;color:rgb(95,135,135)"># Clean the text</span>
+<span class="ansi-green-fg">     18</span> cleaned_dumas <span style="color:rgb(98,98,98)">=</span> clean_text(doc)
+
+<span class="ansi-red-fg ansi-bold">NameError</span>: name 'nlp' is not defined</pre>
+</div>
+</div>
+</div>
+<div id="a8f68e08d19e6874" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T17:13:03.890631Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T17:13:03.813271Z&quot;}}" data-execution_count="33">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # 4.2 Racinisation et lemmatisation</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">"wordnet"</span>)</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">"omw-1.4"</span>)</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>dumas[<span class="dv">1030</span>:<span class="dv">1200</span>]</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[nltk_data] Downloading package wordnet to
+[nltk_data]     C:\Users\dmarin\AppData\Roaming\nltk_data...
+[nltk_data]   Package wordnet is already up-to-date!
+[nltk_data] Downloading package omw-1.4 to
+[nltk_data]     C:\Users\dmarin\AppData\Roaming\nltk_data...
+[nltk_data]   Package omw-1.4 is already up-to-date!</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="33">
+<pre><code>"naples. comme d'habitude, un pilote côtier partit aussitôt du port, rasa le château d'if, et alla aborder le navire entre le cap de morgion et l'île de rion. aussitôt, co"</code></pre>
+</div>
+</div>
+<div id="d13cc2e37e2a2914" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T17:13:35.418354Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T17:13:35.411493Z&quot;}}" data-execution_count="34">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Version racinisée:</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.stem.snowball <span class="im">import</span> SnowballStemmer</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>stemmer <span class="op">=</span> SnowballStemmer(language<span class="op">=</span><span class="st">"french"</span>)</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>stemmed <span class="op">=</span> [stemmer.stem(word) <span class="cf">for</span> word <span class="kw">in</span> word_tokenize(dumas[<span class="dv">1030</span>:<span class="dv">1200</span>])]</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="co">","</span>.join(stemmed)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="34">
+<pre><code>"napl,.,comm,d'habitud,,,un,pilot,côti,part,aussitôt,du,port,,,ras,le,château,d'if,,,et,alla,abord,le,navir,entre,le,cap,de,morgion,et,l'îl,de,rion,.,aussitôt,,,co"</code></pre>
+</div>
+</div>
+<div id="e7cb685d915823f5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T17:15:03.724728Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T17:15:03.712635Z&quot;}}" data-execution_count="36">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Version lemmatisée:</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.stem <span class="im">import</span> WordNetLemmatizer</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>lemm <span class="op">=</span> WordNetLemmatizer()</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> word <span class="kw">in</span> [<span class="st">"women"</span>, <span class="st">"daughters"</span>, <span class="st">"leaves"</span>]:</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"The lemmatized form of </span><span class="sc">{</span>word<span class="sc">}</span><span class="ss"> is: </span><span class="sc">{</span>lemm<span class="sc">.</span>lemmatize(word)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="co"># # Version Dumas:</span></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>lemmatizer <span class="op">=</span> WordNetLemmatizer()</span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>lemmatized <span class="op">=</span> [lemmatizer.lemmatize(word) <span class="cf">for</span> word <span class="kw">in</span> word_tokenize(dumas[<span class="dv">1030</span>:<span class="dv">1200</span>])]</span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a><span class="co">", "</span>.join(lemmatized)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The lemmatized form of women is: woman
+The lemmatized form of daughters is: daughter
+The lemmatized form of leaves is: leaf</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="36">
+<pre><code>"naples, ., comme, d'habitude, ,, un, pilote, côtier, partit, aussitôt, du, port, ,, rasa, le, château, d'if, ,, et, alla, aborder, le, navire, entre, le, cap, de, morgion, et, l'île, de, rion, ., aussitôt, ,, co"</code></pre>
+</div>
+</div>
+<div id="4b83765ad0b73d79" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T17:26:30.652759Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T17:26:29.046086Z&quot;}}" data-execution_count="37">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co">Analyse fréquentiste par l'approche Bags of words</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> spacy</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="co"># # Rechargement des données:</span></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://github.com/GU4243-ADS/spring2018-project1-ginnyqg/raw/master/data/spooky.csv"</span></span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Import des données</span></span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>horror <span class="op">=</span> pd.read_csv(url, encoding<span class="op">=</span><span class="st">"latin-1"</span>)</span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Majuscules aux noms des colonnes</span></span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>horror.columns <span class="op">=</span> horror.columns.<span class="bu">str</span>.capitalize()</span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Retirer le prefixe id</span></span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>horror[<span class="st">"ID"</span>] <span class="op">=</span> horror[<span class="st">"Id"</span>].<span class="bu">str</span>.replace(<span class="st">"id"</span>, <span class="st">""</span>)</span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>horror <span class="op">=</span> horror.set_index(<span class="st">"Id"</span>)</span>
+<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to clean the text</span></span>
+<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> clean_text(doc):</span>
+<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Tokenize, remove stop words and punctuation, and lemmatize</span></span>
+<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a>    cleaned_tokens <span class="op">=</span> [</span>
+<span id="cb48-23"><a href="#cb48-23" aria-hidden="true" tabindex="-1"></a>        token.lemma_ <span class="cf">for</span> token <span class="kw">in</span> doc <span class="cf">if</span> <span class="kw">not</span> token.is_stop <span class="kw">and</span> <span class="kw">not</span> token.is_punct</span>
+<span id="cb48-24"><a href="#cb48-24" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb48-25"><a href="#cb48-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Join tokens back into a single string</span></span>
+<span id="cb48-26"><a href="#cb48-26" aria-hidden="true" tabindex="-1"></a>    cleaned_text <span class="op">=</span> <span class="st">" "</span>.join(cleaned_tokens)</span>
+<span id="cb48-27"><a href="#cb48-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> cleaned_text</span>
+<span id="cb48-28"><a href="#cb48-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-29"><a href="#cb48-29" aria-hidden="true" tabindex="-1"></a>nlp_english <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>)</span>
+<span id="cb48-30"><a href="#cb48-30" aria-hidden="true" tabindex="-1"></a>stopwords <span class="op">=</span> nlp_english.Defaults.stop_words</span>
+<span id="cb48-31"><a href="#cb48-31" aria-hidden="true" tabindex="-1"></a>docs <span class="op">=</span> nlp_english.pipe(horror[<span class="st">"Text"</span>])</span>
+<span id="cb48-32"><a href="#cb48-32" aria-hidden="true" tabindex="-1"></a>cleaned_texts <span class="op">=</span> [clean_text(doc) <span class="cf">for</span> doc <span class="kw">in</span> docs]</span>
+<span id="cb48-33"><a href="#cb48-33" aria-hidden="true" tabindex="-1"></a>horror[<span class="st">"preprocessed_text"</span>] <span class="op">=</span> cleaned_texts</span>
+<span id="cb48-34"><a href="#cb48-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-35"><a href="#cb48-35" aria-hidden="true" tabindex="-1"></a><span class="co"># # 2.3 Exemple:</span></span>
+<span id="cb48-36"><a href="#cb48-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Documents d'exemple</span></span>
+<span id="cb48-37"><a href="#cb48-37" aria-hidden="true" tabindex="-1"></a>documents <span class="op">=</span> [</span>
+<span id="cb48-38"><a href="#cb48-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Le corbeau et le renard"</span>,</span>
+<span id="cb48-39"><a href="#cb48-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Rusé comme un renard"</span>,</span>
+<span id="cb48-40"><a href="#cb48-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Le chat est orange comme un renard"</span>,</span>
+<span id="cb48-41"><a href="#cb48-41" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb48-42"><a href="#cb48-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-43"><a href="#cb48-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-44"><a href="#cb48-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Tokenisation</span></span>
+<span id="cb48-45"><a href="#cb48-45" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> preprocess(doc):</span>
+<span id="cb48-46"><a href="#cb48-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> doc.lower().split()</span>
+<span id="cb48-47"><a href="#cb48-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-48"><a href="#cb48-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-49"><a href="#cb48-49" aria-hidden="true" tabindex="-1"></a>tokenized_docs <span class="op">=</span> [preprocess(doc) <span class="cf">for</span> doc <span class="kw">in</span> documents]</span>
+<span id="cb48-50"><a href="#cb48-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-51"><a href="#cb48-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-52"><a href="#cb48-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Term frequency (TF)</span></span>
+<span id="cb48-53"><a href="#cb48-53" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> term_frequency(term, tokenized_doc):</span>
+<span id="cb48-54"><a href="#cb48-54" aria-hidden="true" tabindex="-1"></a>    term_count <span class="op">=</span> tokenized_doc.count(term)</span>
+<span id="cb48-55"><a href="#cb48-55" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> term_count <span class="op">/</span> <span class="bu">len</span>(tokenized_doc)</span>
+<span id="cb48-56"><a href="#cb48-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-57"><a href="#cb48-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-58"><a href="#cb48-58" aria-hidden="true" tabindex="-1"></a><span class="co"># Inverse document frequency (DF)</span></span>
+<span id="cb48-59"><a href="#cb48-59" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> document_frequency(term, tokenized_docs):</span>
+<span id="cb48-60"><a href="#cb48-60" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span>(<span class="dv">1</span> <span class="cf">for</span> doc <span class="kw">in</span> tokenized_docs <span class="cf">if</span> term <span class="kw">in</span> doc)</span>
+<span id="cb48-61"><a href="#cb48-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-62"><a href="#cb48-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-63"><a href="#cb48-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate inverse document frequency (IDF)</span></span>
+<span id="cb48-64"><a href="#cb48-64" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> inverse_document_frequency(word, corpus):</span>
+<span id="cb48-65"><a href="#cb48-65" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Normalisation avec + 1 pour éviter la division par zéro</span></span>
+<span id="cb48-66"><a href="#cb48-66" aria-hidden="true" tabindex="-1"></a>    count_of_documents <span class="op">=</span> <span class="bu">len</span>(corpus) <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb48-67"><a href="#cb48-67" aria-hidden="true" tabindex="-1"></a>    count_of_documents_with_word <span class="op">=</span> <span class="bu">sum</span>([<span class="dv">1</span> <span class="cf">for</span> doc <span class="kw">in</span> corpus <span class="cf">if</span> word <span class="kw">in</span> doc]) <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb48-68"><a href="#cb48-68" aria-hidden="true" tabindex="-1"></a>    idf <span class="op">=</span> np.log10(count_of_documents <span class="op">/</span> count_of_documents_with_word) <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb48-69"><a href="#cb48-69" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> idf</span>
+<span id="cb48-70"><a href="#cb48-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-71"><a href="#cb48-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-72"><a href="#cb48-72" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate TF-IDF scores in each document</span></span>
+<span id="cb48-73"><a href="#cb48-73" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tf_idf_term(term):</span>
+<span id="cb48-74"><a href="#cb48-74" aria-hidden="true" tabindex="-1"></a>    tf_idf_scores <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb48-75"><a href="#cb48-75" aria-hidden="true" tabindex="-1"></a>        [</span>
+<span id="cb48-76"><a href="#cb48-76" aria-hidden="true" tabindex="-1"></a>            [</span>
+<span id="cb48-77"><a href="#cb48-77" aria-hidden="true" tabindex="-1"></a>                term_frequency(term, doc),</span>
+<span id="cb48-78"><a href="#cb48-78" aria-hidden="true" tabindex="-1"></a>                inverse_document_frequency(term, tokenized_docs),</span>
+<span id="cb48-79"><a href="#cb48-79" aria-hidden="true" tabindex="-1"></a>            ]</span>
+<span id="cb48-80"><a href="#cb48-80" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> doc <span class="kw">in</span> tokenized_docs</span>
+<span id="cb48-81"><a href="#cb48-81" aria-hidden="true" tabindex="-1"></a>        ],</span>
+<span id="cb48-82"><a href="#cb48-82" aria-hidden="true" tabindex="-1"></a>        columns<span class="op">=</span>[<span class="st">"TF"</span>, <span class="st">"IDF"</span>],</span>
+<span id="cb48-83"><a href="#cb48-83" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb48-84"><a href="#cb48-84" aria-hidden="true" tabindex="-1"></a>    tf_idf_scores[<span class="st">"TF-IDF"</span>] <span class="op">=</span> tf_idf_scores[<span class="st">"TF"</span>] <span class="op">*</span> tf_idf_scores[<span class="st">"IDF"</span>]</span>
+<span id="cb48-85"><a href="#cb48-85" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tf_idf_scores</span>
+<span id="cb48-86"><a href="#cb48-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-87"><a href="#cb48-87" aria-hidden="true" tabindex="-1"></a>tf_idf_term(<span class="st">"chat"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg ansi-bold">OSError</span>                                   Traceback (most recent call last)
+Cell <span class="ansi-green-fg ansi-bold">In[37], line 29</span>
+<span class="ansi-green-fg">     26</span>     cleaned_text <span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)"> </span><span style="color:rgb(175,0,0)">"</span><span style="color:rgb(98,98,98)">.</span>join(cleaned_tokens)
+<span class="ansi-green-fg">     27</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> cleaned_text
+<span class="ansi-green-fg ansi-bold">---&gt; 29</span> nlp_english <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">spacy</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">load</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">"</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">en_core_web_sm</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">"</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg">     30</span> stopwords <span style="color:rgb(98,98,98)">=</span> nlp_english<span style="color:rgb(98,98,98)">.</span>Defaults<span style="color:rgb(98,98,98)">.</span>stop_words
+<span class="ansi-green-fg">     31</span> docs <span style="color:rgb(98,98,98)">=</span> nlp_english<span style="color:rgb(98,98,98)">.</span>pipe(horror[<span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">Text</span><span style="color:rgb(175,0,0)">"</span>])
+
+File <span class="ansi-green-fg ansi-bold">~\AppData\Local\Programs\Python\Python311\Lib\site-packages\spacy\__init__.py:51</span>, in <span class="ansi-cyan-fg">load</span><span class="ansi-blue-fg ansi-bold">(name, vocab, disable, enable, exclude, config)</span>
+<span class="ansi-green-fg">     27</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span> <span style="color:rgb(0,0,255)">load</span>(
+<span class="ansi-green-fg">     28</span>     name: Union[<span style="color:rgb(0,135,0)">str</span>, Path],
+<span class="ansi-green-fg">     29</span>     <span style="color:rgb(98,98,98)">*</span>,
+<span class="ansi-green-fg ansi-bold">   (...)</span>
+<span class="ansi-green-fg">     34</span>     config: Union[Dict[<span style="color:rgb(0,135,0)">str</span>, Any], Config] <span style="color:rgb(98,98,98)">=</span> util<span style="color:rgb(98,98,98)">.</span>SimpleFrozenDict(),
+<span class="ansi-green-fg">     35</span> ) <span style="color:rgb(98,98,98)">-</span><span style="color:rgb(98,98,98)">&gt;</span> Language:
+<span class="ansi-green-fg">     36</span> <span style="color:rgb(188,188,188)">    </span><span style="font-style:italic;color:rgb(175,0,0)">"""Load a spaCy model from an installed package or a local path.</span>
+<span class="ansi-green-fg">     37</span> 
+<span class="ansi-green-fg">     38</span> <span style="font-style:italic;color:rgb(175,0,0)">    name (str): Package name or model path.</span>
+<span class="ansi-green-fg ansi-bold">   (...)</span>
+<span class="ansi-green-fg">     49</span> <span style="font-style:italic;color:rgb(175,0,0)">    RETURNS (Language): The loaded nlp object.</span>
+<span class="ansi-green-fg">     50</span> <span style="font-style:italic;color:rgb(175,0,0)">    """</span>
+<span class="ansi-green-fg ansi-bold">---&gt; 51</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">util</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">load_model</span><span class="ansi-yellow-bg">(</span>
+<span class="ansi-green-fg">     52</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">name</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">     53</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">vocab</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">vocab</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">     54</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">disable</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">disable</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">     55</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">enable</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">enable</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">     56</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">exclude</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">exclude</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">     57</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">config</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">config</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">     58</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
+
+File <span class="ansi-green-fg ansi-bold">~\AppData\Local\Programs\Python\Python311\Lib\site-packages\spacy\util.py:472</span>, in <span class="ansi-cyan-fg">load_model</span><span class="ansi-blue-fg ansi-bold">(name, vocab, disable, enable, exclude, config)</span>
+<span class="ansi-green-fg">    470</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> name <span style="font-weight:bold;color:rgb(175,0,255)">in</span> OLD_MODEL_SHORTCUTS:
+<span class="ansi-green-fg">    471</span>     <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> <span style="font-weight:bold;color:rgb(215,95,95)">IOError</span>(Errors<span style="color:rgb(98,98,98)">.</span>E941<span style="color:rgb(98,98,98)">.</span>format(name<span style="color:rgb(98,98,98)">=</span>name, full<span style="color:rgb(98,98,98)">=</span>OLD_MODEL_SHORTCUTS[name]))  <span style="font-style:italic;color:rgb(95,135,135)"># type: ignore[index]</span>
+<span class="ansi-green-fg ansi-bold">--&gt; 472</span> <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> <span style="font-weight:bold;color:rgb(215,95,95)">IOError</span>(Errors<span style="color:rgb(98,98,98)">.</span>E050<span style="color:rgb(98,98,98)">.</span>format(name<span style="color:rgb(98,98,98)">=</span>name))
+
+<span class="ansi-red-fg ansi-bold">OSError</span>: [E050] Can't find model 'en_core_web_sm'. It doesn't seem to be a Python package or a valid path to a data directory.</pre>
+</div>
+</div>
+</div>
+<div id="bd05c5093637f8a1" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Exercice 6: TF-IDF: calcul de fréquence</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfVectorizer</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="co"># # 6.1. TfIdf de scikit</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>tfidf <span class="op">=</span> TfidfVectorizer(stop_words<span class="op">=</span><span class="bu">list</span>(stopwords))</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>tfidf</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="ed49af733c9a529d" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>tfs <span class="op">=</span> tfidf.fit_transform(horror[<span class="st">"Text"</span>])</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>feature_names <span class="op">=</span> tfidf.get_feature_names_out()</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>corpus_index <span class="op">=</span> [n <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">list</span>(tfidf.vocabulary_.keys())]</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>horror_dense <span class="op">=</span> pd.DataFrame(tfs.todense(), columns<span class="op">=</span>feature_names)</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>horror_dense.head()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="94423027fa0ba264" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # 6.2. Lignes où les termes de abandon sont non nuls.</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>tempdf <span class="op">=</span> horror_dense.loc[(horror_dense.<span class="bu">filter</span>(regex<span class="op">=</span><span class="st">"abandon"</span>) <span class="op">!=</span> <span class="dv">0</span>).<span class="bu">any</span>(axis<span class="op">=</span><span class="dv">1</span>)]</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tempdf.index)</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>tempdf.head(<span class="dv">5</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="d8cfd80899efe708" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # 6.3. 50 extraits avec le TF-IDF le plus élevé.</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>list_fear <span class="op">=</span> horror_dense[<span class="st">"fear"</span>].sort_values(ascending<span class="op">=</span><span class="va">False</span>).head(n<span class="op">=</span><span class="dv">50</span>).index.tolist()</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>(horror.iloc[list_fear].agg({<span class="st">"Text"</span>: <span class="st">"count"</span>}).sort_values(ascending<span class="op">=</span><span class="va">False</span>))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="246acfb548085108" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # 6.4. Les 10 scores les plus élevés</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>horror.iloc[list_fear[:<span class="dv">9</span>]][<span class="st">"Text"</span>].tolist()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="6245646ae85f6165" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T17:30:00.693978Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T17:30:00.656517Z&quot;}}" data-execution_count="39">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Les n-grams:</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">"genesis"</span>)</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>nltk.corpus.genesis.words(<span class="st">"english-web.txt"</span>)</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>eap_clean <span class="op">=</span> horror.loc[horror[<span class="st">"Author"</span>] <span class="op">==</span> <span class="st">"EAP"</span>]</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>eap_clean <span class="op">=</span> <span class="st">" "</span>.join(eap_clean[<span class="st">"Text"</span>])</span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> eap_clean.split()</span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tokens[:<span class="dv">10</span>])</span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> nltk.Text(tokens)</span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(text)</span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>['This', 'process,', 'however,', 'afforded', 'me', 'no', 'means', 'of', 'ascertaining', 'the']
+&lt;Text: This process, however, afforded me no means of...&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[nltk_data] Downloading package genesis to
+[nltk_data]     C:\Users\dmarin\AppData\Roaming\nltk_data...
+[nltk_data]   Package genesis is already up-to-date!</code></pre>
+</div>
+</div>
+<div id="3692507633983732" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T17:30:43.019096Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T17:30:42.940712Z&quot;}}" data-execution_count="40">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Exercice 7: n-grams et contexte du mot fear</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.collocations <span class="im">import</span> BigramCollocationFinder</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.metrics <span class="im">import</span> BigramAssocMeasures</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="co"># # 7.1. Methode concordance</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Exemples d'occurences du terme 'fear' :"</span>)</span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>text.concordance(<span class="st">"fear"</span>)</span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Exemples d'occurences du terme 'fear' :
+Displaying 13 of 13 matches:
+d quick unequal spoken apparently in fear as well as in anger. What he said wa
+hutters were close fastened, through fear of robbers, and so I knew that he co
+to details. I even went so far as to fear that, as I occasioned much trouble, 
+years of age, was heard to express a fear "that she should never see Marie aga
+ich must be entirely remodelled, for fear of serious accident I mean the steel
+ my arm, and I attended her home. 'I fear that I shall never see Marie again.'
+clusion here is absurd. "I very much fear it is so," replied Monsieur Maillard
+bt of ultimately seeing the Pole. "I fear you are right there," said the Prefe
+er occurred before.' Indeed I had no fear on her account. For a moment there w
+erhaps so," said I; "but, Legrand, I fear you are no artist. It is my firm int
+ raps with a hammer. Be of heart and fear nothing. My daughter, Mademoiselle M
+e splendor. I have not the slightest fear for the result. The face was so far 
+arriers of iron that hemmed me in. I fear you have mesmerized" adding immediat
+
+</code></pre>
+</div>
+</div>
+<div id="e93a1462f4a28809" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # 7.2. Modélisation des meilleures collocations</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>bcf <span class="op">=</span> BigramCollocationFinder.from_words(text)</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>bcf.nbest(BigramAssocMeasures.likelihood_ratio, <span class="dv">20</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="8a593bd8926be2bd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T17:31:24.665498Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T17:31:24.300825Z&quot;}}" data-execution_count="41">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # 7.3. Modélisation des meilleures collocations (qui apparaissent 5+)</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>finder <span class="op">=</span> nltk.BigramCollocationFinder.from_words(text)</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>finder.apply_freq_filter(<span class="dv">5</span>)</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>bigram_measures <span class="op">=</span> nltk.collocations.BigramAssocMeasures()</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>collocations <span class="op">=</span> finder.nbest(bigram_measures.jaccard, <span class="dv">15</span>)</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> collocation <span class="kw">in</span> collocations:</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>    c <span class="op">=</span> <span class="st">" "</span>.join(collocation)</span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(c)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>"Gad Fly"
+'Hum Drum,'
+'Rowdy Dow,'
+Brevet Brigadier
+BarriÃ¨re du
+ugh ugh
+Ourang Outang
+Chess Player
+John A.
+A. B.
+hu hu
+General John
+'Oppodeldoc,' whoever
+mille, mille,
+Brigadier General</code></pre>
+</div>
+</div>
+<div id="875d6508a907d0f2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T17:31:39.585174Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T17:31:39.465482Z&quot;}}" data-execution_count="42">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # 7.4. collocations du mot fear</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>bigram_measures <span class="op">=</span> nltk.collocations.BigramAssocMeasures()</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> collocations_word(word<span class="op">=</span><span class="st">"fear"</span>):</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Ngrams with a specific name</span></span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>    name_filter <span class="op">=</span> <span class="kw">lambda</span> <span class="op">*</span>w: word <span class="kw">not</span> <span class="kw">in</span> w</span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Bigrams</span></span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>    finder <span class="op">=</span> BigramCollocationFinder.from_words(</span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a>        nltk.corpus.genesis.words(<span class="st">"english-web.txt"</span>)</span>
+<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># only bigrams that contain 'fear'</span></span>
+<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a>    finder.apply_ngram_filter(name_filter)</span>
+<span id="cb62-14"><a href="#cb62-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># return the 100 n-grams with the highest PMI</span></span>
+<span id="cb62-15"><a href="#cb62-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(finder.nbest(bigram_measures.likelihood_ratio, <span class="dv">100</span>))</span>
+<span id="cb62-16"><a href="#cb62-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-17"><a href="#cb62-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-18"><a href="#cb62-18" aria-hidden="true" tabindex="-1"></a>collocations_word(<span class="st">"fear"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[('fear', 'of'), ('fear', 'God'), ('I', 'fear'), ('the', 'fear'), ('The', 'fear'), ('fear', 'him'), ('you', 'fear')]</code></pre>
+</div>
+</div>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

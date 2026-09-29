@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>tests</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="99_tests_files/libs/clipboard/clipboard.min.js"></script>
+<script src="99_tests_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="99_tests_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="99_tests_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="99_tests_files/libs/quarto-html/popper.min.js"></script>
+<script src="99_tests_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="99_tests_files/libs/quarto-html/anchor.min.js"></script>
+<link href="99_tests_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="99_tests_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="99_tests_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="99_tests_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="99_tests_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+
+<div id="initial_id" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2026-02-11T14:43:52.749246Z&quot;,&quot;start_time&quot;:&quot;2026-02-11T14:43:42.925136Z&quot;}}" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'https://www.insee.fr/fr/statistiques/fichier/6800675/v_commune_2023.csv'</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">1</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">TYPECOM</th>
+<th data-quarto-table-cell-role="th">COM</th>
+<th data-quarto-table-cell-role="th">REG</th>
+<th data-quarto-table-cell-role="th">DEP</th>
+<th data-quarto-table-cell-role="th">CTCD</th>
+<th data-quarto-table-cell-role="th">ARR</th>
+<th data-quarto-table-cell-role="th">TNCC</th>
+<th data-quarto-table-cell-role="th">NCC</th>
+<th data-quarto-table-cell-role="th">NCCENR</th>
+<th data-quarto-table-cell-role="th">LIBELLE</th>
+<th data-quarto-table-cell-role="th">CAN</th>
+<th data-quarto-table-cell-role="th">COMPARENT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>COM</td>
+<td>01001</td>
+<td>84.0</td>
+<td>01</td>
+<td>01D</td>
+<td>012</td>
+<td>5</td>
+<td>ABERGEMENT CLEMENCIAT</td>
+<td>Abergement-Clémenciat</td>
+<td>L'Abergement-Clémenciat</td>
+<td>0108</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="a23cda90b26a7a5c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2026-02-11T14:50:42.930548Z&quot;,&quot;start_time&quot;:&quot;2026-02-11T14:50:42.129756Z&quot;}}" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>gdf <span class="op">=</span> gpd.read_file(<span class="vs">r'c:</span><span class="er">\</span><span class="vs">Users</span><span class="dv">\d</span><span class="vs">marin</span><span class="dv">\D</span><span class="vs">ropbox</span><span class="er">\</span><span class="vs">Pro</span><span class="er">\</span><span class="vs">OpenDC</span><span class="va">\99</span><span class="vs"> Projects</span><span class="ch">\014</span><span class="vs">6-TD Python - ENSAE</span><span class="ch">\02</span><span class="vs"> Work</span><span class="ch">\02</span><span class="vs"> Cours</span><span class="ch">\n</span><span class="vs">otebooks</span><span class="dv">\d</span><span class="vs">ata</span><span class="er">\</span><span class="vs">contours-iris-pe</span><span class="dv">.</span><span class="vs">gpkg'</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span><span class="bu">len</span>(gdf.index)<span class="sc">:,}</span><span class="ss"> IRIS'</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>gdf.head()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>48,512 IRIS</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">cleabs</th>
+<th data-quarto-table-cell-role="th">code_insee</th>
+<th data-quarto-table-cell-role="th">nom_commune</th>
+<th data-quarto-table-cell-role="th">iris</th>
+<th data-quarto-table-cell-role="th">code_iris</th>
+<th data-quarto-table-cell-role="th">nom_iris</th>
+<th data-quarto-table-cell-role="th">type_iris</th>
+<th data-quarto-table-cell-role="th">geometry</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>IRIS____0000000670430101</td>
+<td>67043</td>
+<td>Bischheim</td>
+<td>0101</td>
+<td>670430101</td>
+<td>Bischheim</td>
+<td>A</td>
+<td>MULTIPOLYGON (((1052052.5 6848302.2, 1052346.7...</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>IRIS____0000000132020101</td>
+<td>13202</td>
+<td>Marseille 2e Arrondissement</td>
+<td>0101</td>
+<td>132020101</td>
+<td>Marseille 2e Arrondissement</td>
+<td>A</td>
+<td>MULTIPOLYGON (((892392.4 6249040.5, 892189 624...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>IRIS____0000000561850101</td>
+<td>56185</td>
+<td>Quéven</td>
+<td>0101</td>
+<td>561850101</td>
+<td>Quéven</td>
+<td>A</td>
+<td>MULTIPOLYGON (((217035.9 6759952.7, 216941.9 6...</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>IRIS____0000000930630101</td>
+<td>93063</td>
+<td>Romainville</td>
+<td>0101</td>
+<td>930630101</td>
+<td>Romainville</td>
+<td>A</td>
+<td>MULTIPOLYGON (((659020 6865990.2, 658978.6 686...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>IRIS____0000000940480101</td>
+<td>94048</td>
+<td>Marolles-en-Brie</td>
+<td>0101</td>
+<td>940480101</td>
+<td>Marolles-en-Brie</td>
+<td>A</td>
+<td>MULTIPOLYGON (((667454 6850589.8, 667714.1 685...</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="79370939850d3757" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2026-02-11T15:02:03.182098Z&quot;,&quot;start_time&quot;:&quot;2026-02-11T15:02:03.162493Z&quot;}}" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>lkp_dept <span class="op">=</span> pd.read_csv(<span class="vs">r'c:</span><span class="er">\</span><span class="vs">Users</span><span class="dv">\d</span><span class="vs">marin</span><span class="dv">\D</span><span class="vs">ropbox</span><span class="er">\</span><span class="vs">Pro</span><span class="er">\</span><span class="vs">OpenDC</span><span class="va">\99</span><span class="vs"> Projects</span><span class="ch">\014</span><span class="vs">6-TD Python - ENSAE</span><span class="ch">\02</span><span class="vs"> Work</span><span class="ch">\02</span><span class="vs"> Cours</span><span class="ch">\n</span><span class="vs">otebooks</span><span class="dv">\d</span><span class="vs">ata</span><span class="er">\</span><span class="vs">lkp_dept_region</span><span class="dv">.</span><span class="vs">csv'</span>, sep<span class="op">=</span><span class="st">';'</span>, encoding<span class="op">=</span><span class="st">'ansi'</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>lkp_dept.head(<span class="dv">1</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">DEP_ID</th>
+<th data-quarto-table-cell-role="th">DEP</th>
+<th data-quarto-table-cell-role="th">NOM_DEPT</th>
+<th data-quarto-table-cell-role="th">REG_ID</th>
+<th data-quarto-table-cell-role="th">REG_NEW_ID</th>
+<th data-quarto-table-cell-role="th">REGION_NEW</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>1</td>
+<td>01</td>
+<td>Ain</td>
+<td>82</td>
+<td>84</td>
+<td>Auvergne-Rhône-Alpes</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="17f9b3c2c75332de" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2026-02-11T15:07:05.967843Z&quot;,&quot;start_time&quot;:&quot;2026-02-11T15:07:05.223864Z&quot;}}" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df_pop <span class="op">=</span> pd.read_csv(<span class="vs">r'c:</span><span class="er">\</span><span class="vs">Users</span><span class="dv">\d</span><span class="vs">marin</span><span class="dv">\D</span><span class="vs">ropbox</span><span class="er">\</span><span class="vs">Pro</span><span class="er">\</span><span class="vs">OpenDC</span><span class="va">\99</span><span class="vs"> Projects</span><span class="ch">\014</span><span class="vs">6-TD Python - ENSAE</span><span class="ch">\02</span><span class="vs"> Work</span><span class="ch">\02</span><span class="vs"> Cours</span><span class="ch">\n</span><span class="vs">otebooks</span><span class="dv">\d</span><span class="vs">ata</span><span class="er">\</span><span class="vs">pop-IRIS-2022</span><span class="dv">.</span><span class="vs">csv'</span>, sep<span class="op">=</span><span class="st">';'</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span><span class="bu">len</span>(df_pop)<span class="sc">:,}</span><span class="ss"> IRIS'</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df_pop.head()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>49,276 IRIS</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\dmarin\AppData\Local\Temp\ipykernel_22200\599788689.py:1: DtypeWarning: Columns (0,1,3) have mixed types. Specify dtype option on import or set low_memory=False.
+  df_pop = pd.read_csv(r'c:\Users\dmarin\Dropbox\Pro\OpenDC\99 Projects\0146-TD Python - ENSAE\02 Work\02 Cours\notebooks\data\pop-IRIS-2022.csv', sep=';')</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">IRIS</th>
+<th data-quarto-table-cell-role="th">COM</th>
+<th data-quarto-table-cell-role="th">TYP_IRIS</th>
+<th data-quarto-table-cell-role="th">LAB_IRIS</th>
+<th data-quarto-table-cell-role="th">P22_POP</th>
+<th data-quarto-table-cell-role="th">P22_POP0002</th>
+<th data-quarto-table-cell-role="th">P22_POP0305</th>
+<th data-quarto-table-cell-role="th">P22_POP0610</th>
+<th data-quarto-table-cell-role="th">P22_POP1117</th>
+<th data-quarto-table-cell-role="th">P22_POP1824</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">C22_F15P_STAT_GSEC14_24</th>
+<th data-quarto-table-cell-role="th">C22_F15P_STAT_GSEC15_25</th>
+<th data-quarto-table-cell-role="th">C22_F15P_STAT_GSEC16_26</th>
+<th data-quarto-table-cell-role="th">C22_F15P_STAT_GSEC32</th>
+<th data-quarto-table-cell-role="th">C22_F15P_STAT_GSEC40</th>
+<th data-quarto-table-cell-role="th">P22_POP_FR</th>
+<th data-quarto-table-cell-role="th">P22_POP_ETR</th>
+<th data-quarto-table-cell-role="th">P22_POP_IMM</th>
+<th data-quarto-table-cell-role="th">P22_PMEN</th>
+<th data-quarto-table-cell-role="th">P22_PHORMEN</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>10010000</td>
+<td>1001</td>
+<td>Z</td>
+<td>5</td>
+<td>859.000000</td>
+<td>33.000000</td>
+<td>28.000000</td>
+<td>56.000000</td>
+<td>81.000000</td>
+<td>30.000000</td>
+<td>...</td>
+<td>44.177143</td>
+<td>83.445714</td>
+<td>29.451429</td>
+<td>88.354286</td>
+<td>29.451429</td>
+<td>849.000000</td>
+<td>10.000000</td>
+<td>19.000000</td>
+<td>859.000000</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>10020000</td>
+<td>1002</td>
+<td>Z</td>
+<td>5</td>
+<td>273.000000</td>
+<td>6.000000</td>
+<td>12.000000</td>
+<td>19.000000</td>
+<td>34.000000</td>
+<td>11.000000</td>
+<td>...</td>
+<td>24.818182</td>
+<td>14.890909</td>
+<td>4.963636</td>
+<td>24.818182</td>
+<td>4.963636</td>
+<td>272.000000</td>
+<td>1.000000</td>
+<td>3.000000</td>
+<td>273.000000</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>10040101</td>
+<td>1004</td>
+<td>H</td>
+<td>1</td>
+<td>2057.937539</td>
+<td>98.571487</td>
+<td>56.977868</td>
+<td>139.534470</td>
+<td>174.716876</td>
+<td>352.838927</td>
+<td>...</td>
+<td>91.718672</td>
+<td>276.808212</td>
+<td>53.269481</td>
+<td>211.569253</td>
+<td>130.462435</td>
+<td>1767.609911</td>
+<td>290.327628</td>
+<td>247.897397</td>
+<td>1694.944143</td>
+<td>362.993396</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>10040102</td>
+<td>1004</td>
+<td>H</td>
+<td>1</td>
+<td>3986.920098</td>
+<td>147.358644</td>
+<td>164.785678</td>
+<td>239.997491</td>
+<td>358.323293</td>
+<td>418.123741</td>
+<td>...</td>
+<td>212.408021</td>
+<td>415.766092</td>
+<td>146.090052</td>
+<td>356.309707</td>
+<td>323.247325</td>
+<td>3353.940535</td>
+<td>632.979564</td>
+<td>772.537275</td>
+<td>3986.920098</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>10040201</td>
+<td>1004</td>
+<td>H</td>
+<td>1</td>
+<td>4520.666637</td>
+<td>194.195739</td>
+<td>196.752408</td>
+<td>281.247669</td>
+<td>376.641507</td>
+<td>378.855321</td>
+<td>...</td>
+<td>356.149732</td>
+<td>508.642655</td>
+<td>165.866837</td>
+<td>691.215336</td>
+<td>346.153660</td>
+<td>4115.886111</td>
+<td>404.780526</td>
+<td>442.331955</td>
+<td>4432.668238</td>
+<td>87.998399</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 76 columns</p>
+</div>
+</div>
+</div>
+<div id="5565a37aa2f888b7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2026-02-16T14:35:30.942539Z&quot;,&quot;start_time&quot;:&quot;2026-02-16T14:35:30.924715Z&quot;}}" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tu <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>tu2 <span class="op">=</span> tu</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">id</span>(tu))</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">id</span>(tu2))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>2099857127808
+2099857127808</code></pre>
+</div>
+</div>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

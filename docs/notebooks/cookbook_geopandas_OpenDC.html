@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>cookbook_geopandas_opendc</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="cookbook_geopandas_OpenDC_files/libs/clipboard/clipboard.min.js"></script>
+<script src="cookbook_geopandas_OpenDC_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="cookbook_geopandas_OpenDC_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="cookbook_geopandas_OpenDC_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="cookbook_geopandas_OpenDC_files/libs/quarto-html/popper.min.js"></script>
+<script src="cookbook_geopandas_OpenDC_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="cookbook_geopandas_OpenDC_files/libs/quarto-html/anchor.min.js"></script>
+<link href="cookbook_geopandas_OpenDC_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="cookbook_geopandas_OpenDC_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="cookbook_geopandas_OpenDC_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="cookbook_geopandas_OpenDC_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="cookbook_geopandas_OpenDC_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+
+<p><a href="https://colab.research.google.com/github/daniel-odc/td_pythonds_ensae/blob/main/notebooks/cookbook_geopandas_OpenDC.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
+<section id="introduction-à-logo_geopandas" class="level1">
+<h1>Introduction à <img src="./img/logo_geopandas.png" class="img-fluid" alt="logo_geopandas"></h1>
+<p>12/02/2026 - Daniel Marin (dmarin@open-dc.com)</p>
+<p><strong>Objet de la formation:</strong> Prise en main de la librairie <code>GeoPandas</code> du langage <code>Python</code> pour le traitement et la visualisation de données géographiques: &gt; Affichage de cartes <br> &gt; Fusion avec des sources de données externes <br> &gt; Opérations géographiques (zones tampon, intersections de zones etc.)</p>
+<p><strong>Pré-requis:</strong> - Bases en programmation <code>Python</code> - Adresse <code>gmail</code> valide (pour le développement sous <a href="https://colab.google/">Google Colab</a>) - <em>Optionnel</em>: Logiciel <a href="URL">QGIS</a> installé (pour la visualisation et la mise en forme des données) pour aller plus loin sur la mise en forme</p>
+<section id="liens-et-sources-de-données" class="level2">
+<h2 class="anchored" data-anchor-id="liens-et-sources-de-données">Liens et sources de données</h2>
+<ul>
+<li>Nombreux visuels et exemples tirés du cours de 2ème année d’ENSAE <a href="https://pythonds.linogaliana.fr/content/manipulation/">Python pour la data science</a> de Lino Galiana<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</li>
+<li>Documentation <a href="https://pandas.pydata.org/docs/"><code>Pandas</code></a></li>
+<li>Documentation <a href="https://geopandas.org/en/latest/docs.html"><code>GeoPandas</code></a></li>
+<li>Sources de données:
+<ul>
+<li><a href="https://data.geopf.fr/telechargement/download/CONTOURS-IRIS-PE/CONTOURS-IRIS-PE_3-0__GPKG_LAMB93_FXX_2025-01-01/CONTOURS-IRIS-PE_3-0__GPKG_LAMB93_FXX_2025-01-01.7z">Contours géographiques des IRIS de France métropolitaine</a></li>
+<li><a href="https://www.insee.fr/fr/statistiques/8647014">Données de population par IRIS en France en 2022</a></li>
+<li><a href="https://data.grandlyon.com/portail/fr/jeux-de-donnees/entrees-sorties-stations-metro-reseau-transports-commun-lyonnais/info">Liste des entrées de stations de métro de la métropole du Grand Lyon</a></li>
+</ul></li>
+</ul>
+<p>Tous les fichiers allégés pour les besoins de l’exercice sont disponibles en téléchargement local <a href="https://github.com/daniel-odc/td_pythonds_ensae/tree/main/notebooks/aura_data">ici</a>.</p>
+</section>
+<section id="er-développement-sur-google-colab" class="level2">
+<h2 class="anchored" data-anchor-id="er-développement-sur-google-colab">1er développement sur <a href="https://colab.google/">Google Colab</a></h2>
+<p><em>Intérêt de Google Colab</em>: - Pas d’installation locale de <code>Python</code> - Gratuit et accessible à tout le monde, sous réserve de disposer d’une adresse <code>Gmail</code> - Développement dans le navigateur ==&gt; pas d’installation d’IDE nécessaire - Environnement <code>Jupyter Notebook</code> intégré - Partage facile de scripts.</p>
+<p><em>Inconvénients</em>: - Fonctionnement en ligne uniquement - Non adapté pour de gros projets (multiples fichiers) - Non adapté pour des traitements confidentiels (serveurs <code>Google</code>)</p>
+<p>💡<em>Autres solutions</em>: - <a href="https://datalab.sspcloud.fr/">SPP Cloud</a> pour les agents de la fonction publique française (<a href="https://daniel-odc.github.io/td_pythonds_ensae/slides/01_rappels_base.html#/3">Étapes ici</a>). - Installation d’un IDE (<a href="https://www.jetbrains.com/pycharm/"><code>Pycharm</code></a> ou <a href="https://code.visualstudio.com/"><code>VS Code</code></a> par exemple) et d’un exécutable <a href="https://www.python.org/downloads/"><code>Python</code></a> pour les utilisateurs Windows (<code>Python</code> étant installé par défaut sur <code>Mac</code> et <code>Linux</code>)</p>
+<p><em>Note:</em> L’installation de <code>Pycharm</code> ou <code>VS Code</code> propose une installation de <code>Python</code> en parallèle.</p>
+</section>
+<section id="présentation-très-succincte-de-qgis" class="level2">
+<h2 class="anchored" data-anchor-id="présentation-très-succincte-de-qgis">Présentation (très succincte) de <a href="https://qgis.org/">QGIS</a></h2>
+<ul>
+<li>Système d’Information Géographique (SIG).</li>
+<li>Permet de réaliser des cartes, traiter des données géographiques, les mettre et forme et les communiquer.</li>
+<li>Logiciel libre, 100% ouvert et gratuit.</li>
+</ul>
+<p>💡La plupart des opérations réalisables avec <code>GeoPandas</code> (buffers, calculs de distance, de surfaces etc.) le sont via l’interface de <code>QGIS</code>. L’utilisation de <code>GeoPandas</code> permet de chaîner ces opérations dans un script <code>Python</code>, ce qui rend entre autres le process plus reproductible.</p>
+<p>💡💡Pour aller plus loin: <a href="https://qgis.org/resources/hub/">Tutoriel QGIS</a></p>
+<p><img src="./img/qgis_canvas.jpg" class="img-fluid" alt="screenshot QGIS"><br> <em>Illustration des données de zones tampons autour des stations du métro lyonnais produites dans ce tutoriel, visualisées sous <code>QGIS</code></em></p>
+</section>
+<section id="rappels-de-base-de-programmation-python" class="level2">
+<h2 class="anchored" data-anchor-id="rappels-de-base-de-programmation-python">Rappels de base de programmation <code>Python</code></h2>
+<p><em>Note:</em> On ne revient pas ici sur les notions de base de programmation telles que les variables, fonctions, boucles, conditions. On se concentre sur les spécificités de <code>Python</code> par rapport aux autres langages.</p>
+<section id="types-de-base" class="level3">
+<h3 class="anchored" data-anchor-id="types-de-base">Types de base</h3>
+<section id="les-types-de-base-int-float-str" class="level4">
+<h4 class="anchored" data-anchor-id="les-types-de-base-int-float-str">Les types de base: ‘int’, ‘float’, ‘str’</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="fl">3.14</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> <span class="st">'texte'</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'a=</span><span class="sc">{</span>a<span class="sc">}</span><span class="ss">, b=</span><span class="sc">{</span>b<span class="sc">}</span><span class="ss">, c=</span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># # Les variables ne sont pas figées à un type donné:</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="st">'texte'</span>  <span class="co"># a passe de 'int' à 'str' sans problème</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'new a=</span><span class="sc">{</span>a<span class="sc">}</span><span class="ss">'</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="listes-tuples-dictionnaires-et-sets" class="level4">
+<h4 class="anchored" data-anchor-id="listes-tuples-dictionnaires-et-sets">Listes, tuples, dictionnaires et sets</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>li <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]  <span class="co"># `list`: []</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'type li: </span><span class="sc">{</span><span class="bu">type</span>(li)<span class="sc">}</span><span class="ch">\n</span><span class="sc">{</span>li<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>tu <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)  <span class="co"># `tuple`: ()</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'type lu: </span><span class="sc">{</span><span class="bu">type</span>(tu)<span class="sc">}</span><span class="ch">\n</span><span class="sc">{</span>tu<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>di <span class="op">=</span> {<span class="st">'a'</span>: <span class="dv">1</span>, <span class="st">'b'</span>: <span class="dv">2</span>, <span class="st">'c'</span>: <span class="dv">3</span>}  <span class="co"># `dict`: {}</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'type di: </span><span class="sc">{</span><span class="bu">type</span>(di)<span class="sc">}</span><span class="ch">\n</span><span class="sc">{</span>di<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>st <span class="op">=</span> <span class="bu">set</span>([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>])  <span class="co"># `set`: set([...]) ou {1, 2, 3}</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'type st: </span><span class="sc">{</span><span class="bu">type</span>(st)<span class="sc">}</span><span class="ch">\n</span><span class="sc">{</span>st<span class="sc">}</span><span class="ss">'</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="listes" class="level5">
+<h5 class="anchored" data-anchor-id="listes">Listes</h5>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>li <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">3</span>]      <span class="co"># liste de 3 éléments</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(li)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'1ère valeur: </span><span class="sc">{</span>li[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>)        <span class="co"># l'index commence à 0</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>li.sort()           <span class="co"># tri la liste</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(li)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>li.append(<span class="dv">5</span>)        <span class="co"># ajoute un élément</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(li)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>li.extend([<span class="dv">6</span>, <span class="dv">7</span>])   <span class="co"># ajoute une liste à la liste</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(li)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>li.pop(<span class="dv">4</span>)           <span class="co"># retire le 4ème élément de la liste (et non l'élément 4 de la liste!)</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(li)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># # boucle sur les éléments:</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> el <span class="kw">in</span> li:</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(el)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co"># # boucle avec conservation des index:</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ix, el <span class="kw">in</span> <span class="bu">enumerate</span>(li):</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'index </span><span class="sc">{</span>ix<span class="sc">}</span><span class="ss">, valeur: </span><span class="sc">{</span>el<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co"># # Comprehension lists:</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>li <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>) <span class="cf">if</span> i<span class="op">%</span><span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>]</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="dictionnaires" class="level5">
+<h5 class="anchored" data-anchor-id="dictionnaires">Dictionnaires</h5>
+<p><code>my_dict = {key1: val1, key2: val2}</code></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>di <span class="op">=</span> {<span class="st">'nom'</span>: <span class="st">'Crusoé'</span>, <span class="st">'prénom'</span>: <span class="st">'Robinson'</span>, <span class="st">'âge'</span>: <span class="dv">42</span>}</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(di)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>di[<span class="st">'nom'</span>] <span class="op">=</span> <span class="st">'Stévenin'</span>  <span class="co"># les clés sont uniques</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(di)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>prenom <span class="op">=</span> di.get(<span class="st">'prénom'</span>, <span class="st">'???'</span>)        <span class="co"># clé existante</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>adresse <span class="op">=</span> di.get(<span class="st">'adresse'</span>, <span class="st">'???'</span>)      <span class="co"># clé manquante</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'prénom:</span><span class="ch">\t</span><span class="sc">{</span>prenom<span class="sc">}</span><span class="ss">,</span><span class="ch">\n</span><span class="ss">adresse:</span><span class="ch">\t</span><span class="sc">{</span>adresse<span class="sc">}</span><span class="ss">'</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="tuples" class="level5">
+<h5 class="anchored" data-anchor-id="tuples">Tuples</h5>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tu <span class="op">=</span> (<span class="fl">49.4545</span>, <span class="fl">2.4545</span>)  <span class="co"># tuple à 2 éléments</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>tu[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>tu[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># tu[2] = 0               # le nombre d'éléments d'un tuple est invariable (pas de méthodes `append` ou `pop`)</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># tu[1] = 0               # le contenu d'un tuple n'est pas modifiable</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="sets" class="level5">
+<h5 class="anchored" data-anchor-id="sets">Sets</h5>
+<p>💡 Ensemble d’éléments uniques</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>st <span class="op">=</span> {<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>}</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(st)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>st.add(<span class="dv">4</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(st)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>st.pop()  <span class="co"># retire le premier élément</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(st)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>st.remove(<span class="dv">3</span>)  <span class="co"># retire un élément donné</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(st)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+</section>
+<section id="mutabilité" class="level3">
+<h3 class="anchored" data-anchor-id="mutabilité">Mutabilité</h3>
+<p>La mutabilité est la possibilité de changer le contenu d’une variable en conservant l’adresse mémoire de cette variable. En <code>Python</code>, seuls les types de base <code>int</code>, <code>float</code>, <code>bool</code> et <code>str</code> ainsi que les <code>tuple</code> ne sont pas mutables. En pratique, cela se traduit par le fait que lorsque l’on assigne une variable <code>a</code> à une nouvelle variable <code>b</code>, le fait de changer le contenu de <code>b</code>: * n’aura aucun impact sur <code>a</code> si <code>a</code> est de type <code>int</code>, <code>float</code>, <code>bool</code> ou <code>str</code> (la nouvelle assignation a créé une nouvelle adresse mémoire pour la variable <code>b</code>, qui n’est plus reliée à <code>a</code> d’aucune manière) * changera le contenu de <code>a</code> si <code>a</code> est de tout autre type (excepté <code>tuple</code>) (la nouvelle assignation utilise la même adresse mémoire pour la variable <code>b</code> que pour la variable <code>a</code>, ainsi modifier <code>a</code> ou <code>b</code> modifie en réalité un seul et même objet)</p>
+<p>Les <code>tuples</code> ne sont pas mutables dans le sens où on ne peut changer leur contenu ou nombre d’éléments après leur initialisation.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> a</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'a: </span><span class="sc">{</span>a<span class="sc">}</span><span class="ss">, b: </span><span class="sc">{</span>b<span class="sc">}</span><span class="ss">'</span>)  <span class="co"># le contenu de a n'a pas changé: une copie de a a été réalisée pour être alouée à b (idem si a est un float ou str)</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>li1 <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>]</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'li1: </span><span class="sc">{</span>li1<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>li2 <span class="op">=</span> li1</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>li2[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'li2: </span><span class="sc">{</span>li2<span class="sc">}</span><span class="ch">\n</span><span class="ss">li1: </span><span class="sc">{</span>li1<span class="sc">}</span><span class="ss">'</span>)  <span class="co"># le contenu de li1 a été modifié lorsque li2 a été modifié</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># # Solution: créer une copie de l'objet mutable:</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>li3 <span class="op">=</span> li1.copy()</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>li3[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'li3: </span><span class="sc">{</span>li3<span class="sc">}</span><span class="ch">\n</span><span class="ss">li1: </span><span class="sc">{</span>li1<span class="sc">}</span><span class="ss">'</span>)  <span class="co"># le contenu de li1 n'a pas été modifié lorsque li3 a été modifié</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p>💡Les objets <code>Pandas</code> et <code>GeoPandas</code> qu’on verra par la suite sont mutables comme tous les objets <code>Python</code>, donc attention aux copies d’objets et ce qu’on en fait par la suite!</p>
+</section>
+<section id="utilisation-de-modules" class="level3">
+<h3 class="anchored" data-anchor-id="utilisation-de-modules">Utilisation de modules</h3>
+<section id="installation-dun-module" class="level4">
+<h4 class="anchored" data-anchor-id="installation-dun-module">Installation d’un module</h4>
+<p>💡 Uniquement pour les modules non natifs (ex de modules natifs: <code>datetime</code>, <code>os</code>, <code>re</code> etc.)</p>
+<blockquote class="blockquote">
+<p>Dans le terminal:</p>
+</blockquote>
+<pre class="shell"><code>pip install mon_module  # example: pip install geopandas</code></pre>
+<blockquote class="blockquote">
+<p>Dans Jupyter:</p>
+</blockquote>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install mon_module  <span class="co"># notez le "!"</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="import-de-modules" class="level4">
+<h4 class="anchored" data-anchor-id="import-de-modules">Import de modules</h4>
+<p>💡 Toujours en tête de fichier</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np  <span class="co"># et jamais "from numpy import *"!</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'https://www.insee.fr/fr/statistiques/fichier/6800675/v_commune_2023.csv'</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># reste du code...</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="introduction-à-pandas" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-à-pandas">Introduction à <code>Pandas</code></h3>
+<ul>
+<li><code>Pandas</code>: librairie “mère” de <code>GeoPandas</code>. Librairie <code>Python</code> de base pour l’analyse de données, téléchargée 5 millions de fois par jour.</li>
+<li>Permet le traitement de données tabulaires</li>
+</ul>
+<p><img src="./img/pandas_dataframe_rows_col.png" class="img-fluid" alt="Exemple données tabulaires"><br> <em>source</em>: <a href="https://x.com/epfl_exts/status/997506000600084480">https://x.com/epfl_exts/status/997506000600084480</a></p>
+<p>💡 <code>GeoPandas</code> = <code>Pandas</code> + opérations géographiques <br> 💡💡 Toutes les manipulations de cette partie fonctionnent aussi avec <code>GeoPandas</code>.</p>
+<ul>
+<li><code>Serie</code>: objet vecteur pandas</li>
+<li><code>Dataframe</code>: matrice ==&gt; ensemble de <code>Series</code>. Les différentes colonnes peuvent être de types mixtes.</li>
+<li>Formats de de fichiers pour l’import de données:
+<ul>
+<li><code>csv</code> (méthode <code>read_csv()</code>)</li>
+<li><code>parquet</code> (méthode <code>read_parquet()</code>)</li>
+<li><code>json</code> (méthode <code>read_json()</code>)</li>
+<li><code>txt</code> (méthode <code>read_csv()</code>)</li>
+<li><code>zip</code> (méthode <code>read_csv()</code>)</li>
+<li><code>excel</code> (méthode <code>read_excel()</code>)</li>
+<li><code>html</code> (méthode <code>read_html()</code>)</li>
+<li><code>SQL DB</code> (méthode <code>read_sql()</code>)</li>
+<li>etc.</li>
+</ul></li>
+</ul>
+<p><em>Exemple:</em> Lecture d’un fichier <code>csv</code> disponible via une url publique:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'https://www.insee.fr/fr/statistiques/fichier/6800675/v_commune_2023.csv'</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>df.head()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="indexation" class="level4">
+<h4 class="anchored" data-anchor-id="indexation">Indexation</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # colonnes pour une condition donnée:</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'column1'</span>]<span class="op">==</span><span class="st">'valeur'</span>, [<span class="st">'column2'</span>, <span class="st">'column3'</span>]]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># # Ensemble de la colonne:</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>df.column1 <span class="co"># ne fonctionne que si les colonnes n'ont pas d'espaces ou caractères spéciaux</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># # ou:</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'column1'</span>] <span class="co"># renvoie une `Serie`</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">'column1'</span>]] <span class="co"># renvoie un `DataFrame` à une colonne</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># # Accéder aux lignes:</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>df.iloc[<span class="dv">0</span>, <span class="dv">3</span>]  <span class="co"># accès par numéro d'index: 1ère ligne, 4ème colonne. Attention à la mise à jour des index!</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>df.loc[<span class="st">'nom_index'</span>, <span class="st">'nom_colonne'</span>]  <span class="co"># accès par nom d'index</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="cell-17" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Exemple simple:</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({<span class="st">'year'</span>: [<span class="dv">2012</span>, <span class="dv">2014</span>, <span class="dv">2013</span>, <span class="dv">2014</span>], <span class="st">'month'</span>: [<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">10</span>], <span class="st">'sale'</span>: [<span class="dv">55</span>, <span class="dv">40</span>, <span class="dv">84</span>, <span class="dv">31</span>]})</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>df.set_index(<span class="st">'month'</span>, inplace<span class="op">=</span><span class="va">True</span>, drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'year:</span><span class="ch">\n</span><span class="sc">{</span>df<span class="sc">.</span>year<span class="sc">}</span><span class="ch">\n</span><span class="ss">'</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f".loc:</span><span class="ch">\n</span><span class="sc">{</span>df<span class="sc">.</span>loc[<span class="dv">10</span>, <span class="st">'year'</span>]<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'.iloc:</span><span class="ch">\n</span><span class="sc">{</span>df<span class="sc">.</span>iloc[<span class="dv">0</span>, <span class="dv">1</span>]<span class="sc">}</span><span class="ch">\n</span><span class="ss">'</span>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>df.loc[:, <span class="st">'sale'</span>]</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="statistiques-descriptives" class="level4">
+<h4 class="anchored" data-anchor-id="statistiques-descriptives">Statistiques descriptives</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'column'</span>].count()</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'column'</span>].<span class="bu">sum</span>()</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'column'</span>].<span class="bu">min</span>()</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'column'</span>].<span class="bu">max</span>()</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'column'</span>].mean()</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'column'</span>].std()</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'column'</span>].nunique()</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'column'</span>].unique()</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co"># etc.</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="fusions-merge" class="level4">
+<h4 class="anchored" data-anchor-id="fusions-merge">Fusions (<code>merge</code>)</h4>
+<p><img src="./img/pandas_merge_star-schema.png" class="img-fluid" alt="star schema"><br> <em>Source: </em><a href="https://www.databricks.com/wp-content/uploads/2022/04/star-schema-erd.png">Databricks</a></p>
+<ul>
+<li><em>Exemple avec champ commun dans les deux tables</em>:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df_merged <span class="op">=</span> df_left.merge(df_right, on<span class="op">=</span><span class="st">'key'</span>, how<span class="op">=</span><span class="st">'left'</span>) <span class="co"># (how=‘inner’, ‘left’, ‘right’ ou ‘outer’)</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><em>Exemple avec champs de noms différents dans les deux tables mais représentant la même donnée</em>:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df_merged <span class="op">=</span> df_left.merge(df_right, left_on<span class="op">=</span><span class="st">'key_left'</span>, right_on<span class="op">=</span><span class="st">'key_right'</span>, how<span class="op">=</span><span class="st">'left'</span>) <span class="co"># (how=‘inner’, ‘left’, ‘right’ ou ‘outer’)</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./img/pandas_merge_inner_outer_etc.jpg" class="img-fluid figure-img"></p>
+<figcaption>img merge left etc.</figcaption>
+</figure>
+</div>
+<div id="cell-21" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Exemple `merge`:</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>df_sale <span class="op">=</span> pd.DataFrame({<span class="st">'year'</span>: [<span class="dv">2012</span>, <span class="dv">2014</span>, <span class="dv">2013</span>, <span class="dv">2014</span>], <span class="st">'month'</span>: [<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">10</span>], <span class="st">'sale'</span>: [<span class="dv">55</span>, <span class="dv">40</span>, <span class="dv">84</span>, <span class="dv">31</span>]})</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>df_purchase <span class="op">=</span> pd.DataFrame({<span class="st">'year'</span>: [<span class="dv">2012</span>, <span class="dv">2014</span>, <span class="dv">2013</span>, <span class="dv">2014</span>], <span class="st">'month'</span>: [<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">12</span>], <span class="st">'purchase'</span>: [<span class="dv">45</span>, <span class="dv">30</span>, <span class="dv">90</span>, <span class="dv">25</span>]})</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>df_balance <span class="op">=</span> df_sale.merge(df_purchase, on<span class="op">=</span>[<span class="st">'year'</span>, <span class="st">'month'</span>], how<span class="op">=</span><span class="st">'left'</span>)  <span class="co"># jointure sur un ou plusieurs champs</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Left join:'</span>)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>display(df_balance)</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>df_balance <span class="op">=</span> df_sale.merge(df_purchase, on<span class="op">=</span>[<span class="st">'year'</span>, <span class="st">'month'</span>], how<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Right join:'</span>)</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>display(df_balance)</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>df_balance <span class="op">=</span> df_sale.merge(df_purchase, on<span class="op">=</span>[<span class="st">'year'</span>, <span class="st">'month'</span>], how<span class="op">=</span><span class="st">'inner'</span>)</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Inner join:'</span>)</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>display(df_balance)</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>df_balance <span class="op">=</span> df_sale.merge(df_purchase, on<span class="op">=</span>[<span class="st">'year'</span>, <span class="st">'month'</span>], how<span class="op">=</span><span class="st">'outer'</span>)</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Outer join:'</span>)</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>display(df_balance)</span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="aggrégation-groupby" class="level4">
+<h4 class="anchored" data-anchor-id="aggrégation-groupby">Aggrégation (<code>groupby</code>)</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df_grouped <span class="op">=</span> df.groupby(by<span class="op">=</span><span class="st">'col_group'</span>, as_index<span class="op">=</span><span class="va">False</span>)[<span class="st">'col_operation'</span>].mean()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Opérations possibles:
+<ul>
+<li><code>.count()</code></li>
+<li><code>.mean()</code></li>
+<li><code>.sum()</code></li>
+<li><code>.min()</code></li>
+<li><code>.max()</code></li>
+<li><code>.std()</code></li>
+<li><code>.median()</code></li>
+<li><code>.var()</code></li>
+<li><code>.prod()</code></li>
+<li><code>.first()</code></li>
+<li><code>.last()</code></li>
+<li><code>.nunique()</code></li>
+<li>…</li>
+</ul></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="geopandas" class="level2">
+<h2 class="anchored" data-anchor-id="geopandas"><code>GeoPandas</code></h2>
+<p>💡<code>DataFrame</code> avec une colonne <code>geometry</code> (nom de colonne fixe)</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./img/geopandas_geodf_object.png" class="img-fluid figure-img"></p>
+<figcaption>images gdf</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>Formats de fichiers:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 33%">
+<col style="width: 57%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Extension</th>
+<th style="text-align: left;">Commentaires</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>Shapefile</code></td>
+<td style="text-align: left;">(4 fichiers: <code>.shp</code> + <code>.dbf</code> + <code>.shx</code> + <code>.prj</code>)</td>
+<td style="text-align: left;">Format le plus courant mais sur le déclain du fait de la contrainte “multi-fichiers”</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Geopackage</code></td>
+<td style="text-align: left;">(.gpkg)</td>
+<td style="text-align: left;">💡à privilégier sous <code>QGIS</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>Geoparquet</code></td>
+<td style="text-align: left;">(.parquet)</td>
+<td style="text-align: left;">💡à privilégier en développement <code>Python</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>GeoJSON</code></td>
+<td style="text-align: left;">(.geojson)</td>
+<td style="text-align: left;">💡à privilégier en développement web</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>WKT</code></td>
+<td style="text-align: left;">(.csv)</td>
+<td style="text-align: left;">💡à privilégier pour construction “à la main”</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">etc.</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./img/geopandas_geometries_wkt.png" class="img-fluid figure-img"></p>
+<figcaption>geometries</figcaption>
+</figure>
+</div>
+<section id="systèmes-de-projection" class="level3">
+<h3 class="anchored" data-anchor-id="systèmes-de-projection">Systèmes de projection</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./img/geopandas_projection_system.png" class="img-fluid figure-img"></p>
+<figcaption>img_crs</figcaption>
+</figure>
+</div>
+<ul>
+<li>Systèmes de projection:
+<ul>
+<li>Coordonnées <strong>sphériques</strong>: GPS: longitude latitude: <code>WGS84</code> (EPSG <strong>4326</strong>):
+<ul>
+<li>Toute donnée issue d’un système GPS: Même système quel que soit l’emplacement sur le globe.<br>
+</li>
+</ul></li>
+<li>Coordonnées <strong>projetées</strong>:
+<ul>
+<li>Cartes Google Maps: <code>Mercator</code>: EPSG <strong>3857</strong>: Même système quel que soit l’emplacement sur le globe mais fortes distorsions de surfaces aux pôles.</li>
+<li>France métropolitaine: <code>Lambert 93</code>: EPSG <strong>2154</strong>: Système valable uniquement en France métropolitaine.</li>
+</ul></li>
+</ul></li>
+<li>Attribut:
+<ul>
+<li><code>gdf.crs</code></li>
+</ul></li>
+<li>Méthodes:
+<ul>
+<li><code>gdf.set_crs(epsg=2154)</code> (à éviter habituellement!)</li>
+<li><code>gdf.to_crs(epsg=2154)</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="commandes-utiles" class="level3">
+<h3 class="anchored" data-anchor-id="commandes-utiles">Commandes utiles</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p>💡 Dans les exemples ci-dessous: - <code>gpd</code> est l’alias du module <code>GeoPandas</code> - <code>gdf</code> est une variable de type <code>GeoDataFrame</code></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 72%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Méthode</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>gpd.read_file</code></td>
+<td style="text-align: left;">Charge tout type de fichiers SIG, sauf le format <code>parquet</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>gpd.read_parquet</code></td>
+<td style="text-align: left;">Charge les fichiers au format <code>parquet</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>gdf.to_crs(epsg=2154)</code></td>
+<td style="text-align: left;">Convertit le systéme de coordonnées.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>gdf.plot()</code></td>
+<td style="text-align: left;">Affichage brut sans mise en forme.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>gpd.overlay(gdf1, gdf2, how="intersection")</code></td>
+<td style="text-align: left;">Combinaison spatiale de 2 geodataframes. Opérations possibles: <code>intersection</code>, <code>union</code>, <code>difference</code>, <code>symmetric_difference</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>gdf1.sjoin(gdf2, predicate='within')</code></td>
+<td style="text-align: left;">Jointure spatiale. Opérations possibles: <code>within</code>, <code>intersects</code>, <code>contains</code>, <code>touches</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>gdf.geometry.buffer(distance=1000)</code></td>
+<td style="text-align: left;">Renvoie une géométrie buffurisée (zone tampon).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>gdf.dissolve(by='field_agg')</code></td>
+<td style="text-align: left;">Fusionne des géométries ayant le même attribut.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>gdf.to_file('path_to_output.gpkg')</code></td>
+<td style="text-align: left;">Exporte dans un fichier SIG. Le format est défini par l’extention du nom de fichier de sortie.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="exercice-geopandas" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-geopandas">Exercice GeoPandas</h2>
+<section id="installations-préalables" class="level3">
+<h3 class="anchored" data-anchor-id="installations-préalables">Installations préalables</h3>
+<ul>
+<li>Télécharger les <a href="https://github.com/daniel-odc/td_pythonds_ensae/tree/main/notebooks/aura_data">données de l’exercice</a></li>
+<li>Ouvrir <a href="https://colab.google/">Colab</a> et créer un nouveau Notebook (<code>New Notebook</code>)</li>
+<li>Charger les fichiers téléchargés dans l’environnement <code>Colab</code> (Volet de gauche <code>Files</code> puis <code>Upload to the session storage</code>)</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./img/colab_files.jpg" class="img-fluid figure-img"></p>
+<figcaption>colab</figcaption>
+</figure>
+</div>
+<p><em>Note:</em> Il se peut que certains modules ne soient pas installés dans votre session <code>Colab</code>. Dans ce cas, lancer comme indiqué ci-dessous les installations de modules complémentaires nécessaires à la réalisation des exercices:</p>
+<div id="cell-27" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install pyarrow        <span class="co"># pour le traitement des fichiers `parquet`</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install contextily     <span class="co"># pour la superposition de cartes sur des fonds de carte OpenStreetMap, Google etc.</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install mapclassify    <span class="co"># pour l'affichage de données quantitatives sur des cartes</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-28" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Imports (lancer les installations ci-dessus si certains modules sont manquants)</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> contextily <span class="im">as</span> cx  <span class="co"># pour la gestion des fonds de carte</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt  <span class="co"># pour la gestion du graphique</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="pré-traitement-de-la-donnée" class="level3">
+<h3 class="anchored" data-anchor-id="pré-traitement-de-la-donnée">Pré-traitement de la donnée</h3>
+<p>Opérations de téléchargement de la donnée complète et de réduction pour les besoins de l’exercice. Réalisé en amont, à ne pas relancer. Ici pour info</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # # Code de réduction de taille des fichiers pour les exercices des IRIS de la région AURA uniquement. </span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># import pandas as pd</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># import geopandas as gpd</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># gdf_iris = gpd.read_parquet('./data/contours-iris-2025.parquet')</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co"># df_lkp_dept = pd.read_csv('./data/lkp_dept_region.csv', sep=';', encoding='ansi')</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># # # Ajout code département depuis codes commune:</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co"># gdf_iris.loc[:, 'com'] = gdf_iris.loc[:, 'code_insee'].str.zfill(5)</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co"># gdf_iris.loc[:, 'DEP'] = gdf_iris.loc[:, 'com'].str[0:2]</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co"># # # Récupération code région depuis table de correspondance départements / région:</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co"># gdf_iris = gdf_iris.merge(df_lkp_dept, on='DEP', how='left')</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co"># # # Extraction AURA et export:</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="co"># gdf_iris_aura = gdf_iris.loc[gdf_iris['REG_NEW_ID']==84]</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="co"># gdf_iris_aura.to_file('/content/contours-iris-2025_AURA.gpkg')</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="co"># # # Récupération des données de population</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="co"># df_pop = pd.read_csv('./data/pop-IRIS-2022.csv', sep=';', low_memory=False)</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="co"># df_pop.loc[:, 'com'] = df_pop.loc[:, 'COM'].astype(str).str.zfill(5)</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="co"># df_pop.loc[:, 'DEP'] = df_pop.loc[:, 'com'].str[0:2]</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a><span class="co"># df_pop = df_pop[['IRIS', 'DEP', 'com', 'P22_POP']]</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a><span class="co"># df_pop = df_pop.merge(df_lkp_dept[['DEP', 'REG_NEW_ID']], on='DEP', how='left')</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a><span class="co"># df_pop.to_parquet('/content/pop-IRIS-2022.parquet')</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a><span class="co"># df_pop.head()</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="affichage-de-cartes" class="level3">
+<h3 class="anchored" data-anchor-id="affichage-de-cartes">Affichage de cartes</h3>
+<section id="affichage-simple" class="level4">
+<h4 class="anchored" data-anchor-id="affichage-simple">Affichage simple</h4>
+<div id="cell-31" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Chargement de la couche: méthode `read_file` pour la majorité des fichiers SIG, `read_parquet` pour des fichiers parquet</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>gdf_iris <span class="op">=</span> gpd.read_file(<span class="st">'/content/contours-iris-2025_AURA.gpkg'</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>gdf_iris.plot()  </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>gdf_iris.head(<span class="dv">2</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="affichage-avec-fond-de-carte-nécessite-une-connexion-internet" class="level4">
+<h4 class="anchored" data-anchor-id="affichage-avec-fond-de-carte-nécessite-une-connexion-internet">Affichage avec fond de carte (nécessite une connexion internet)</h4>
+<div id="cell-33" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Projection en Web Mercator (CRS des fonds de carte)</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>gdf <span class="op">=</span> gdf_iris.to_crs(epsg<span class="op">=</span><span class="dv">3857</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># # Définition du graphique:</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> gdf.plot(</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>), </span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.7</span>,          <span class="co"># niveau de transparence (0 ==&gt; transparent)</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    facecolor<span class="op">=</span><span class="st">"none"</span>,   <span class="co"># Pas de remplissage des IRIS</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    edgecolor<span class="op">=</span><span class="st">"black"</span>,  <span class="co"># contour des IRIS</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    linewidth<span class="op">=</span><span class="fl">0.5</span>,      <span class="co"># contour des IRIS    </span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co"># # Retire la graduation des axes:</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>ax.set_axis_off()</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="co"># # Ajout du fond de carte:</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>cx.add_basemap(</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>    ax,</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>    source<span class="op">=</span>cx.providers.CartoDB.Positron  <span class="co"># autre source pour autre type de fond de carte</span></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="représentation-de-données-quantitatives" class="level4">
+<h4 class="anchored" data-anchor-id="représentation-de-données-quantitatives">Représentation de données quantitatives</h4>
+<div id="cell-35" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>gdf_iris <span class="op">=</span> gpd.read_file(<span class="st">'/content/contours-iris-2025_AURA.gpkg'</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>df_pop <span class="op">=</span> pd.read_parquet(<span class="st">'/content/pop-IRIS-2022.parquet'</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># # Avant fusion sur une clé commune ('IRIS' dans df_pop et 'iris' and gdf_iris), vérifier la cohérence des types:</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'types df pop: </span><span class="sc">{</span>df_pop[<span class="st">"IRIS"</span>]<span class="sc">.</span>dtype<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'types gdf iris: </span><span class="sc">{</span>gdf_iris[<span class="st">"code_iris"</span>]<span class="sc">.</span>dtype<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># # Si types différents (ex: 'object' (string) et 'int64'), alors conversion nécessaire avant fusion</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>gdf_iris <span class="op">=</span> gdf_iris.merge(df_pop[[<span class="st">'IRIS'</span>, <span class="st">'P22_POP'</span>]], left_on<span class="op">=</span><span class="st">'code_iris'</span>, right_on<span class="op">=</span><span class="st">'IRIS'</span>, how<span class="op">=</span><span class="st">'left'</span>).drop(columns<span class="op">=</span>[<span class="st">'IRIS'</span>])</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co"># # Affichage de la population en dégradé de couleur</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>))</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>gdf_iris.plot(</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    column<span class="op">=</span><span class="st">"P22_POP"</span>,        <span class="co"># le champ de données quantitatives à afficher</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    scheme<span class="op">=</span><span class="st">"NaturalBreaks"</span>,  <span class="co"># la façon de définir les tranches de couleurs pour la légende</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    k<span class="op">=</span><span class="dv">5</span>,                     <span class="co"># le nombre de tranches de couleurs</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"OrRd"</span>,             <span class="co"># la gamme de couleurs (cf documentation de matplotlib pour l'ensemble des gammes)</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>    legend<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>    ax<span class="op">=</span>ax,</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.8</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>cx.add_basemap(ax, source<span class="op">=</span>cx.providers.CartoDB.Positron)</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>ax.set_axis_off()</span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="création-de-cartes" class="level3">
+<h3 class="anchored" data-anchor-id="création-de-cartes">Création de cartes</h3>
+<p>On souhaite ici créer une carte au département plutôt qu’à l’IRIS. 💡Intérêt de la manip: &gt; On ne conserve qu’une seule donnée source (le fond de carte IRIS), et on reconstruit les cartes de communes, départements, communautés de communes etc. en fonction de cette même base. &gt; Les frontières de chaque découpage administratif coïncident parfaitement</p>
+<div id="cell-37" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>gdf_iris <span class="op">=</span> gpd.read_file(<span class="st">'/content/contours-iris-2025_AURA.gpkg'</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>gdf_dept <span class="op">=</span>  gdf_iris.dissolve(by<span class="op">=</span><span class="st">'DEP'</span>, aggfunc<span class="op">=</span><span class="st">'first'</span>, as_index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span><span class="bu">len</span>(gdf_dept.index)<span class="sc">}</span><span class="ss"> départements'</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>gdf_dept.plot()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="analyse-de-la-desserte-du-métro-lyonnais" class="level3">
+<h3 class="anchored" data-anchor-id="analyse-de-la-desserte-du-métro-lyonnais">Analyse de la desserte du métro Lyonnais</h3>
+<div id="cell-39" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:147}}" data-outputid="8ce3235e-6f95-4023-9b3d-75d2f749439d">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Chargement des IRIS et fusion données de population (cf. cellule précédente)</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>gdf_iris <span class="op">=</span> gpd.read_file(<span class="st">'/content/contours-iris-2025_AURA.gpkg'</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>df_pop <span class="op">=</span> pd.read_parquet(<span class="st">'/content/pop-IRIS-2022.parquet'</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>gdf_iris <span class="op">=</span> gdf_iris.merge(df_pop[[<span class="st">'IRIS'</span>, <span class="st">'P22_POP'</span>]], left_on<span class="op">=</span><span class="st">'code_iris'</span>, right_on<span class="op">=</span><span class="st">'IRIS'</span>, how<span class="op">=</span><span class="st">'left'</span>).drop(columns<span class="op">=</span>[<span class="st">'IRIS'</span>])</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># # Entrées sorties du réseau de métro:</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>gdf_in_out <span class="op">=</span> gpd.read_file(<span class="st">'/content/tcl_entrees_sorties_stations_metro.gpkg'</span>)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="bu">len</span>(gdf_in_out.index)<span class="sc">:,}</span><span class="ss"> entrées / sorties de métro"</span>)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="co"># # Affichage du CRS: toujours vérifier la cohérence des CRS avant de croiser les informations géographiques!</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Système de projection IRIS: </span><span class="sc">{</span>gdf_iris<span class="sc">.</span>crs<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Système de projection STATIONS: </span><span class="sc">{</span>gdf_in_out<span class="sc">.</span>crs<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="co"># # Conversion du CRS des stations pour qu'il soit cohérent avec la carte des IRIS</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>crs_iris <span class="op">=</span> gdf_iris.crs</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>gdf_in_out.to_crs(crs<span class="op">=</span>crs_iris, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="co"># # Suppression des doublons sur les noms de stations:</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>gdf_stations <span class="op">=</span> gdf_in_out.drop_duplicates(subset<span class="op">=</span><span class="st">'nom'</span>, keep<span class="op">=</span><span class="st">'first'</span>)</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="bu">len</span>(gdf_stations.index)<span class="sc">:,}</span><span class="ss"> stations de métro"</span>)</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a><span class="co"># # Creation d'une zone tampon autour des stations de métro de 800m:</span></span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>distance <span class="op">=</span> <span class="dv">800</span></span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>gdf_buffer <span class="op">=</span> gdf_stations.copy()</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>gdf_buffer.geometry <span class="op">=</span> gdf_stations.geometry.<span class="bu">buffer</span>(distance<span class="op">=</span>distance)</span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>gdf_buffer.plot()</span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a><span class="co"># # Intersection avec les zones IRIS:</span></span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>gdf_iris <span class="op">=</span> gdf_iris.sjoin(gdf_buffer, how<span class="op">=</span><span class="st">'left'</span>, predicate<span class="op">=</span><span class="st">'intersects'</span>)</span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a><span class="co"># # Compte la population dans des zones IRIS à moins de 800m vs population totale:</span></span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a>pop_tot <span class="op">=</span> gdf_iris[<span class="st">'P22_POP'</span>].<span class="bu">sum</span>()</span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>pop_stations <span class="op">=</span> gdf_iris.loc[<span class="op">~</span>gdf_iris[<span class="st">'id_station'</span>].isna(), <span class="st">'P22_POP'</span>].<span class="bu">sum</span>()</span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>pop_stations<span class="op">/</span>pop_tot<span class="sc">:.1%}</span><span class="ss"> de la population de la région AURA se trouve à moins de </span><span class="sc">{</span>distance<span class="sc">}</span><span class="ss">m d'une station de métro"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-40" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Export des fichiers localement pour création de cartes sous QGIS:</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> os.path <span class="im">import</span> join</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>my_path <span class="op">=</span> <span class="st">'chemin_fichiers_a_exporter'</span>  <span class="co"># exemple: r'c:\Users\[vous]\Desktop\formation_geopandas'</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>gdf_iris.to_file(join(my_path, <span class="st">'couche_iris_population_AURA.gpkg'</span>))</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>gdf_in_out.to_file(join(my_path, <span class="st">'entrees_sorties_metro.gpkg'</span>))</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>gdf_stations.to_file(join(my_path, <span class="st">'stations_metro.gpkg'</span>))</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>gdf_buffer.to_file(join(my_path, <span class="st">'buffer_800m_stations_metro.gpkg'</span>))</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="co"># # La suite sur QGIS...</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Notes de bas de page</h2>
+
+<ol>
+<li id="fn1"><p>Galiana, Lino. 2025. Python pour la data science. https://doi.org/10.5281/zenodo.8229676.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

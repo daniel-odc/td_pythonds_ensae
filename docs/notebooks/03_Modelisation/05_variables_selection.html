@@ -1,0 +1,2508 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>variables_selection</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="05_variables_selection_files/libs/clipboard/clipboard.min.js"></script>
+<script src="05_variables_selection_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="05_variables_selection_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="05_variables_selection_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="05_variables_selection_files/libs/quarto-html/popper.min.js"></script>
+<script src="05_variables_selection_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="05_variables_selection_files/libs/quarto-html/anchor.min.js"></script>
+<link href="05_variables_selection_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="05_variables_selection_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="05_variables_selection_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="05_variables_selection_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="05_variables_selection_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+
+<div id="6d0227df7608b683" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install xlrd</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="febfe14b96055974" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Sélection de variables avec la méthode LASSO</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.impute <span class="im">import</span> SimpleImputer</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OneHotEncoder, StandardScaler</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.compose <span class="im">import</span> ColumnTransformer</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Lasso, LassoCV</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, r2_score</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> lasso_path</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="afa736d0e02804ec" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T08:33:52.071824Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T08:33:38.460500Z&quot;}}" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/linogaliana/python-datascientist/main/content/modelisation/get_data.py"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> requests.get(url, allow_redirects<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">open</span>(<span class="st">"getdata.py"</span>, <span class="st">"wb"</span>).write(r.content)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> getdata</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>votes <span class="op">=</span> getdata.create_votes_dataframes()</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="sc">{:,}</span><span class="st"> columns:</span><span class="ch">\n</span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(<span class="bu">len</span>(<span class="bu">list</span>(votes.columns)), <span class="bu">list</span>(votes.columns)))</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>votes.head(<span class="dv">1</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>383 columns:
+['STATEFP', 'COUNTYFP', 'COUNTYNS', 'AFFGEOID', 'GEOID', 'NAME', 'LSAD', 'ALAND', 'AWATER', 'geometry', 'FIPS_x', 'state_name', 'county_fips', 'county_name', 'votes_gop', 'votes_dem', 'total_votes', 'diff', 'per_gop', 'per_dem', 'per_point_diff', 'FIPS_y', 'State', 'Area_Name', 'Rural-urban_Continuum Code_2003', 'Rural-urban_Continuum Code_2013', 'Urban_Influence_Code_2003', 'Urban_Influence_Code_2013', 'Economic_typology_2015', 'CENSUS_2010_POP', 'ESTIMATES_BASE_2010', 'POP_ESTIMATE_2010', 'POP_ESTIMATE_2011', 'POP_ESTIMATE_2012', 'POP_ESTIMATE_2013', 'POP_ESTIMATE_2014', 'POP_ESTIMATE_2015', 'POP_ESTIMATE_2016', 'POP_ESTIMATE_2017', 'POP_ESTIMATE_2018', 'POP_ESTIMATE_2019', 'N_POP_CHG_2010', 'N_POP_CHG_2011', 'N_POP_CHG_2012', 'N_POP_CHG_2013', 'N_POP_CHG_2014', 'N_POP_CHG_2015', 'N_POP_CHG_2016', 'N_POP_CHG_2017', 'N_POP_CHG_2018', 'N_POP_CHG_2019', 'Births_2010', 'Births_2011', 'Births_2012', 'Births_2013', 'Births_2014', 'Births_2015', 'Births_2016', 'Births_2017', 'Births_2018', 'Births_2019', 'Deaths_2010', 'Deaths_2011', 'Deaths_2012', 'Deaths_2013', 'Deaths_2014', 'Deaths_2015', 'Deaths_2016', 'Deaths_2017', 'Deaths_2018', 'Deaths_2019', 'NATURAL_INC_2010', 'NATURAL_INC_2011', 'NATURAL_INC_2012', 'NATURAL_INC_2013', 'NATURAL_INC_2014', 'NATURAL_INC_2015', 'NATURAL_INC_2016', 'NATURAL_INC_2017', 'NATURAL_INC_2018', 'NATURAL_INC_2019', 'INTERNATIONAL_MIG_2010', 'INTERNATIONAL_MIG_2011', 'INTERNATIONAL_MIG_2012', 'INTERNATIONAL_MIG_2013', 'INTERNATIONAL_MIG_2014', 'INTERNATIONAL_MIG_2015', 'INTERNATIONAL_MIG_2016', 'INTERNATIONAL_MIG_2017', 'INTERNATIONAL_MIG_2018', 'INTERNATIONAL_MIG_2019', 'DOMESTIC_MIG_2010', 'DOMESTIC_MIG_2011', 'DOMESTIC_MIG_2012', 'DOMESTIC_MIG_2013', 'DOMESTIC_MIG_2014', 'DOMESTIC_MIG_2015', 'DOMESTIC_MIG_2016', 'DOMESTIC_MIG_2017', 'DOMESTIC_MIG_2018', 'DOMESTIC_MIG_2019', 'NET_MIG_2010', 'NET_MIG_2011', 'NET_MIG_2012', 'NET_MIG_2013', 'NET_MIG_2014', 'NET_MIG_2015', 'NET_MIG_2016', 'NET_MIG_2017', 'NET_MIG_2018', 'NET_MIG_2019', 'RESIDUAL_2010', 'RESIDUAL_2011', 'RESIDUAL_2012', 'RESIDUAL_2013', 'RESIDUAL_2014', 'RESIDUAL_2015', 'RESIDUAL_2016', 'RESIDUAL_2017', 'RESIDUAL_2018', 'RESIDUAL_2019', 'GQ_ESTIMATES_BASE_2010', 'GQ_ESTIMATES_2010', 'GQ_ESTIMATES_2011', 'GQ_ESTIMATES_2012', 'GQ_ESTIMATES_2013', 'GQ_ESTIMATES_2014', 'GQ_ESTIMATES_2015', 'GQ_ESTIMATES_2016', 'GQ_ESTIMATES_2017', 'GQ_ESTIMATES_2018', 'GQ_ESTIMATES_2019', 'R_birth_2011', 'R_birth_2012', 'R_birth_2013', 'R_birth_2014', 'R_birth_2015', 'R_birth_2016', 'R_birth_2017', 'R_birth_2018', 'R_birth_2019', 'R_death_2011', 'R_death_2012', 'R_death_2013', 'R_death_2014', 'R_death_2015', 'R_death_2016', 'R_death_2017', 'R_death_2018', 'R_death_2019', 'R_NATURAL_INC_2011', 'R_NATURAL_INC_2012', 'R_NATURAL_INC_2013', 'R_NATURAL_INC_2014', 'R_NATURAL_INC_2015', 'R_NATURAL_INC_2016', 'R_NATURAL_INC_2017', 'R_NATURAL_INC_2018', 'R_NATURAL_INC_2019', 'R_INTERNATIONAL_MIG_2011', 'R_INTERNATIONAL_MIG_2012', 'R_INTERNATIONAL_MIG_2013', 'R_INTERNATIONAL_MIG_2014', 'R_INTERNATIONAL_MIG_2015', 'R_INTERNATIONAL_MIG_2016', 'R_INTERNATIONAL_MIG_2017', 'R_INTERNATIONAL_MIG_2018', 'R_INTERNATIONAL_MIG_2019', 'R_DOMESTIC_MIG_2011', 'R_DOMESTIC_MIG_2012', 'R_DOMESTIC_MIG_2013', 'R_DOMESTIC_MIG_2014', 'R_DOMESTIC_MIG_2015', 'R_DOMESTIC_MIG_2016', 'R_DOMESTIC_MIG_2017', 'R_DOMESTIC_MIG_2018', 'R_DOMESTIC_MIG_2019', 'R_NET_MIG_2011', 'R_NET_MIG_2012', 'R_NET_MIG_2013', 'R_NET_MIG_2014', 'R_NET_MIG_2015', 'R_NET_MIG_2016', 'R_NET_MIG_2017', 'R_NET_MIG_2018', 'R_NET_MIG_2019', 'Area_Name', '2003 Rural-urban Continuum Code', '2003 Urban Influence Code', '2013 Rural-urban Continuum Code', '2013 Urban Influence Code', 'Less than a high school diploma, 1970', 'High school diploma only, 1970', 'Some college (1-3 years), 1970', 'Four years of college or higher, 1970', 'Percent of adults with less than a high school diploma, 1970', 'Percent of adults with a high school diploma only, 1970', 'Percent of adults completing some college (1-3 years), 1970', 'Percent of adults completing four years of college or higher, 1970', 'Less than a high school diploma, 1980', 'High school diploma only, 1980', 'Some college (1-3 years), 1980', 'Four years of college or higher, 1980', 'Percent of adults with less than a high school diploma, 1980', 'Percent of adults with a high school diploma only, 1980', 'Percent of adults completing some college (1-3 years), 1980', 'Percent of adults completing four years of college or higher, 1980', 'Less than a high school diploma, 1990', 'High school diploma only, 1990', "Some college or associate's degree, 1990", "Bachelor's degree or higher, 1990", 'Percent of adults with less than a high school diploma, 1990', 'Percent of adults with a high school diploma only, 1990', "Percent of adults completing some college or associate's degree, 1990", "Percent of adults with a bachelor's degree or higher, 1990", 'Less than a high school diploma, 2000', 'High school diploma only, 2000', "Some college or associate's degree, 2000", "Bachelor's degree or higher, 2000", 'Percent of adults with less than a high school diploma, 2000', 'Percent of adults with a high school diploma only, 2000', "Percent of adults completing some college or associate's degree, 2000", "Percent of adults with a bachelor's degree or higher, 2000", 'Less than a high school diploma, 2015-19', 'High school diploma only, 2015-19', "Some college or associate's degree, 2015-19", "Bachelor's degree or higher, 2015-19", 'Percent of adults with less than a high school diploma, 2015-19', 'Percent of adults with a high school diploma only, 2015-19', "Percent of adults completing some college or associate's degree, 2015-19", "Percent of adults with a bachelor's degree or higher, 2015-19", 'Area_Name', 'Rural_urban_continuum_code_2013', 'Urban_influence_code_2013', 'Metro_2013', 'Civilian_labor_force_2000', 'Employed_2000', 'Unemployed_2000', 'Unemployment_rate_2000', 'Civilian_labor_force_2001', 'Employed_2001', 'Unemployed_2001', 'Unemployment_rate_2001', 'Civilian_labor_force_2002', 'Employed_2002', 'Unemployed_2002', 'Unemployment_rate_2002', 'Civilian_labor_force_2003', 'Employed_2003', 'Unemployed_2003', 'Unemployment_rate_2003', 'Civilian_labor_force_2004', 'Employed_2004', 'Unemployed_2004', 'Unemployment_rate_2004', 'Civilian_labor_force_2005', 'Employed_2005', 'Unemployed_2005', 'Unemployment_rate_2005', 'Civilian_labor_force_2006', 'Employed_2006', 'Unemployed_2006', 'Unemployment_rate_2006', 'Civilian_labor_force_2007', 'Employed_2007', 'Unemployed_2007', 'Unemployment_rate_2007', 'Civilian_labor_force_2008', 'Employed_2008', 'Unemployed_2008', 'Unemployment_rate_2008', 'Civilian_labor_force_2009', 'Employed_2009', 'Unemployed_2009', 'Unemployment_rate_2009', 'Civilian_labor_force_2010', 'Employed_2010', 'Unemployed_2010', 'Unemployment_rate_2010', 'Civilian_labor_force_2011', 'Employed_2011', 'Unemployed_2011', 'Unemployment_rate_2011', 'Civilian_labor_force_2012', 'Employed_2012', 'Unemployed_2012', 'Unemployment_rate_2012', 'Civilian_labor_force_2013', 'Employed_2013', 'Unemployed_2013', 'Unemployment_rate_2013', 'Civilian_labor_force_2014', 'Employed_2014', 'Unemployed_2014', 'Unemployment_rate_2014', 'Civilian_labor_force_2015', 'Employed_2015', 'Unemployed_2015', 'Unemployment_rate_2015', 'Civilian_labor_force_2016', 'Employed_2016', 'Unemployed_2016', 'Unemployment_rate_2016', 'Civilian_labor_force_2017', 'Employed_2017', 'Unemployed_2017', 'Unemployment_rate_2017', 'Civilian_labor_force_2018', 'Employed_2018', 'Unemployed_2018', 'Unemployment_rate_2018', 'Civilian_labor_force_2019', 'Employed_2019', 'Unemployed_2019', 'Unemployment_rate_2019', 'Median_Household_Income_2019', 'Med_HH_Income_Percent_of_State_Total_2019', 'Area_Name', 'Rural-urban_Continuum_Code_2003', 'Urban_Influence_Code_2003', 'Rural-urban_Continuum_Code_2013', 'Urban_Influence_Code_2013', 'POVALL_2019', 'CI90LBALL_2019', 'CI90UBALL_2019', 'PCTPOVALL_2019', 'CI90LBALLP_2019', 'CI90UBALLP_2019', 'POV017_2019', 'CI90LB017_2019', 'CI90UB017_2019', 'PCTPOV017_2019', 'CI90LB017P_2019', 'CI90UB017P_2019', 'POV517_2019', 'CI90LB517_2019', 'CI90UB517_2019', 'PCTPOV517_2019', 'CI90LB517P_2019', 'CI90UB517P_2019', 'MEDHHINC_2019', 'CI90LBINC_2019', 'CI90UBINC_2019', 'POV04_2019', 'CI90LB04_2019', 'CI90UB04_2019', 'PCTPOV04_2019', 'CI90LB04P_2019', 'CI90UB04P_2019', 'FIPS', 'candidatevotes_2000_democrat', 'candidatevotes_2000_green', 'candidatevotes_2000_other', 'candidatevotes_2000_republican', 'candidatevotes_2004_democrat', 'candidatevotes_2004_other', 'candidatevotes_2004_republican', 'candidatevotes_2008_democrat', 'candidatevotes_2008_other', 'candidatevotes_2008_republican', 'candidatevotes_2012_democrat', 'candidatevotes_2012_other', 'candidatevotes_2012_republican', 'candidatevotes_2016_democrat', 'candidatevotes_2016_other', 'candidatevotes_2016_republican', 'share_2000_democrat', 'share_2000_green', 'share_2000_other', 'share_2000_republican', 'share_2004_democrat', 'share_2004_other', 'share_2004_republican', 'share_2008_democrat', 'share_2008_other', 'share_2008_republican', 'share_2012_democrat', 'share_2012_other', 'share_2012_republican', 'share_2016_democrat', 'share_2016_other', 'share_2016_republican', 'winner']</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">STATEFP</th>
+<th data-quarto-table-cell-role="th">COUNTYFP</th>
+<th data-quarto-table-cell-role="th">COUNTYNS</th>
+<th data-quarto-table-cell-role="th">AFFGEOID</th>
+<th data-quarto-table-cell-role="th">GEOID</th>
+<th data-quarto-table-cell-role="th">NAME</th>
+<th data-quarto-table-cell-role="th">LSAD</th>
+<th data-quarto-table-cell-role="th">ALAND</th>
+<th data-quarto-table-cell-role="th">AWATER</th>
+<th data-quarto-table-cell-role="th">geometry</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">share_2008_democrat</th>
+<th data-quarto-table-cell-role="th">share_2008_other</th>
+<th data-quarto-table-cell-role="th">share_2008_republican</th>
+<th data-quarto-table-cell-role="th">share_2012_democrat</th>
+<th data-quarto-table-cell-role="th">share_2012_other</th>
+<th data-quarto-table-cell-role="th">share_2012_republican</th>
+<th data-quarto-table-cell-role="th">share_2016_democrat</th>
+<th data-quarto-table-cell-role="th">share_2016_other</th>
+<th data-quarto-table-cell-role="th">share_2016_republican</th>
+<th data-quarto-table-cell-role="th">winner</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>29</td>
+<td>227</td>
+<td>00758566</td>
+<td>0500000US29227</td>
+<td>29227</td>
+<td>Worth</td>
+<td>06</td>
+<td>690564983</td>
+<td>493903</td>
+<td>POLYGON ((-94.63203 40.57176, -94.53388 40.570...</td>
+<td>...</td>
+<td>0.363714</td>
+<td>0.034072</td>
+<td>0.602215</td>
+<td>0.325382</td>
+<td>0.041031</td>
+<td>0.633588</td>
+<td>0.186424</td>
+<td>0.041109</td>
+<td>0.772467</td>
+<td>republican</td>
+</tr>
+</tbody>
+</table>
+
+<p>1 rows × 383 columns</p>
+</div>
+</div>
+</div>
+<div id="27ef59b41d817f35" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T08:35:23.009657Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T08:35:22.957Z&quot;}}" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Analyse des variables prédictives du vote républicain:</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># #     Retrait des variables de scores des concurrents (liées au score républicain) </span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> pd.DataFrame(votes.drop(columns<span class="op">=</span><span class="st">"geometry"</span>))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df2.loc[:,<span class="op">~</span>df2.columns.<span class="bu">str</span>.endswith(</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"_democrat"</span>, <span class="st">"_green"</span>, <span class="st">"_other"</span>, <span class="st">"winner"</span>, <span class="st">"per_point_diff"</span>, <span class="st">"per_dem"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df2.loc[:, <span class="op">~</span>df2.columns.duplicated()]</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>df2.head(<span class="dv">1</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">STATEFP</th>
+<th data-quarto-table-cell-role="th">COUNTYFP</th>
+<th data-quarto-table-cell-role="th">COUNTYNS</th>
+<th data-quarto-table-cell-role="th">AFFGEOID</th>
+<th data-quarto-table-cell-role="th">GEOID</th>
+<th data-quarto-table-cell-role="th">NAME</th>
+<th data-quarto-table-cell-role="th">LSAD</th>
+<th data-quarto-table-cell-role="th">ALAND</th>
+<th data-quarto-table-cell-role="th">AWATER</th>
+<th data-quarto-table-cell-role="th">FIPS_x</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">candidatevotes_2000_republican</th>
+<th data-quarto-table-cell-role="th">candidatevotes_2004_republican</th>
+<th data-quarto-table-cell-role="th">candidatevotes_2008_republican</th>
+<th data-quarto-table-cell-role="th">candidatevotes_2012_republican</th>
+<th data-quarto-table-cell-role="th">candidatevotes_2016_republican</th>
+<th data-quarto-table-cell-role="th">share_2000_republican</th>
+<th data-quarto-table-cell-role="th">share_2004_republican</th>
+<th data-quarto-table-cell-role="th">share_2008_republican</th>
+<th data-quarto-table-cell-role="th">share_2012_republican</th>
+<th data-quarto-table-cell-role="th">share_2016_republican</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>29</td>
+<td>227</td>
+<td>00758566</td>
+<td>0500000US29227</td>
+<td>29227</td>
+<td>Worth</td>
+<td>06</td>
+<td>690564983</td>
+<td>493903</td>
+<td>29227</td>
+<td>...</td>
+<td>651.0</td>
+<td>691.0</td>
+<td>707.0</td>
+<td>664.0</td>
+<td>808.0</td>
+<td>0.562176</td>
+<td>0.610424</td>
+<td>0.602215</td>
+<td>0.633588</td>
+<td>0.772467</td>
+</tr>
+</tbody>
+</table>
+
+<p>1 rows × 352 columns</p>
+</div>
+</div>
+</div>
+<div id="3a13987c9b890cc5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T08:35:29.435218Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T08:35:25.170822Z&quot;}}" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Exercice 1: 'per_gop': % vote républicain ('gop' = "Grand Old Party")</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># # 1.1 Remplacer les infinis par des NaN</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>df2.replace([np.inf, <span class="op">-</span>np.inf], np.nan, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># # 1.2. Échantillon d'entraînement et échantillon test</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    df2.drop([<span class="st">"per_gop"</span>], axis<span class="op">=</span><span class="dv">1</span>), <span class="dv">100</span> <span class="op">*</span> df2[[<span class="st">"per_gop"</span>]], test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># # 1.3. Création de pipeline pour l'imputation de valeurs numériques et catégorielles</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># #     Sélction des variables numériques et catégorielles:</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>numerical_features <span class="op">=</span> X_train.select_dtypes(include<span class="op">=</span><span class="st">'number'</span>).columns.tolist()</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>categorical_features <span class="op">=</span> X_train.select_dtypes(exclude<span class="op">=</span>[<span class="st">'number'</span>, <span class="st">'datetime'</span>]).columns.tolist()  <span class="co"># on rajoute 'datetime' pour l'exemple</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co"># #     Création des pipelines:</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>numeric_pipeline <span class="op">=</span> Pipeline(</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    steps<span class="op">=</span>[(<span class="st">"impute"</span>, SimpleImputer(strategy<span class="op">=</span><span class="st">"mean"</span>)), (<span class="st">"scale"</span>, StandardScaler())]</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>categorical_pipeline <span class="op">=</span> Pipeline(</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    steps<span class="op">=</span>[</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"impute"</span>, SimpleImputer(strategy<span class="op">=</span><span class="st">"most_frequent"</span>)),</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"one-hot"</span>, OneHotEncoder(handle_unknown<span class="op">=</span><span class="st">"ignore"</span>, sparse_output<span class="op">=</span><span class="va">False</span>)),</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>preprocessor <span class="op">=</span> ColumnTransformer(</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    transformers<span class="op">=</span>[</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"number"</span>, numeric_pipeline, numerical_features),</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"category"</span>, categorical_pipeline, categorical_features),</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co"># # 1.4. Estimateur LASSO:</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Lasso(fit_intercept<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>lasso_pipeline <span class="op">=</span> Pipeline(steps<span class="op">=</span>[(<span class="st">"preprocess"</span>, preprocessor), (<span class="st">"model"</span>, model)])</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>lasso_pipeline.fit(X_train, y_train)</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="co"># # 1.5. Affichage des coefficients:</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>lasso_model <span class="op">=</span> lasso_pipeline[<span class="st">"model"</span>]</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Get feature names from the preprocessing step</span></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>features_preprocessing <span class="op">=</span> lasso_pipeline[<span class="st">'preprocess'</span>].get_feature_names_out()</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract selected features based on non-zero coefficients</span></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>features_selec <span class="op">=</span> pd.Series(features_preprocessing[np.<span class="bu">abs</span>(lasso_model.coef_) <span class="op">&gt;</span> <span class="dv">0</span>])</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>features_selec</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\impute\_base.py:598: UserWarning: Skipping features without any observed values: ['POV04_2019' 'CI90LB04_2019' 'CI90UB04_2019' 'PCTPOV04_2019'
+ 'CI90LB04P_2019' 'CI90UB04P_2019']. At least one non-missing value is needed for imputation with strategy='mean'.
+  warnings.warn(</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>0                                         number__ALAND
+1                                        number__FIPS_y
+2                        number__INTERNATIONAL_MIG_2017
+3                             number__DOMESTIC_MIG_2014
+4                             number__DOMESTIC_MIG_2017
+5                                 number__RESIDUAL_2010
+6                                 number__RESIDUAL_2019
+7                                  number__R_death_2012
+8                                  number__R_death_2019
+9                            number__R_NATURAL_INC_2019
+10                     number__R_INTERNATIONAL_MIG_2011
+11                          number__R_DOMESTIC_MIG_2012
+12    number__Percent of adults with a bachelor's de...
+13    number__Percent of adults with a high school d...
+14    number__Percent of adults with a bachelor's de...
+15    number__Percent of adults with a bachelor's de...
+16              number__Rural_urban_continuum_code_2013
+17                                   number__Metro_2013
+18                       number__Unemployment_rate_2002
+19                       number__Unemployment_rate_2003
+20                       number__Unemployment_rate_2012
+21              number__Rural-urban_Continuum_Code_2003
+22              number__Rural-urban_Continuum_Code_2013
+23                              number__CI90LB517P_2019
+24               number__candidatevotes_2016_republican
+25                        number__share_2012_republican
+26                        number__share_2016_republican
+dtype: object</code></pre>
+</div>
+</div>
+<div id="3575a87ee8c3e166" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T08:35:36.140231Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T08:35:35.997342Z&quot;}}" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # 1.6. Corrélation entre les variables sélectionnées:</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>features_selected <span class="op">=</span> features_selec.loc[</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    features_selec.<span class="bu">str</span>.startswith(<span class="st">"number__"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>].<span class="bu">str</span>.replace(<span class="st">"number__"</span>, <span class="st">""</span>, regex<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>corr <span class="op">=</span> df2.loc[:, features_selected].corr()</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> corr.style.background_gradient(cmap<span class="op">=</span><span class="st">"coolwarm"</span>, axis<span class="op">=</span><span class="va">None</span>).<span class="bu">format</span>(<span class="st">"</span><span class="sc">{:.2f}</span><span class="st">"</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>p</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<style type="text/css">
+#T_fca41_row0_col0, #T_fca41_row1_col1, #T_fca41_row2_col2, #T_fca41_row3_col3, #T_fca41_row4_col4, #T_fca41_row5_col5, #T_fca41_row6_col6, #T_fca41_row7_col7, #T_fca41_row8_col8, #T_fca41_row9_col9, #T_fca41_row10_col10, #T_fca41_row11_col11, #T_fca41_row12_col12, #T_fca41_row13_col13, #T_fca41_row14_col14, #T_fca41_row15_col15, #T_fca41_row16_col16, #T_fca41_row16_col22, #T_fca41_row17_col17, #T_fca41_row18_col18, #T_fca41_row19_col19, #T_fca41_row20_col20, #T_fca41_row21_col21, #T_fca41_row22_col16, #T_fca41_row22_col22, #T_fca41_row23_col23, #T_fca41_row24_col24, #T_fca41_row25_col25, #T_fca41_row26_col26 {
+  background-color: #b40426;
+  color: #f1f1f1;
+}
+#T_fca41_row0_col1, #T_fca41_row0_col15, #T_fca41_row1_col0, #T_fca41_row1_col10, #T_fca41_row1_col17, #T_fca41_row1_col19, #T_fca41_row2_col19, #T_fca41_row2_col23, #T_fca41_row5_col17, #T_fca41_row10_col1, #T_fca41_row15_col0, #T_fca41_row17_col1, #T_fca41_row17_col5, #T_fca41_row19_col1, #T_fca41_row19_col2, #T_fca41_row23_col2 {
+  background-color: #d3dbe7;
+  color: #000000;
+}
+#T_fca41_row0_col2, #T_fca41_row0_col11, #T_fca41_row0_col25, #T_fca41_row1_col12, #T_fca41_row1_col14, #T_fca41_row2_col0, #T_fca41_row3_col14, #T_fca41_row5_col11, #T_fca41_row5_col23, #T_fca41_row6_col12, #T_fca41_row6_col14, #T_fca41_row6_col17, #T_fca41_row11_col0, #T_fca41_row11_col5, #T_fca41_row11_col26, #T_fca41_row12_col1, #T_fca41_row12_col6, #T_fca41_row14_col1, #T_fca41_row14_col3, #T_fca41_row14_col6, #T_fca41_row17_col6, #T_fca41_row23_col5, #T_fca41_row25_col0, #T_fca41_row26_col11 {
+  background-color: #d8dce2;
+  color: #000000;
+}
+#T_fca41_row0_col3, #T_fca41_row1_col25, #T_fca41_row1_col26, #T_fca41_row2_col11, #T_fca41_row3_col0, #T_fca41_row4_col5, #T_fca41_row4_col13, #T_fca41_row5_col4, #T_fca41_row6_col9, #T_fca41_row9_col6, #T_fca41_row11_col2, #T_fca41_row13_col4, #T_fca41_row25_col1, #T_fca41_row26_col1 {
+  background-color: #dadce0;
+  color: #000000;
+}
+#T_fca41_row0_col4, #T_fca41_row0_col18, #T_fca41_row0_col19, #T_fca41_row4_col0, #T_fca41_row16_col19, #T_fca41_row18_col0, #T_fca41_row19_col0, #T_fca41_row19_col16, #T_fca41_row19_col21, #T_fca41_row19_col22, #T_fca41_row21_col19, #T_fca41_row22_col19 {
+  background-color: #dbdcde;
+  color: #000000;
+}
+#T_fca41_row0_col5, #T_fca41_row3_col7, #T_fca41_row3_col13, #T_fca41_row4_col15, #T_fca41_row5_col0, #T_fca41_row5_col13, #T_fca41_row5_col15, #T_fca41_row6_col21, #T_fca41_row7_col3, #T_fca41_row13_col3, #T_fca41_row13_col5, #T_fca41_row15_col4, #T_fca41_row15_col5, #T_fca41_row21_col6 {
+  background-color: #d1dae9;
+  color: #000000;
+}
+#T_fca41_row0_col6, #T_fca41_row6_col0 {
+  background-color: #e4d9d2;
+  color: #000000;
+}
+#T_fca41_row0_col7, #T_fca41_row7_col0, #T_fca41_row7_col11, #T_fca41_row11_col7, #T_fca41_row17_col18, #T_fca41_row18_col17 {
+  background-color: #c3d5f4;
+  color: #000000;
+}
+#T_fca41_row0_col8, #T_fca41_row8_col0, #T_fca41_row8_col11, #T_fca41_row10_col18, #T_fca41_row11_col8, #T_fca41_row18_col10 {
+  background-color: #c0d4f5;
+  color: #000000;
+}
+#T_fca41_row0_col9, #T_fca41_row3_col6, #T_fca41_row3_col26, #T_fca41_row4_col11, #T_fca41_row6_col3, #T_fca41_row9_col0, #T_fca41_row11_col4, #T_fca41_row26_col3 {
+  background-color: #e2dad5;
+  color: #000000;
+}
+#T_fca41_row0_col10, #T_fca41_row1_col8, #T_fca41_row3_col8, #T_fca41_row3_col16, #T_fca41_row3_col21, #T_fca41_row3_col22, #T_fca41_row3_col24, #T_fca41_row4_col14, #T_fca41_row5_col12, #T_fca41_row5_col14, #T_fca41_row6_col16, #T_fca41_row6_col22, #T_fca41_row8_col1, #T_fca41_row8_col3, #T_fca41_row10_col0, #T_fca41_row12_col5, #T_fca41_row14_col4, #T_fca41_row14_col5, #T_fca41_row16_col3, #T_fca41_row16_col6, #T_fca41_row18_col24, #T_fca41_row21_col3, #T_fca41_row22_col3, #T_fca41_row22_col6, #T_fca41_row24_col3, #T_fca41_row24_col18 {
+  background-color: #cfdaea;
+  color: #000000;
+}
+#T_fca41_row0_col12, #T_fca41_row8_col25, #T_fca41_row12_col0, #T_fca41_row25_col8 {
+  background-color: #dddcdc;
+  color: #000000;
+}
+#T_fca41_row0_col13, #T_fca41_row13_col0, #T_fca41_row23_col25, #T_fca41_row25_col23 {
+  background-color: #b7cff9;
+  color: #000000;
+}
+#T_fca41_row0_col14, #T_fca41_row1_col15, #T_fca41_row3_col15, #T_fca41_row3_col17, #T_fca41_row14_col0, #T_fca41_row15_col1, #T_fca41_row15_col3, #T_fca41_row16_col18, #T_fca41_row17_col3, #T_fca41_row18_col16, #T_fca41_row18_col21, #T_fca41_row18_col22, #T_fca41_row21_col18, #T_fca41_row22_col18 {
+  background-color: #d9dce1;
+  color: #000000;
+}
+#T_fca41_row0_col16, #T_fca41_row0_col22, #T_fca41_row6_col11, #T_fca41_row11_col6, #T_fca41_row16_col0, #T_fca41_row22_col0 {
+  background-color: #dedcdb;
+  color: #000000;
+}
+#T_fca41_row0_col17, #T_fca41_row17_col0 {
+  background-color: #c7d7f0;
+  color: #000000;
+}
+#T_fca41_row0_col20, #T_fca41_row1_col4, #T_fca41_row4_col1, #T_fca41_row4_col6, #T_fca41_row4_col8, #T_fca41_row5_col16, #T_fca41_row5_col18, #T_fca41_row5_col19, #T_fca41_row5_col20, #T_fca41_row5_col21, #T_fca41_row5_col22, #T_fca41_row5_col26, #T_fca41_row6_col4, #T_fca41_row6_col18, #T_fca41_row6_col25, #T_fca41_row8_col4, #T_fca41_row16_col5, #T_fca41_row18_col5, #T_fca41_row18_col6, #T_fca41_row19_col5, #T_fca41_row20_col0, #T_fca41_row20_col5, #T_fca41_row21_col5, #T_fca41_row22_col5, #T_fca41_row25_col6, #T_fca41_row26_col5 {
+  background-color: #d6dce4;
+  color: #000000;
+}
+#T_fca41_row0_col21, #T_fca41_row6_col10, #T_fca41_row7_col20, #T_fca41_row10_col6, #T_fca41_row10_col11, #T_fca41_row11_col10, #T_fca41_row11_col25, #T_fca41_row20_col7, #T_fca41_row21_col0, #T_fca41_row25_col11 {
+  background-color: #dfdbd9;
+  color: #000000;
+}
+#T_fca41_row0_col23, #T_fca41_row1_col3, #T_fca41_row1_col7, #T_fca41_row1_col9, #T_fca41_row1_col13, #T_fca41_row1_col16, #T_fca41_row1_col21, #T_fca41_row1_col22, #T_fca41_row2_col18, #T_fca41_row3_col1, #T_fca41_row3_col12, #T_fca41_row4_col17, #T_fca41_row6_col23, #T_fca41_row7_col1, #T_fca41_row9_col1, #T_fca41_row12_col3, #T_fca41_row13_col1, #T_fca41_row16_col1, #T_fca41_row17_col4, #T_fca41_row18_col2, #T_fca41_row21_col1, #T_fca41_row22_col1, #T_fca41_row23_col0, #T_fca41_row23_col6 {
+  background-color: #d5dbe5;
+  color: #000000;
+}
+#T_fca41_row0_col24, #T_fca41_row1_col11, #T_fca41_row9_col11, #T_fca41_row11_col1, #T_fca41_row11_col9, #T_fca41_row24_col0 {
+  background-color: #e3d9d3;
+  color: #000000;
+}
+#T_fca41_row0_col26, #T_fca41_row5_col10, #T_fca41_row9_col25, #T_fca41_row10_col5, #T_fca41_row19_col24, #T_fca41_row24_col19, #T_fca41_row25_col9, #T_fca41_row26_col0 {
+  background-color: #cedaeb;
+  color: #000000;
+}
+#T_fca41_row1_col2, #T_fca41_row2_col1, #T_fca41_row4_col18, #T_fca41_row18_col4 {
+  background-color: #cdd9ec;
+  color: #000000;
+}
+#T_fca41_row1_col5, #T_fca41_row2_col20, #T_fca41_row4_col16, #T_fca41_row4_col21, #T_fca41_row4_col22, #T_fca41_row5_col1, #T_fca41_row6_col19, #T_fca41_row16_col4, #T_fca41_row17_col20, #T_fca41_row19_col6, #T_fca41_row20_col2, #T_fca41_row20_col17, #T_fca41_row21_col4, #T_fca41_row22_col4 {
+  background-color: #d4dbe6;
+  color: #000000;
+}
+#T_fca41_row1_col6, #T_fca41_row4_col9, #T_fca41_row4_col12, #T_fca41_row4_col19, #T_fca41_row6_col1, #T_fca41_row9_col4, #T_fca41_row12_col4, #T_fca41_row19_col4 {
+  background-color: #ccd9ed;
+  color: #000000;
+}
+#T_fca41_row1_col18, #T_fca41_row3_col9, #T_fca41_row4_col20, #T_fca41_row6_col26, #T_fca41_row9_col3, #T_fca41_row13_col23, #T_fca41_row18_col1, #T_fca41_row20_col4, #T_fca41_row23_col13, #T_fca41_row26_col6 {
+  background-color: #d2dbe8;
+  color: #000000;
+}
+#T_fca41_row1_col20, #T_fca41_row20_col1 {
+  background-color: #b2ccfb;
+  color: #000000;
+}
+#T_fca41_row1_col23, #T_fca41_row6_col13, #T_fca41_row13_col6, #T_fca41_row23_col1 {
+  background-color: #c5d6f2;
+  color: #000000;
+}
+#T_fca41_row1_col24, #T_fca41_row3_col19, #T_fca41_row5_col7, #T_fca41_row5_col8, #T_fca41_row6_col7, #T_fca41_row6_col8, #T_fca41_row7_col5, #T_fca41_row7_col6, #T_fca41_row8_col5, #T_fca41_row8_col6, #T_fca41_row19_col3, #T_fca41_row24_col1 {
+  background-color: #cad8ef;
+  color: #000000;
+}
+#T_fca41_row2_col3, #T_fca41_row3_col2 {
+  background-color: #a5c3fe;
+  color: #000000;
+}
+#T_fca41_row2_col4, #T_fca41_row4_col2 {
+  background-color: #6f92f3;
+  color: #f1f1f1;
+}
+#T_fca41_row2_col5, #T_fca41_row5_col2 {
+  background-color: #bbd1f8;
+  color: #000000;
+}
+#T_fca41_row2_col6, #T_fca41_row2_col12, #T_fca41_row6_col2, #T_fca41_row6_col24, #T_fca41_row9_col15, #T_fca41_row12_col2, #T_fca41_row15_col9, #T_fca41_row24_col6 {
+  background-color: #f3c8b2;
+  color: #000000;
+}
+#T_fca41_row2_col7, #T_fca41_row7_col2, #T_fca41_row9_col26, #T_fca41_row17_col23, #T_fca41_row23_col17, #T_fca41_row26_col9 {
+  background-color: #b5cdfa;
+  color: #000000;
+}
+#T_fca41_row2_col8, #T_fca41_row8_col2, #T_fca41_row19_col26, #T_fca41_row26_col19 {
+  background-color: #b9d0f9;
+  color: #000000;
+}
+#T_fca41_row2_col9, #T_fca41_row4_col26, #T_fca41_row9_col2, #T_fca41_row26_col4 {
+  background-color: #e8d6cc;
+  color: #000000;
+}
+#T_fca41_row2_col10, #T_fca41_row10_col2 {
+  background-color: #f7ac8e;
+  color: #000000;
+}
+#T_fca41_row2_col13, #T_fca41_row13_col2 {
+  background-color: #aac7fd;
+  color: #000000;
+}
+#T_fca41_row2_col14, #T_fca41_row2_col15, #T_fca41_row11_col15, #T_fca41_row14_col2, #T_fca41_row15_col2, #T_fca41_row15_col11 {
+  background-color: #f2c9b4;
+  color: #000000;
+}
+#T_fca41_row2_col16, #T_fca41_row2_col22, #T_fca41_row4_col24, #T_fca41_row8_col24, #T_fca41_row9_col19, #T_fca41_row11_col20, #T_fca41_row16_col2, #T_fca41_row19_col9, #T_fca41_row20_col11, #T_fca41_row22_col2, #T_fca41_row24_col4, #T_fca41_row24_col8 {
+  background-color: #afcafc;
+  color: #000000;
+}
+#T_fca41_row2_col17, #T_fca41_row11_col12, #T_fca41_row12_col11, #T_fca41_row17_col2 {
+  background-color: #edd1c2;
+  color: #000000;
+}
+#T_fca41_row2_col21, #T_fca41_row2_col25, #T_fca41_row10_col16, #T_fca41_row10_col22, #T_fca41_row16_col10, #T_fca41_row21_col2, #T_fca41_row22_col10, #T_fca41_row24_col25, #T_fca41_row25_col2, #T_fca41_row25_col24 {
+  background-color: #aec9fc;
+  color: #000000;
+}
+#T_fca41_row2_col24, #T_fca41_row24_col2 {
+  background-color: #ea7b60;
+  color: #f1f1f1;
+}
+#T_fca41_row2_col26, #T_fca41_row7_col24, #T_fca41_row9_col20, #T_fca41_row10_col25, #T_fca41_row20_col9, #T_fca41_row24_col7, #T_fca41_row25_col10, #T_fca41_row26_col2 {
+  background-color: #a3c2fe;
+  color: #000000;
+}
+#T_fca41_row3_col4, #T_fca41_row4_col3 {
+  background-color: #d24b40;
+  color: #f1f1f1;
+}
+#T_fca41_row3_col5, #T_fca41_row3_col18, #T_fca41_row3_col20, #T_fca41_row5_col3, #T_fca41_row18_col3, #T_fca41_row20_col3 {
+  background-color: #cbd8ee;
+  color: #000000;
+}
+#T_fca41_row3_col10, #T_fca41_row4_col23, #T_fca41_row10_col3, #T_fca41_row23_col4 {
+  background-color: #c4d5f3;
+  color: #000000;
+}
+#T_fca41_row3_col11, #T_fca41_row4_col25, #T_fca41_row7_col19, #T_fca41_row11_col3, #T_fca41_row19_col7, #T_fca41_row25_col4 {
+  background-color: #e9d5cb;
+  color: #000000;
+}
+#T_fca41_row3_col23, #T_fca41_row17_col19, #T_fca41_row19_col17, #T_fca41_row23_col3, #T_fca41_row23_col26, #T_fca41_row26_col23 {
+  background-color: #c1d4f4;
+  color: #000000;
+}
+#T_fca41_row3_col25, #T_fca41_row11_col24, #T_fca41_row24_col11, #T_fca41_row25_col3 {
+  background-color: #e6d7cf;
+  color: #000000;
+}
+#T_fca41_row4_col7, #T_fca41_row5_col25, #T_fca41_row6_col15, #T_fca41_row6_col20, #T_fca41_row7_col4, #T_fca41_row13_col18, #T_fca41_row13_col20, #T_fca41_row15_col6, #T_fca41_row18_col13, #T_fca41_row20_col6, #T_fca41_row20_col13, #T_fca41_row20_col24, #T_fca41_row24_col20, #T_fca41_row25_col5 {
+  background-color: #d7dce3;
+  color: #000000;
+}
+#T_fca41_row4_col10, #T_fca41_row10_col4, #T_fca41_row11_col19, #T_fca41_row19_col11 {
+  background-color: #b3cdfb;
+  color: #000000;
+}
+#T_fca41_row5_col6, #T_fca41_row6_col5 {
+  background-color: #e0dbd8;
+  color: #000000;
+}
+#T_fca41_row5_col9, #T_fca41_row9_col5 {
+  background-color: #e1dad6;
+  color: #000000;
+}
+#T_fca41_row5_col24, #T_fca41_row10_col20, #T_fca41_row11_col13, #T_fca41_row13_col11, #T_fca41_row20_col10, #T_fca41_row24_col5 {
+  background-color: #bcd2f7;
+  color: #000000;
+}
+#T_fca41_row7_col8, #T_fca41_row8_col7 {
+  background-color: #e0654f;
+  color: #f1f1f1;
+}
+#T_fca41_row7_col9, #T_fca41_row9_col7 {
+  background-color: #6485ec;
+  color: #f1f1f1;
+}
+#T_fca41_row7_col10, #T_fca41_row10_col7, #T_fca41_row12_col19, #T_fca41_row19_col12 {
+  background-color: #9bbcff;
+  color: #000000;
+}
+#T_fca41_row7_col12, #T_fca41_row12_col7, #T_fca41_row15_col26, #T_fca41_row26_col15 {
+  background-color: #7da0f9;
+  color: #f1f1f1;
+}
+#T_fca41_row7_col13, #T_fca41_row10_col15, #T_fca41_row13_col7, #T_fca41_row15_col10 {
+  background-color: #f7af91;
+  color: #000000;
+}
+#T_fca41_row7_col14, #T_fca41_row8_col12, #T_fca41_row12_col8, #T_fca41_row14_col7 {
+  background-color: #7b9ff9;
+  color: #f1f1f1;
+}
+#T_fca41_row7_col15, #T_fca41_row8_col15, #T_fca41_row15_col7, #T_fca41_row15_col8 {
+  background-color: #80a3fa;
+  color: #f1f1f1;
+}
+#T_fca41_row7_col16, #T_fca41_row7_col22, #T_fca41_row16_col7, #T_fca41_row22_col7 {
+  background-color: #f7a889;
+  color: #000000;
+}
+#T_fca41_row7_col17, #T_fca41_row17_col7 {
+  background-color: #8caffe;
+  color: #000000;
+}
+#T_fca41_row7_col18, #T_fca41_row11_col17, #T_fca41_row17_col11, #T_fca41_row18_col7 {
+  background-color: #e7d7ce;
+  color: #000000;
+}
+#T_fca41_row7_col21, #T_fca41_row21_col7 {
+  background-color: #f7a98b;
+  color: #000000;
+}
+#T_fca41_row7_col23, #T_fca41_row23_col7 {
+  background-color: #f2cab5;
+  color: #000000;
+}
+#T_fca41_row7_col25, #T_fca41_row9_col17, #T_fca41_row11_col14, #T_fca41_row14_col11, #T_fca41_row17_col9, #T_fca41_row25_col7 {
+  background-color: #efcebd;
+  color: #000000;
+}
+#T_fca41_row7_col26, #T_fca41_row8_col23, #T_fca41_row23_col8, #T_fca41_row26_col7 {
+  background-color: #f7b79b;
+  color: #000000;
+}
+#T_fca41_row8_col9, #T_fca41_row9_col8, #T_fca41_row17_col21, #T_fca41_row21_col17 {
+  background-color: #445acc;
+  color: #f1f1f1;
+}
+#T_fca41_row8_col10, #T_fca41_row10_col8, #T_fca41_row12_col23, #T_fca41_row14_col18, #T_fca41_row18_col14, #T_fca41_row23_col12 {
+  background-color: #96b7ff;
+  color: #000000;
+}
+#T_fca41_row8_col13, #T_fca41_row13_col8 {
+  background-color: #f7b093;
+  color: #000000;
+}
+#T_fca41_row8_col14, #T_fca41_row14_col8 {
+  background-color: #7a9df8;
+  color: #f1f1f1;
+}
+#T_fca41_row8_col16, #T_fca41_row8_col21, #T_fca41_row8_col22, #T_fca41_row16_col8, #T_fca41_row16_col25, #T_fca41_row21_col8, #T_fca41_row22_col8, #T_fca41_row22_col25, #T_fca41_row25_col16, #T_fca41_row25_col22 {
+  background-color: #f3c7b1;
+  color: #000000;
+}
+#T_fca41_row8_col17, #T_fca41_row17_col8 {
+  background-color: #a2c1ff;
+  color: #000000;
+}
+#T_fca41_row8_col18, #T_fca41_row8_col19, #T_fca41_row9_col14, #T_fca41_row14_col9, #T_fca41_row18_col8, #T_fca41_row19_col8 {
+  background-color: #f5c4ac;
+  color: #000000;
+}
+#T_fca41_row8_col20, #T_fca41_row9_col10, #T_fca41_row10_col9, #T_fca41_row20_col8 {
+  background-color: #f5c0a7;
+  color: #000000;
+}
+#T_fca41_row8_col26, #T_fca41_row26_col8 {
+  background-color: #f0cdbb;
+  color: #000000;
+}
+#T_fca41_row9_col12, #T_fca41_row12_col9 {
+  background-color: #f5c2aa;
+  color: #000000;
+}
+#T_fca41_row9_col13, #T_fca41_row13_col9 {
+  background-color: #97b8ff;
+  color: #000000;
+}
+#T_fca41_row9_col16, #T_fca41_row9_col21, #T_fca41_row9_col22, #T_fca41_row16_col9, #T_fca41_row18_col25, #T_fca41_row19_col25, #T_fca41_row21_col9, #T_fca41_row22_col9, #T_fca41_row25_col18, #T_fca41_row25_col19 {
+  background-color: #abc8fd;
+  color: #000000;
+}
+#T_fca41_row9_col18, #T_fca41_row17_col25, #T_fca41_row18_col9, #T_fca41_row25_col17 {
+  background-color: #b1cbfc;
+  color: #000000;
+}
+#T_fca41_row9_col23, #T_fca41_row18_col26, #T_fca41_row23_col9, #T_fca41_row26_col18 {
+  background-color: #b6cefa;
+  color: #000000;
+}
+#T_fca41_row9_col24, #T_fca41_row24_col9 {
+  background-color: #ecd3c5;
+  color: #000000;
+}
+#T_fca41_row10_col12, #T_fca41_row12_col10, #T_fca41_row13_col26, #T_fca41_row26_col13 {
+  background-color: #f6a385;
+  color: #000000;
+}
+#T_fca41_row10_col13, #T_fca41_row13_col10 {
+  background-color: #8fb1fe;
+  color: #000000;
+}
+#T_fca41_row10_col14, #T_fca41_row14_col10 {
+  background-color: #f7a688;
+  color: #000000;
+}
+#T_fca41_row10_col17, #T_fca41_row17_col10 {
+  background-color: #efcfbf;
+  color: #000000;
+}
+#T_fca41_row10_col19, #T_fca41_row19_col10 {
+  background-color: #bfd3f6;
+  color: #000000;
+}
+#T_fca41_row10_col21, #T_fca41_row11_col23, #T_fca41_row21_col10, #T_fca41_row23_col11 {
+  background-color: #adc9fd;
+  color: #000000;
+}
+#T_fca41_row10_col23, #T_fca41_row23_col10, #T_fca41_row23_col24, #T_fca41_row24_col23 {
+  background-color: #c6d6f1;
+  color: #000000;
+}
+#T_fca41_row10_col24, #T_fca41_row24_col10 {
+  background-color: #f5c1a9;
+  color: #000000;
+}
+#T_fca41_row10_col26, #T_fca41_row12_col21, #T_fca41_row21_col12, #T_fca41_row26_col10 {
+  background-color: #93b5fe;
+  color: #000000;
+}
+#T_fca41_row11_col16, #T_fca41_row11_col21, #T_fca41_row11_col22, #T_fca41_row16_col11, #T_fca41_row21_col11, #T_fca41_row22_col11 {
+  background-color: #bed2f6;
+  color: #000000;
+}
+#T_fca41_row11_col18, #T_fca41_row18_col11 {
+  background-color: #bad0f8;
+  color: #000000;
+}
+#T_fca41_row12_col13, #T_fca41_row13_col12 {
+  background-color: #5d7ce6;
+  color: #f1f1f1;
+}
+#T_fca41_row12_col14, #T_fca41_row14_col12 {
+  background-color: #ba162b;
+  color: #f1f1f1;
+}
+#T_fca41_row12_col15, #T_fca41_row15_col12 {
+  background-color: #c53334;
+  color: #f1f1f1;
+}
+#T_fca41_row12_col16, #T_fca41_row12_col22, #T_fca41_row14_col19, #T_fca41_row16_col12, #T_fca41_row19_col14, #T_fca41_row22_col12 {
+  background-color: #94b6ff;
+  color: #000000;
+}
+#T_fca41_row12_col17, #T_fca41_row17_col12 {
+  background-color: #f6bda2;
+  color: #000000;
+}
+#T_fca41_row12_col18, #T_fca41_row13_col24, #T_fca41_row14_col25, #T_fca41_row18_col12, #T_fca41_row24_col13, #T_fca41_row24_col26, #T_fca41_row25_col14, #T_fca41_row26_col24 {
+  background-color: #9dbdff;
+  color: #000000;
+}
+#T_fca41_row12_col20, #T_fca41_row20_col12 {
+  background-color: #a6c4fe;
+  color: #000000;
+}
+#T_fca41_row12_col24, #T_fca41_row14_col24, #T_fca41_row24_col12, #T_fca41_row24_col14 {
+  background-color: #f7b497;
+  color: #000000;
+}
+#T_fca41_row12_col25, #T_fca41_row25_col12 {
+  background-color: #98b9ff;
+  color: #000000;
+}
+#T_fca41_row12_col26, #T_fca41_row26_col12 {
+  background-color: #7597f6;
+  color: #f1f1f1;
+}
+#T_fca41_row13_col14, #T_fca41_row14_col13 {
+  background-color: #5e7de7;
+  color: #f1f1f1;
+}
+#T_fca41_row13_col15, #T_fca41_row15_col13 {
+  background-color: #6b8df0;
+  color: #f1f1f1;
+}
+#T_fca41_row13_col16, #T_fca41_row13_col21, #T_fca41_row13_col22, #T_fca41_row13_col25, #T_fca41_row16_col13, #T_fca41_row21_col13, #T_fca41_row22_col13, #T_fca41_row25_col13 {
+  background-color: #f2cbb7;
+  color: #000000;
+}
+#T_fca41_row13_col17, #T_fca41_row17_col13, #T_fca41_row20_col26, #T_fca41_row26_col20 {
+  background-color: #a9c6fd;
+  color: #000000;
+}
+#T_fca41_row13_col19, #T_fca41_row19_col13 {
+  background-color: #dcdddd;
+  color: #000000;
+}
+#T_fca41_row14_col15, #T_fca41_row15_col14 {
+  background-color: #bd1f2d;
+  color: #f1f1f1;
+}
+#T_fca41_row14_col16, #T_fca41_row14_col21, #T_fca41_row14_col22, #T_fca41_row15_col18, #T_fca41_row15_col19, #T_fca41_row16_col14, #T_fca41_row18_col15, #T_fca41_row19_col15, #T_fca41_row21_col14, #T_fca41_row22_col14 {
+  background-color: #92b4fe;
+  color: #000000;
+}
+#T_fca41_row14_col17, #T_fca41_row17_col14 {
+  background-color: #f7b99e;
+  color: #000000;
+}
+#T_fca41_row14_col20, #T_fca41_row20_col14 {
+  background-color: #a1c0ff;
+  color: #000000;
+}
+#T_fca41_row14_col23, #T_fca41_row15_col16, #T_fca41_row15_col21, #T_fca41_row15_col22, #T_fca41_row16_col15, #T_fca41_row21_col15, #T_fca41_row22_col15, #T_fca41_row23_col14 {
+  background-color: #8badfd;
+  color: #000000;
+}
+#T_fca41_row14_col26, #T_fca41_row26_col14 {
+  background-color: #779af7;
+  color: #f1f1f1;
+}
+#T_fca41_row15_col17, #T_fca41_row17_col15, #T_fca41_row17_col24, #T_fca41_row24_col17 {
+  background-color: #f7b194;
+  color: #000000;
+}
+#T_fca41_row15_col20, #T_fca41_row15_col25, #T_fca41_row17_col26, #T_fca41_row20_col15, #T_fca41_row25_col15, #T_fca41_row26_col17 {
+  background-color: #9fbfff;
+  color: #000000;
+}
+#T_fca41_row15_col23, #T_fca41_row23_col15 {
+  background-color: #81a4fb;
+  color: #f1f1f1;
+}
+#T_fca41_row15_col24, #T_fca41_row24_col15 {
+  background-color: #f7b396;
+  color: #000000;
+}
+#T_fca41_row16_col17, #T_fca41_row17_col16, #T_fca41_row17_col22, #T_fca41_row22_col17 {
+  background-color: #3b4cc0;
+  color: #f1f1f1;
+}
+#T_fca41_row16_col20, #T_fca41_row20_col16, #T_fca41_row20_col21, #T_fca41_row20_col22, #T_fca41_row21_col20, #T_fca41_row22_col20 {
+  background-color: #c9d7f0;
+  color: #000000;
+}
+#T_fca41_row16_col21, #T_fca41_row18_col19, #T_fca41_row19_col18, #T_fca41_row21_col16, #T_fca41_row21_col22, #T_fca41_row22_col21 {
+  background-color: #c0282f;
+  color: #f1f1f1;
+}
+#T_fca41_row16_col23, #T_fca41_row21_col23, #T_fca41_row22_col23, #T_fca41_row23_col16, #T_fca41_row23_col21, #T_fca41_row23_col22 {
+  background-color: #ebd3c6;
+  color: #000000;
+}
+#T_fca41_row16_col24, #T_fca41_row22_col24, #T_fca41_row24_col16, #T_fca41_row24_col22 {
+  background-color: #85a8fc;
+  color: #f1f1f1;
+}
+#T_fca41_row16_col26, #T_fca41_row22_col26, #T_fca41_row26_col16, #T_fca41_row26_col22 {
+  background-color: #f7b89c;
+  color: #000000;
+}
+#T_fca41_row18_col20, #T_fca41_row20_col18 {
+  background-color: #df634e;
+  color: #f1f1f1;
+}
+#T_fca41_row18_col23, #T_fca41_row23_col18 {
+  background-color: #f49a7b;
+  color: #000000;
+}
+#T_fca41_row19_col20, #T_fca41_row20_col19 {
+  background-color: #e16751;
+  color: #f1f1f1;
+}
+#T_fca41_row19_col23, #T_fca41_row23_col19 {
+  background-color: #f59f80;
+  color: #000000;
+}
+#T_fca41_row20_col23, #T_fca41_row23_col20 {
+  background-color: #f39778;
+  color: #000000;
+}
+#T_fca41_row20_col25, #T_fca41_row25_col20 {
+  background-color: #9ebeff;
+  color: #000000;
+}
+#T_fca41_row21_col24, #T_fca41_row24_col21 {
+  background-color: #84a7fc;
+  color: #f1f1f1;
+}
+#T_fca41_row21_col25, #T_fca41_row25_col21 {
+  background-color: #f4c5ad;
+  color: #000000;
+}
+#T_fca41_row21_col26, #T_fca41_row26_col21 {
+  background-color: #f7b599;
+  color: #000000;
+}
+#T_fca41_row25_col26, #T_fca41_row26_col25 {
+  background-color: #c12b30;
+  color: #f1f1f1;
+}
+</style>
+
+<table id="T_fca41" class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th class="blank level0" data-quarto-table-cell-role="th">&nbsp;</th>
+<th id="T_fca41_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">ALAND</th>
+<th id="T_fca41_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">FIPS_y</th>
+<th id="T_fca41_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">INTERNATIONAL_MIG_2017</th>
+<th id="T_fca41_level0_col3" class="col_heading level0 col3" data-quarto-table-cell-role="th">DOMESTIC_MIG_2014</th>
+<th id="T_fca41_level0_col4" class="col_heading level0 col4" data-quarto-table-cell-role="th">DOMESTIC_MIG_2017</th>
+<th id="T_fca41_level0_col5" class="col_heading level0 col5" data-quarto-table-cell-role="th">RESIDUAL_2010</th>
+<th id="T_fca41_level0_col6" class="col_heading level0 col6" data-quarto-table-cell-role="th">RESIDUAL_2019</th>
+<th id="T_fca41_level0_col7" class="col_heading level0 col7" data-quarto-table-cell-role="th">R_death_2012</th>
+<th id="T_fca41_level0_col8" class="col_heading level0 col8" data-quarto-table-cell-role="th">R_death_2019</th>
+<th id="T_fca41_level0_col9" class="col_heading level0 col9" data-quarto-table-cell-role="th">R_NATURAL_INC_2019</th>
+<th id="T_fca41_level0_col10" class="col_heading level0 col10" data-quarto-table-cell-role="th">R_INTERNATIONAL_MIG_2011</th>
+<th id="T_fca41_level0_col11" class="col_heading level0 col11" data-quarto-table-cell-role="th">R_DOMESTIC_MIG_2012</th>
+<th id="T_fca41_level0_col12" class="col_heading level0 col12" data-quarto-table-cell-role="th">Percent of adults with a bachelor's degree or higher, 1990</th>
+<th id="T_fca41_level0_col13" class="col_heading level0 col13" data-quarto-table-cell-role="th">Percent of adults with a high school diploma only, 2000</th>
+<th id="T_fca41_level0_col14" class="col_heading level0 col14" data-quarto-table-cell-role="th">Percent of adults with a bachelor's degree or higher, 2000</th>
+<th id="T_fca41_level0_col15" class="col_heading level0 col15" data-quarto-table-cell-role="th">Percent of adults with a bachelor's degree or higher, 2015-19</th>
+<th id="T_fca41_level0_col16" class="col_heading level0 col16" data-quarto-table-cell-role="th">Rural_urban_continuum_code_2013</th>
+<th id="T_fca41_level0_col17" class="col_heading level0 col17" data-quarto-table-cell-role="th">Metro_2013</th>
+<th id="T_fca41_level0_col18" class="col_heading level0 col18" data-quarto-table-cell-role="th">Unemployment_rate_2002</th>
+<th id="T_fca41_level0_col19" class="col_heading level0 col19" data-quarto-table-cell-role="th">Unemployment_rate_2003</th>
+<th id="T_fca41_level0_col20" class="col_heading level0 col20" data-quarto-table-cell-role="th">Unemployment_rate_2012</th>
+<th id="T_fca41_level0_col21" class="col_heading level0 col21" data-quarto-table-cell-role="th">Rural-urban_Continuum_Code_2003</th>
+<th id="T_fca41_level0_col22" class="col_heading level0 col22" data-quarto-table-cell-role="th">Rural-urban_Continuum_Code_2013</th>
+<th id="T_fca41_level0_col23" class="col_heading level0 col23" data-quarto-table-cell-role="th">CI90LB517P_2019</th>
+<th id="T_fca41_level0_col24" class="col_heading level0 col24" data-quarto-table-cell-role="th">candidatevotes_2016_republican</th>
+<th id="T_fca41_level0_col25" class="col_heading level0 col25" data-quarto-table-cell-role="th">share_2012_republican</th>
+<th id="T_fca41_level0_col26" class="col_heading level0 col26" data-quarto-table-cell-role="th">share_2016_republican</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th id="T_fca41_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">ALAND</th>
+<td id="T_fca41_row0_col0" class="data row0 col0">1.00</td>
+<td id="T_fca41_row0_col1" class="data row0 col1">-0.01</td>
+<td id="T_fca41_row0_col2" class="data row0 col2">0.03</td>
+<td id="T_fca41_row0_col3" class="data row0 col3">0.05</td>
+<td id="T_fca41_row0_col4" class="data row0 col4">0.06</td>
+<td id="T_fca41_row0_col5" class="data row0 col5">-0.02</td>
+<td id="T_fca41_row0_col6" class="data row0 col6">0.12</td>
+<td id="T_fca41_row0_col7" class="data row0 col7">-0.11</td>
+<td id="T_fca41_row0_col8" class="data row0 col8">-0.12</td>
+<td id="T_fca41_row0_col9" class="data row0 col9">0.10</td>
+<td id="T_fca41_row0_col10" class="data row0 col10">-0.03</td>
+<td id="T_fca41_row0_col11" class="data row0 col11">0.03</td>
+<td id="T_fca41_row0_col12" class="data row0 col12">0.06</td>
+<td id="T_fca41_row0_col13" class="data row0 col13">-0.17</td>
+<td id="T_fca41_row0_col14" class="data row0 col14">0.04</td>
+<td id="T_fca41_row0_col15" class="data row0 col15">-0.00</td>
+<td id="T_fca41_row0_col16" class="data row0 col16">0.08</td>
+<td id="T_fca41_row0_col17" class="data row0 col17">-0.08</td>
+<td id="T_fca41_row0_col18" class="data row0 col18">0.06</td>
+<td id="T_fca41_row0_col19" class="data row0 col19">0.05</td>
+<td id="T_fca41_row0_col20" class="data row0 col20">0.02</td>
+<td id="T_fca41_row0_col21" class="data row0 col21">0.08</td>
+<td id="T_fca41_row0_col22" class="data row0 col22">0.08</td>
+<td id="T_fca41_row0_col23" class="data row0 col23">0.01</td>
+<td id="T_fca41_row0_col24" class="data row0 col24">0.11</td>
+<td id="T_fca41_row0_col25" class="data row0 col25">0.03</td>
+<td id="T_fca41_row0_col26" class="data row0 col26">-0.04</td>
+</tr>
+<tr class="even">
+<th id="T_fca41_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">FIPS_y</th>
+<td id="T_fca41_row1_col0" class="data row1 col0">-0.01</td>
+<td id="T_fca41_row1_col1" class="data row1 col1">1.00</td>
+<td id="T_fca41_row1_col2" class="data row1 col2">-0.04</td>
+<td id="T_fca41_row1_col3" class="data row1 col3">0.01</td>
+<td id="T_fca41_row1_col4" class="data row1 col4">0.01</td>
+<td id="T_fca41_row1_col5" class="data row1 col5">-0.00</td>
+<td id="T_fca41_row1_col6" class="data row1 col6">-0.05</td>
+<td id="T_fca41_row1_col7" class="data row1 col7">0.01</td>
+<td id="T_fca41_row1_col8" class="data row1 col8">-0.03</td>
+<td id="T_fca41_row1_col9" class="data row1 col9">0.01</td>
+<td id="T_fca41_row1_col10" class="data row1 col10">-0.00</td>
+<td id="T_fca41_row1_col11" class="data row1 col11">0.11</td>
+<td id="T_fca41_row1_col12" class="data row1 col12">0.03</td>
+<td id="T_fca41_row1_col13" class="data row1 col13">0.01</td>
+<td id="T_fca41_row1_col14" class="data row1 col14">0.03</td>
+<td id="T_fca41_row1_col15" class="data row1 col15">0.04</td>
+<td id="T_fca41_row1_col16" class="data row1 col16">0.01</td>
+<td id="T_fca41_row1_col17" class="data row1 col17">-0.01</td>
+<td id="T_fca41_row1_col18" class="data row1 col18">-0.01</td>
+<td id="T_fca41_row1_col19" class="data row1 col19">-0.01</td>
+<td id="T_fca41_row1_col20" class="data row1 col20">-0.20</td>
+<td id="T_fca41_row1_col21" class="data row1 col21">0.01</td>
+<td id="T_fca41_row1_col22" class="data row1 col22">0.01</td>
+<td id="T_fca41_row1_col23" class="data row1 col23">-0.09</td>
+<td id="T_fca41_row1_col24" class="data row1 col24">-0.06</td>
+<td id="T_fca41_row1_col25" class="data row1 col25">0.05</td>
+<td id="T_fca41_row1_col26" class="data row1 col26">0.05</td>
+</tr>
+<tr class="odd">
+<th id="T_fca41_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">INTERNATIONAL_MIG_2017</th>
+<td id="T_fca41_row2_col0" class="data row2 col0">0.03</td>
+<td id="T_fca41_row2_col1" class="data row2 col1">-0.04</td>
+<td id="T_fca41_row2_col2" class="data row2 col2">1.00</td>
+<td id="T_fca41_row2_col3" class="data row2 col3">-0.28</td>
+<td id="T_fca41_row2_col4" class="data row2 col4">-0.56</td>
+<td id="T_fca41_row2_col5" class="data row2 col5">-0.15</td>
+<td id="T_fca41_row2_col6" class="data row2 col6">0.27</td>
+<td id="T_fca41_row2_col7" class="data row2 col7">-0.19</td>
+<td id="T_fca41_row2_col8" class="data row2 col8">-0.17</td>
+<td id="T_fca41_row2_col9" class="data row2 col9">0.15</td>
+<td id="T_fca41_row2_col10" class="data row2 col10">0.44</td>
+<td id="T_fca41_row2_col11" class="data row2 col11">0.05</td>
+<td id="T_fca41_row2_col12" class="data row2 col12">0.27</td>
+<td id="T_fca41_row2_col13" class="data row2 col13">-0.25</td>
+<td id="T_fca41_row2_col14" class="data row2 col14">0.26</td>
+<td id="T_fca41_row2_col15" class="data row2 col15">0.27</td>
+<td id="T_fca41_row2_col16" class="data row2 col16">-0.22</td>
+<td id="T_fca41_row2_col17" class="data row2 col17">0.20</td>
+<td id="T_fca41_row2_col18" class="data row2 col18">0.01</td>
+<td id="T_fca41_row2_col19" class="data row2 col19">-0.01</td>
+<td id="T_fca41_row2_col20" class="data row2 col20">0.00</td>
+<td id="T_fca41_row2_col21" class="data row2 col21">-0.22</td>
+<td id="T_fca41_row2_col22" class="data row2 col22">-0.22</td>
+<td id="T_fca41_row2_col23" class="data row2 col23">-0.00</td>
+<td id="T_fca41_row2_col24" class="data row2 col24">0.66</td>
+<td id="T_fca41_row2_col25" class="data row2 col25">-0.23</td>
+<td id="T_fca41_row2_col26" class="data row2 col26">-0.29</td>
+</tr>
+<tr class="even">
+<th id="T_fca41_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">DOMESTIC_MIG_2014</th>
+<td id="T_fca41_row3_col0" class="data row3 col0">0.05</td>
+<td id="T_fca41_row3_col1" class="data row3 col1">0.01</td>
+<td id="T_fca41_row3_col2" class="data row3 col2">-0.28</td>
+<td id="T_fca41_row3_col3" class="data row3 col3">1.00</td>
+<td id="T_fca41_row3_col4" class="data row3 col4">0.84</td>
+<td id="T_fca41_row3_col5" class="data row3 col5">-0.05</td>
+<td id="T_fca41_row3_col6" class="data row3 col6">0.10</td>
+<td id="T_fca41_row3_col7" class="data row3 col7">-0.02</td>
+<td id="T_fca41_row3_col8" class="data row3 col8">-0.03</td>
+<td id="T_fca41_row3_col9" class="data row3 col9">-0.01</td>
+<td id="T_fca41_row3_col10" class="data row3 col10">-0.10</td>
+<td id="T_fca41_row3_col11" class="data row3 col11">0.16</td>
+<td id="T_fca41_row3_col12" class="data row3 col12">0.01</td>
+<td id="T_fca41_row3_col13" class="data row3 col13">-0.02</td>
+<td id="T_fca41_row3_col14" class="data row3 col14">0.03</td>
+<td id="T_fca41_row3_col15" class="data row3 col15">0.04</td>
+<td id="T_fca41_row3_col16" class="data row3 col16">-0.03</td>
+<td id="T_fca41_row3_col17" class="data row3 col17">0.04</td>
+<td id="T_fca41_row3_col18" class="data row3 col18">-0.05</td>
+<td id="T_fca41_row3_col19" class="data row3 col19">-0.06</td>
+<td id="T_fca41_row3_col20" class="data row3 col20">-0.05</td>
+<td id="T_fca41_row3_col21" class="data row3 col21">-0.03</td>
+<td id="T_fca41_row3_col22" class="data row3 col22">-0.03</td>
+<td id="T_fca41_row3_col23" class="data row3 col23">-0.11</td>
+<td id="T_fca41_row3_col24" class="data row3 col24">-0.03</td>
+<td id="T_fca41_row3_col25" class="data row3 col25">0.13</td>
+<td id="T_fca41_row3_col26" class="data row3 col26">0.10</td>
+</tr>
+<tr class="odd">
+<th id="T_fca41_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">DOMESTIC_MIG_2017</th>
+<td id="T_fca41_row4_col0" class="data row4 col0">0.06</td>
+<td id="T_fca41_row4_col1" class="data row4 col1">0.01</td>
+<td id="T_fca41_row4_col2" class="data row4 col2">-0.56</td>
+<td id="T_fca41_row4_col3" class="data row4 col3">0.84</td>
+<td id="T_fca41_row4_col4" class="data row4 col4">1.00</td>
+<td id="T_fca41_row4_col5" class="data row4 col5">0.04</td>
+<td id="T_fca41_row4_col6" class="data row4 col6">0.02</td>
+<td id="T_fca41_row4_col7" class="data row4 col7">0.02</td>
+<td id="T_fca41_row4_col8" class="data row4 col8">0.02</td>
+<td id="T_fca41_row4_col9" class="data row4 col9">-0.05</td>
+<td id="T_fca41_row4_col10" class="data row4 col10">-0.19</td>
+<td id="T_fca41_row4_col11" class="data row4 col11">0.10</td>
+<td id="T_fca41_row4_col12" class="data row4 col12">-0.05</td>
+<td id="T_fca41_row4_col13" class="data row4 col13">0.04</td>
+<td id="T_fca41_row4_col14" class="data row4 col14">-0.03</td>
+<td id="T_fca41_row4_col15" class="data row4 col15">-0.02</td>
+<td id="T_fca41_row4_col16" class="data row4 col16">-0.00</td>
+<td id="T_fca41_row4_col17" class="data row4 col17">0.01</td>
+<td id="T_fca41_row4_col18" class="data row4 col18">-0.04</td>
+<td id="T_fca41_row4_col19" class="data row4 col19">-0.05</td>
+<td id="T_fca41_row4_col20" class="data row4 col20">-0.02</td>
+<td id="T_fca41_row4_col21" class="data row4 col21">0.00</td>
+<td id="T_fca41_row4_col22" class="data row4 col22">-0.00</td>
+<td id="T_fca41_row4_col23" class="data row4 col23">-0.10</td>
+<td id="T_fca41_row4_col24" class="data row4 col24">-0.21</td>
+<td id="T_fca41_row4_col25" class="data row4 col25">0.16</td>
+<td id="T_fca41_row4_col26" class="data row4 col26">0.15</td>
+</tr>
+<tr class="even">
+<th id="T_fca41_level0_row5" class="row_heading level0 row5" data-quarto-table-cell-role="th">RESIDUAL_2010</th>
+<td id="T_fca41_row5_col0" class="data row5 col0">-0.02</td>
+<td id="T_fca41_row5_col1" class="data row5 col1">-0.00</td>
+<td id="T_fca41_row5_col2" class="data row5 col2">-0.15</td>
+<td id="T_fca41_row5_col3" class="data row5 col3">-0.05</td>
+<td id="T_fca41_row5_col4" class="data row5 col4">0.04</td>
+<td id="T_fca41_row5_col5" class="data row5 col5">1.00</td>
+<td id="T_fca41_row5_col6" class="data row5 col6">0.09</td>
+<td id="T_fca41_row5_col7" class="data row5 col7">-0.06</td>
+<td id="T_fca41_row5_col8" class="data row5 col8">-0.07</td>
+<td id="T_fca41_row5_col9" class="data row5 col9">0.09</td>
+<td id="T_fca41_row5_col10" class="data row5 col10">-0.03</td>
+<td id="T_fca41_row5_col11" class="data row5 col11">0.03</td>
+<td id="T_fca41_row5_col12" class="data row5 col12">-0.03</td>
+<td id="T_fca41_row5_col13" class="data row5 col13">-0.02</td>
+<td id="T_fca41_row5_col14" class="data row5 col14">-0.03</td>
+<td id="T_fca41_row5_col15" class="data row5 col15">-0.02</td>
+<td id="T_fca41_row5_col16" class="data row5 col16">0.01</td>
+<td id="T_fca41_row5_col17" class="data row5 col17">-0.01</td>
+<td id="T_fca41_row5_col18" class="data row5 col18">0.02</td>
+<td id="T_fca41_row5_col19" class="data row5 col19">0.02</td>
+<td id="T_fca41_row5_col20" class="data row5 col20">0.01</td>
+<td id="T_fca41_row5_col21" class="data row5 col21">0.01</td>
+<td id="T_fca41_row5_col22" class="data row5 col22">0.01</td>
+<td id="T_fca41_row5_col23" class="data row5 col23">0.03</td>
+<td id="T_fca41_row5_col24" class="data row5 col24">-0.15</td>
+<td id="T_fca41_row5_col25" class="data row5 col25">0.02</td>
+<td id="T_fca41_row5_col26" class="data row5 col26">0.02</td>
+</tr>
+<tr class="odd">
+<th id="T_fca41_level0_row6" class="row_heading level0 row6" data-quarto-table-cell-role="th">RESIDUAL_2019</th>
+<td id="T_fca41_row6_col0" class="data row6 col0">0.12</td>
+<td id="T_fca41_row6_col1" class="data row6 col1">-0.05</td>
+<td id="T_fca41_row6_col2" class="data row6 col2">0.27</td>
+<td id="T_fca41_row6_col3" class="data row6 col3">0.10</td>
+<td id="T_fca41_row6_col4" class="data row6 col4">0.02</td>
+<td id="T_fca41_row6_col5" class="data row6 col5">0.09</td>
+<td id="T_fca41_row6_col6" class="data row6 col6">1.00</td>
+<td id="T_fca41_row6_col7" class="data row6 col7">-0.06</td>
+<td id="T_fca41_row6_col8" class="data row6 col8">-0.06</td>
+<td id="T_fca41_row6_col9" class="data row6 col9">0.05</td>
+<td id="T_fca41_row6_col10" class="data row6 col10">0.08</td>
+<td id="T_fca41_row6_col11" class="data row6 col11">0.07</td>
+<td id="T_fca41_row6_col12" class="data row6 col12">0.03</td>
+<td id="T_fca41_row6_col13" class="data row6 col13">-0.09</td>
+<td id="T_fca41_row6_col14" class="data row6 col14">0.03</td>
+<td id="T_fca41_row6_col15" class="data row6 col15">0.02</td>
+<td id="T_fca41_row6_col16" class="data row6 col16">-0.02</td>
+<td id="T_fca41_row6_col17" class="data row6 col17">0.03</td>
+<td id="T_fca41_row6_col18" class="data row6 col18">0.01</td>
+<td id="T_fca41_row6_col19" class="data row6 col19">-0.00</td>
+<td id="T_fca41_row6_col20" class="data row6 col20">0.02</td>
+<td id="T_fca41_row6_col21" class="data row6 col21">-0.02</td>
+<td id="T_fca41_row6_col22" class="data row6 col22">-0.02</td>
+<td id="T_fca41_row6_col23" class="data row6 col23">0.01</td>
+<td id="T_fca41_row6_col24" class="data row6 col24">0.27</td>
+<td id="T_fca41_row6_col25" class="data row6 col25">0.02</td>
+<td id="T_fca41_row6_col26" class="data row6 col26">-0.01</td>
+</tr>
+<tr class="even">
+<th id="T_fca41_level0_row7" class="row_heading level0 row7" data-quarto-table-cell-role="th">R_death_2012</th>
+<td id="T_fca41_row7_col0" class="data row7 col0">-0.11</td>
+<td id="T_fca41_row7_col1" class="data row7 col1">0.01</td>
+<td id="T_fca41_row7_col2" class="data row7 col2">-0.19</td>
+<td id="T_fca41_row7_col3" class="data row7 col3">-0.02</td>
+<td id="T_fca41_row7_col4" class="data row7 col4">0.02</td>
+<td id="T_fca41_row7_col5" class="data row7 col5">-0.06</td>
+<td id="T_fca41_row7_col6" class="data row7 col6">-0.06</td>
+<td id="T_fca41_row7_col7" class="data row7 col7">1.00</td>
+<td id="T_fca41_row7_col8" class="data row7 col8">0.75</td>
+<td id="T_fca41_row7_col9" class="data row7 col9">-0.62</td>
+<td id="T_fca41_row7_col10" class="data row7 col10">-0.33</td>
+<td id="T_fca41_row7_col11" class="data row7 col11">-0.11</td>
+<td id="T_fca41_row7_col12" class="data row7 col12">-0.49</td>
+<td id="T_fca41_row7_col13" class="data row7 col13">0.43</td>
+<td id="T_fca41_row7_col14" class="data row7 col14">-0.50</td>
+<td id="T_fca41_row7_col15" class="data row7 col15">-0.47</td>
+<td id="T_fca41_row7_col16" class="data row7 col16">0.46</td>
+<td id="T_fca41_row7_col17" class="data row7 col17">-0.41</td>
+<td id="T_fca41_row7_col18" class="data row7 col18">0.14</td>
+<td id="T_fca41_row7_col19" class="data row7 col19">0.16</td>
+<td id="T_fca41_row7_col20" class="data row7 col20">0.08</td>
+<td id="T_fca41_row7_col21" class="data row7 col21">0.45</td>
+<td id="T_fca41_row7_col22" class="data row7 col22">0.46</td>
+<td id="T_fca41_row7_col23" class="data row7 col23">0.26</td>
+<td id="T_fca41_row7_col24" class="data row7 col24">-0.28</td>
+<td id="T_fca41_row7_col25" class="data row7 col25">0.22</td>
+<td id="T_fca41_row7_col26" class="data row7 col26">0.38</td>
+</tr>
+<tr class="odd">
+<th id="T_fca41_level0_row8" class="row_heading level0 row8" data-quarto-table-cell-role="th">R_death_2019</th>
+<td id="T_fca41_row8_col0" class="data row8 col0">-0.12</td>
+<td id="T_fca41_row8_col1" class="data row8 col1">-0.03</td>
+<td id="T_fca41_row8_col2" class="data row8 col2">-0.17</td>
+<td id="T_fca41_row8_col3" class="data row8 col3">-0.03</td>
+<td id="T_fca41_row8_col4" class="data row8 col4">0.02</td>
+<td id="T_fca41_row8_col5" class="data row8 col5">-0.07</td>
+<td id="T_fca41_row8_col6" class="data row8 col6">-0.06</td>
+<td id="T_fca41_row8_col7" class="data row8 col7">0.75</td>
+<td id="T_fca41_row8_col8" class="data row8 col8">1.00</td>
+<td id="T_fca41_row8_col9" class="data row8 col9">-0.81</td>
+<td id="T_fca41_row8_col10" class="data row8 col10">-0.35</td>
+<td id="T_fca41_row8_col11" class="data row8 col11">-0.12</td>
+<td id="T_fca41_row8_col12" class="data row8 col12">-0.49</td>
+<td id="T_fca41_row8_col13" class="data row8 col13">0.42</td>
+<td id="T_fca41_row8_col14" class="data row8 col14">-0.50</td>
+<td id="T_fca41_row8_col15" class="data row8 col15">-0.47</td>
+<td id="T_fca41_row8_col16" class="data row8 col16">0.28</td>
+<td id="T_fca41_row8_col17" class="data row8 col17">-0.29</td>
+<td id="T_fca41_row8_col18" class="data row8 col18">0.30</td>
+<td id="T_fca41_row8_col19" class="data row8 col19">0.31</td>
+<td id="T_fca41_row8_col20" class="data row8 col20">0.32</td>
+<td id="T_fca41_row8_col21" class="data row8 col21">0.28</td>
+<td id="T_fca41_row8_col22" class="data row8 col22">0.28</td>
+<td id="T_fca41_row8_col23" class="data row8 col23">0.38</td>
+<td id="T_fca41_row8_col24" class="data row8 col24">-0.22</td>
+<td id="T_fca41_row8_col25" class="data row8 col25">0.07</td>
+<td id="T_fca41_row8_col26" class="data row8 col26">0.23</td>
+</tr>
+<tr class="even">
+<th id="T_fca41_level0_row9" class="row_heading level0 row9" data-quarto-table-cell-role="th">R_NATURAL_INC_2019</th>
+<td id="T_fca41_row9_col0" class="data row9 col0">0.10</td>
+<td id="T_fca41_row9_col1" class="data row9 col1">0.01</td>
+<td id="T_fca41_row9_col2" class="data row9 col2">0.15</td>
+<td id="T_fca41_row9_col3" class="data row9 col3">-0.01</td>
+<td id="T_fca41_row9_col4" class="data row9 col4">-0.05</td>
+<td id="T_fca41_row9_col5" class="data row9 col5">0.09</td>
+<td id="T_fca41_row9_col6" class="data row9 col6">0.05</td>
+<td id="T_fca41_row9_col7" class="data row9 col7">-0.62</td>
+<td id="T_fca41_row9_col8" class="data row9 col8">-0.81</td>
+<td id="T_fca41_row9_col9" class="data row9 col9">1.00</td>
+<td id="T_fca41_row9_col10" class="data row9 col10">0.32</td>
+<td id="T_fca41_row9_col11" class="data row9 col11">0.11</td>
+<td id="T_fca41_row9_col12" class="data row9 col12">0.31</td>
+<td id="T_fca41_row9_col13" class="data row9 col13">-0.35</td>
+<td id="T_fca41_row9_col14" class="data row9 col14">0.30</td>
+<td id="T_fca41_row9_col15" class="data row9 col15">0.27</td>
+<td id="T_fca41_row9_col16" class="data row9 col16">-0.24</td>
+<td id="T_fca41_row9_col17" class="data row9 col17">0.22</td>
+<td id="T_fca41_row9_col18" class="data row9 col18">-0.21</td>
+<td id="T_fca41_row9_col19" class="data row9 col19">-0.22</td>
+<td id="T_fca41_row9_col20" class="data row9 col20">-0.28</td>
+<td id="T_fca41_row9_col21" class="data row9 col21">-0.24</td>
+<td id="T_fca41_row9_col22" class="data row9 col22">-0.24</td>
+<td id="T_fca41_row9_col23" class="data row9 col23">-0.18</td>
+<td id="T_fca41_row9_col24" class="data row9 col24">0.18</td>
+<td id="T_fca41_row9_col25" class="data row9 col25">-0.04</td>
+<td id="T_fca41_row9_col26" class="data row9 col26">-0.19</td>
+</tr>
+<tr class="odd">
+<th id="T_fca41_level0_row10" class="row_heading level0 row10" data-quarto-table-cell-role="th">R_INTERNATIONAL_MIG_2011</th>
+<td id="T_fca41_row10_col0" class="data row10 col0">-0.03</td>
+<td id="T_fca41_row10_col1" class="data row10 col1">-0.00</td>
+<td id="T_fca41_row10_col2" class="data row10 col2">0.44</td>
+<td id="T_fca41_row10_col3" class="data row10 col3">-0.10</td>
+<td id="T_fca41_row10_col4" class="data row10 col4">-0.19</td>
+<td id="T_fca41_row10_col5" class="data row10 col5">-0.03</td>
+<td id="T_fca41_row10_col6" class="data row10 col6">0.08</td>
+<td id="T_fca41_row10_col7" class="data row10 col7">-0.33</td>
+<td id="T_fca41_row10_col8" class="data row10 col8">-0.35</td>
+<td id="T_fca41_row10_col9" class="data row10 col9">0.32</td>
+<td id="T_fca41_row10_col10" class="data row10 col10">1.00</td>
+<td id="T_fca41_row10_col11" class="data row10 col11">0.08</td>
+<td id="T_fca41_row10_col12" class="data row10 col12">0.48</td>
+<td id="T_fca41_row10_col13" class="data row10 col13">-0.39</td>
+<td id="T_fca41_row10_col14" class="data row10 col14">0.47</td>
+<td id="T_fca41_row10_col15" class="data row10 col15">0.43</td>
+<td id="T_fca41_row10_col16" class="data row10 col16">-0.23</td>
+<td id="T_fca41_row10_col17" class="data row10 col17">0.21</td>
+<td id="T_fca41_row10_col18" class="data row10 col18">-0.12</td>
+<td id="T_fca41_row10_col19" class="data row10 col19">-0.13</td>
+<td id="T_fca41_row10_col20" class="data row10 col20">-0.14</td>
+<td id="T_fca41_row10_col21" class="data row10 col21">-0.23</td>
+<td id="T_fca41_row10_col22" class="data row10 col22">-0.23</td>
+<td id="T_fca41_row10_col23" class="data row10 col23">-0.09</td>
+<td id="T_fca41_row10_col24" class="data row10 col24">0.31</td>
+<td id="T_fca41_row10_col25" class="data row10 col25">-0.28</td>
+<td id="T_fca41_row10_col26" class="data row10 col26">-0.37</td>
+</tr>
+<tr class="even">
+<th id="T_fca41_level0_row11" class="row_heading level0 row11" data-quarto-table-cell-role="th">R_DOMESTIC_MIG_2012</th>
+<td id="T_fca41_row11_col0" class="data row11 col0">0.03</td>
+<td id="T_fca41_row11_col1" class="data row11 col1">0.11</td>
+<td id="T_fca41_row11_col2" class="data row11 col2">0.05</td>
+<td id="T_fca41_row11_col3" class="data row11 col3">0.16</td>
+<td id="T_fca41_row11_col4" class="data row11 col4">0.10</td>
+<td id="T_fca41_row11_col5" class="data row11 col5">0.03</td>
+<td id="T_fca41_row11_col6" class="data row11 col6">0.07</td>
+<td id="T_fca41_row11_col7" class="data row11 col7">-0.11</td>
+<td id="T_fca41_row11_col8" class="data row11 col8">-0.12</td>
+<td id="T_fca41_row11_col9" class="data row11 col9">0.11</td>
+<td id="T_fca41_row11_col10" class="data row11 col10">0.08</td>
+<td id="T_fca41_row11_col11" class="data row11 col11">1.00</td>
+<td id="T_fca41_row11_col12" class="data row11 col12">0.20</td>
+<td id="T_fca41_row11_col13" class="data row11 col13">-0.15</td>
+<td id="T_fca41_row11_col14" class="data row11 col14">0.22</td>
+<td id="T_fca41_row11_col15" class="data row11 col15">0.27</td>
+<td id="T_fca41_row11_col16" class="data row11 col16">-0.13</td>
+<td id="T_fca41_row11_col17" class="data row11 col17">0.14</td>
+<td id="T_fca41_row11_col18" class="data row11 col18">-0.16</td>
+<td id="T_fca41_row11_col19" class="data row11 col19">-0.19</td>
+<td id="T_fca41_row11_col20" class="data row11 col20">-0.21</td>
+<td id="T_fca41_row11_col21" class="data row11 col21">-0.13</td>
+<td id="T_fca41_row11_col22" class="data row11 col22">-0.13</td>
+<td id="T_fca41_row11_col23" class="data row11 col23">-0.23</td>
+<td id="T_fca41_row11_col24" class="data row11 col24">0.13</td>
+<td id="T_fca41_row11_col25" class="data row11 col25">0.08</td>
+<td id="T_fca41_row11_col26" class="data row11 col26">0.03</td>
+</tr>
+<tr class="odd">
+<th id="T_fca41_level0_row12" class="row_heading level0 row12" data-quarto-table-cell-role="th">Percent of adults with a bachelor's degree or higher, 1990</th>
+<td id="T_fca41_row12_col0" class="data row12 col0">0.06</td>
+<td id="T_fca41_row12_col1" class="data row12 col1">0.03</td>
+<td id="T_fca41_row12_col2" class="data row12 col2">0.27</td>
+<td id="T_fca41_row12_col3" class="data row12 col3">0.01</td>
+<td id="T_fca41_row12_col4" class="data row12 col4">-0.05</td>
+<td id="T_fca41_row12_col5" class="data row12 col5">-0.03</td>
+<td id="T_fca41_row12_col6" class="data row12 col6">0.03</td>
+<td id="T_fca41_row12_col7" class="data row12 col7">-0.49</td>
+<td id="T_fca41_row12_col8" class="data row12 col8">-0.49</td>
+<td id="T_fca41_row12_col9" class="data row12 col9">0.31</td>
+<td id="T_fca41_row12_col10" class="data row12 col10">0.48</td>
+<td id="T_fca41_row12_col11" class="data row12 col11">0.20</td>
+<td id="T_fca41_row12_col12" class="data row12 col12">1.00</td>
+<td id="T_fca41_row12_col13" class="data row12 col13">-0.66</td>
+<td id="T_fca41_row12_col14" class="data row12 col14">0.97</td>
+<td id="T_fca41_row12_col15" class="data row12 col15">0.91</td>
+<td id="T_fca41_row12_col16" class="data row12 col16">-0.37</td>
+<td id="T_fca41_row12_col17" class="data row12 col17">0.35</td>
+<td id="T_fca41_row12_col18" class="data row12 col18">-0.32</td>
+<td id="T_fca41_row12_col19" class="data row12 col19">-0.33</td>
+<td id="T_fca41_row12_col20" class="data row12 col20">-0.27</td>
+<td id="T_fca41_row12_col21" class="data row12 col21">-0.37</td>
+<td id="T_fca41_row12_col22" class="data row12 col22">-0.37</td>
+<td id="T_fca41_row12_col23" class="data row12 col23">-0.36</td>
+<td id="T_fca41_row12_col24" class="data row12 col24">0.40</td>
+<td id="T_fca41_row12_col25" class="data row12 col25">-0.34</td>
+<td id="T_fca41_row12_col26" class="data row12 col26">-0.53</td>
+</tr>
+<tr class="even">
+<th id="T_fca41_level0_row13" class="row_heading level0 row13" data-quarto-table-cell-role="th">Percent of adults with a high school diploma only, 2000</th>
+<td id="T_fca41_row13_col0" class="data row13 col0">-0.17</td>
+<td id="T_fca41_row13_col1" class="data row13 col1">0.01</td>
+<td id="T_fca41_row13_col2" class="data row13 col2">-0.25</td>
+<td id="T_fca41_row13_col3" class="data row13 col3">-0.02</td>
+<td id="T_fca41_row13_col4" class="data row13 col4">0.04</td>
+<td id="T_fca41_row13_col5" class="data row13 col5">-0.02</td>
+<td id="T_fca41_row13_col6" class="data row13 col6">-0.09</td>
+<td id="T_fca41_row13_col7" class="data row13 col7">0.43</td>
+<td id="T_fca41_row13_col8" class="data row13 col8">0.42</td>
+<td id="T_fca41_row13_col9" class="data row13 col9">-0.35</td>
+<td id="T_fca41_row13_col10" class="data row13 col10">-0.39</td>
+<td id="T_fca41_row13_col11" class="data row13 col11">-0.15</td>
+<td id="T_fca41_row13_col12" class="data row13 col12">-0.66</td>
+<td id="T_fca41_row13_col13" class="data row13 col13">1.00</td>
+<td id="T_fca41_row13_col14" class="data row13 col14">-0.65</td>
+<td id="T_fca41_row13_col15" class="data row13 col15">-0.58</td>
+<td id="T_fca41_row13_col16" class="data row13 col16">0.25</td>
+<td id="T_fca41_row13_col17" class="data row13 col17">-0.25</td>
+<td id="T_fca41_row13_col18" class="data row13 col18">0.02</td>
+<td id="T_fca41_row13_col19" class="data row13 col19">0.06</td>
+<td id="T_fca41_row13_col20" class="data row13 col20">0.02</td>
+<td id="T_fca41_row13_col21" class="data row13 col21">0.25</td>
+<td id="T_fca41_row13_col22" class="data row13 col22">0.25</td>
+<td id="T_fca41_row13_col23" class="data row13 col23">-0.01</td>
+<td id="T_fca41_row13_col24" class="data row13 col24">-0.32</td>
+<td id="T_fca41_row13_col25" class="data row13 col25">0.25</td>
+<td id="T_fca41_row13_col26" class="data row13 col26">0.48</td>
+</tr>
+<tr class="odd">
+<th id="T_fca41_level0_row14" class="row_heading level0 row14" data-quarto-table-cell-role="th">Percent of adults with a bachelor's degree or higher, 2000</th>
+<td id="T_fca41_row14_col0" class="data row14 col0">0.04</td>
+<td id="T_fca41_row14_col1" class="data row14 col1">0.03</td>
+<td id="T_fca41_row14_col2" class="data row14 col2">0.26</td>
+<td id="T_fca41_row14_col3" class="data row14 col3">0.03</td>
+<td id="T_fca41_row14_col4" class="data row14 col4">-0.03</td>
+<td id="T_fca41_row14_col5" class="data row14 col5">-0.03</td>
+<td id="T_fca41_row14_col6" class="data row14 col6">0.03</td>
+<td id="T_fca41_row14_col7" class="data row14 col7">-0.50</td>
+<td id="T_fca41_row14_col8" class="data row14 col8">-0.50</td>
+<td id="T_fca41_row14_col9" class="data row14 col9">0.30</td>
+<td id="T_fca41_row14_col10" class="data row14 col10">0.47</td>
+<td id="T_fca41_row14_col11" class="data row14 col11">0.22</td>
+<td id="T_fca41_row14_col12" class="data row14 col12">0.97</td>
+<td id="T_fca41_row14_col13" class="data row14 col13">-0.65</td>
+<td id="T_fca41_row14_col14" class="data row14 col14">1.00</td>
+<td id="T_fca41_row14_col15" class="data row14 col15">0.95</td>
+<td id="T_fca41_row14_col16" class="data row14 col16">-0.38</td>
+<td id="T_fca41_row14_col17" class="data row14 col17">0.37</td>
+<td id="T_fca41_row14_col18" class="data row14 col18">-0.36</td>
+<td id="T_fca41_row14_col19" class="data row14 col19">-0.36</td>
+<td id="T_fca41_row14_col20" class="data row14 col20">-0.30</td>
+<td id="T_fca41_row14_col21" class="data row14 col21">-0.38</td>
+<td id="T_fca41_row14_col22" class="data row14 col22">-0.38</td>
+<td id="T_fca41_row14_col23" class="data row14 col23">-0.41</td>
+<td id="T_fca41_row14_col24" class="data row14 col24">0.39</td>
+<td id="T_fca41_row14_col25" class="data row14 col25">-0.32</td>
+<td id="T_fca41_row14_col26" class="data row14 col26">-0.51</td>
+</tr>
+<tr class="even">
+<th id="T_fca41_level0_row15" class="row_heading level0 row15" data-quarto-table-cell-role="th">Percent of adults with a bachelor's degree or higher, 2015-19</th>
+<td id="T_fca41_row15_col0" class="data row15 col0">-0.00</td>
+<td id="T_fca41_row15_col1" class="data row15 col1">0.04</td>
+<td id="T_fca41_row15_col2" class="data row15 col2">0.27</td>
+<td id="T_fca41_row15_col3" class="data row15 col3">0.04</td>
+<td id="T_fca41_row15_col4" class="data row15 col4">-0.02</td>
+<td id="T_fca41_row15_col5" class="data row15 col5">-0.02</td>
+<td id="T_fca41_row15_col6" class="data row15 col6">0.02</td>
+<td id="T_fca41_row15_col7" class="data row15 col7">-0.47</td>
+<td id="T_fca41_row15_col8" class="data row15 col8">-0.47</td>
+<td id="T_fca41_row15_col9" class="data row15 col9">0.27</td>
+<td id="T_fca41_row15_col10" class="data row15 col10">0.43</td>
+<td id="T_fca41_row15_col11" class="data row15 col11">0.27</td>
+<td id="T_fca41_row15_col12" class="data row15 col12">0.91</td>
+<td id="T_fca41_row15_col13" class="data row15 col13">-0.58</td>
+<td id="T_fca41_row15_col14" class="data row15 col14">0.95</td>
+<td id="T_fca41_row15_col15" class="data row15 col15">1.00</td>
+<td id="T_fca41_row15_col16" class="data row15 col16">-0.41</td>
+<td id="T_fca41_row15_col17" class="data row15 col17">0.41</td>
+<td id="T_fca41_row15_col18" class="data row15 col18">-0.38</td>
+<td id="T_fca41_row15_col19" class="data row15 col19">-0.38</td>
+<td id="T_fca41_row15_col20" class="data row15 col20">-0.31</td>
+<td id="T_fca41_row15_col21" class="data row15 col21">-0.41</td>
+<td id="T_fca41_row15_col22" class="data row15 col22">-0.41</td>
+<td id="T_fca41_row15_col23" class="data row15 col23">-0.47</td>
+<td id="T_fca41_row15_col24" class="data row15 col24">0.40</td>
+<td id="T_fca41_row15_col25" class="data row15 col25">-0.31</td>
+<td id="T_fca41_row15_col26" class="data row15 col26">-0.49</td>
+</tr>
+<tr class="odd">
+<th id="T_fca41_level0_row16" class="row_heading level0 row16" data-quarto-table-cell-role="th">Rural_urban_continuum_code_2013</th>
+<td id="T_fca41_row16_col0" class="data row16 col0">0.08</td>
+<td id="T_fca41_row16_col1" class="data row16 col1">0.01</td>
+<td id="T_fca41_row16_col2" class="data row16 col2">-0.22</td>
+<td id="T_fca41_row16_col3" class="data row16 col3">-0.03</td>
+<td id="T_fca41_row16_col4" class="data row16 col4">-0.00</td>
+<td id="T_fca41_row16_col5" class="data row16 col5">0.01</td>
+<td id="T_fca41_row16_col6" class="data row16 col6">-0.02</td>
+<td id="T_fca41_row16_col7" class="data row16 col7">0.46</td>
+<td id="T_fca41_row16_col8" class="data row16 col8">0.28</td>
+<td id="T_fca41_row16_col9" class="data row16 col9">-0.24</td>
+<td id="T_fca41_row16_col10" class="data row16 col10">-0.23</td>
+<td id="T_fca41_row16_col11" class="data row16 col11">-0.13</td>
+<td id="T_fca41_row16_col12" class="data row16 col12">-0.37</td>
+<td id="T_fca41_row16_col13" class="data row16 col13">0.25</td>
+<td id="T_fca41_row16_col14" class="data row16 col14">-0.38</td>
+<td id="T_fca41_row16_col15" class="data row16 col15">-0.41</td>
+<td id="T_fca41_row16_col16" class="data row16 col16">1.00</td>
+<td id="T_fca41_row16_col17" class="data row16 col17">-0.87</td>
+<td id="T_fca41_row16_col18" class="data row16 col18">0.04</td>
+<td id="T_fca41_row16_col19" class="data row16 col19">0.05</td>
+<td id="T_fca41_row16_col20" class="data row16 col20">-0.07</td>
+<td id="T_fca41_row16_col21" class="data row16 col21">0.93</td>
+<td id="T_fca41_row16_col22" class="data row16 col22">1.00</td>
+<td id="T_fca41_row16_col23" class="data row16 col23">0.18</td>
+<td id="T_fca41_row16_col24" class="data row16 col24">-0.44</td>
+<td id="T_fca41_row16_col25" class="data row16 col25">0.28</td>
+<td id="T_fca41_row16_col26" class="data row16 col26">0.38</td>
+</tr>
+<tr class="even">
+<th id="T_fca41_level0_row17" class="row_heading level0 row17" data-quarto-table-cell-role="th">Metro_2013</th>
+<td id="T_fca41_row17_col0" class="data row17 col0">-0.08</td>
+<td id="T_fca41_row17_col1" class="data row17 col1">-0.01</td>
+<td id="T_fca41_row17_col2" class="data row17 col2">0.20</td>
+<td id="T_fca41_row17_col3" class="data row17 col3">0.04</td>
+<td id="T_fca41_row17_col4" class="data row17 col4">0.01</td>
+<td id="T_fca41_row17_col5" class="data row17 col5">-0.01</td>
+<td id="T_fca41_row17_col6" class="data row17 col6">0.03</td>
+<td id="T_fca41_row17_col7" class="data row17 col7">-0.41</td>
+<td id="T_fca41_row17_col8" class="data row17 col8">-0.29</td>
+<td id="T_fca41_row17_col9" class="data row17 col9">0.22</td>
+<td id="T_fca41_row17_col10" class="data row17 col10">0.21</td>
+<td id="T_fca41_row17_col11" class="data row17 col11">0.14</td>
+<td id="T_fca41_row17_col12" class="data row17 col12">0.35</td>
+<td id="T_fca41_row17_col13" class="data row17 col13">-0.25</td>
+<td id="T_fca41_row17_col14" class="data row17 col14">0.37</td>
+<td id="T_fca41_row17_col15" class="data row17 col15">0.41</td>
+<td id="T_fca41_row17_col16" class="data row17 col16">-0.87</td>
+<td id="T_fca41_row17_col17" class="data row17 col17">1.00</td>
+<td id="T_fca41_row17_col18" class="data row17 col18">-0.10</td>
+<td id="T_fca41_row17_col19" class="data row17 col19">-0.12</td>
+<td id="T_fca41_row17_col20" class="data row17 col20">-0.00</td>
+<td id="T_fca41_row17_col21" class="data row17 col21">-0.81</td>
+<td id="T_fca41_row17_col22" class="data row17 col22">-0.87</td>
+<td id="T_fca41_row17_col23" class="data row17 col23">-0.19</td>
+<td id="T_fca41_row17_col24" class="data row17 col24">0.41</td>
+<td id="T_fca41_row17_col25" class="data row17 col25">-0.21</td>
+<td id="T_fca41_row17_col26" class="data row17 col26">-0.31</td>
+</tr>
+<tr class="odd">
+<th id="T_fca41_level0_row18" class="row_heading level0 row18" data-quarto-table-cell-role="th">Unemployment_rate_2002</th>
+<td id="T_fca41_row18_col0" class="data row18 col0">0.06</td>
+<td id="T_fca41_row18_col1" class="data row18 col1">-0.01</td>
+<td id="T_fca41_row18_col2" class="data row18 col2">0.01</td>
+<td id="T_fca41_row18_col3" class="data row18 col3">-0.05</td>
+<td id="T_fca41_row18_col4" class="data row18 col4">-0.04</td>
+<td id="T_fca41_row18_col5" class="data row18 col5">0.02</td>
+<td id="T_fca41_row18_col6" class="data row18 col6">0.01</td>
+<td id="T_fca41_row18_col7" class="data row18 col7">0.14</td>
+<td id="T_fca41_row18_col8" class="data row18 col8">0.30</td>
+<td id="T_fca41_row18_col9" class="data row18 col9">-0.21</td>
+<td id="T_fca41_row18_col10" class="data row18 col10">-0.12</td>
+<td id="T_fca41_row18_col11" class="data row18 col11">-0.16</td>
+<td id="T_fca41_row18_col12" class="data row18 col12">-0.32</td>
+<td id="T_fca41_row18_col13" class="data row18 col13">0.02</td>
+<td id="T_fca41_row18_col14" class="data row18 col14">-0.36</td>
+<td id="T_fca41_row18_col15" class="data row18 col15">-0.38</td>
+<td id="T_fca41_row18_col16" class="data row18 col16">0.04</td>
+<td id="T_fca41_row18_col17" class="data row18 col17">-0.10</td>
+<td id="T_fca41_row18_col18" class="data row18 col18">1.00</td>
+<td id="T_fca41_row18_col19" class="data row18 col19">0.94</td>
+<td id="T_fca41_row18_col20" class="data row18 col20">0.76</td>
+<td id="T_fca41_row18_col21" class="data row18 col21">0.04</td>
+<td id="T_fca41_row18_col22" class="data row18 col22">0.04</td>
+<td id="T_fca41_row18_col23" class="data row18 col23">0.53</td>
+<td id="T_fca41_row18_col24" class="data row18 col24">-0.02</td>
+<td id="T_fca41_row18_col25" class="data row18 col25">-0.24</td>
+<td id="T_fca41_row18_col26" class="data row18 col26">-0.18</td>
+</tr>
+<tr class="even">
+<th id="T_fca41_level0_row19" class="row_heading level0 row19" data-quarto-table-cell-role="th">Unemployment_rate_2003</th>
+<td id="T_fca41_row19_col0" class="data row19 col0">0.05</td>
+<td id="T_fca41_row19_col1" class="data row19 col1">-0.01</td>
+<td id="T_fca41_row19_col2" class="data row19 col2">-0.01</td>
+<td id="T_fca41_row19_col3" class="data row19 col3">-0.06</td>
+<td id="T_fca41_row19_col4" class="data row19 col4">-0.05</td>
+<td id="T_fca41_row19_col5" class="data row19 col5">0.02</td>
+<td id="T_fca41_row19_col6" class="data row19 col6">-0.00</td>
+<td id="T_fca41_row19_col7" class="data row19 col7">0.16</td>
+<td id="T_fca41_row19_col8" class="data row19 col8">0.31</td>
+<td id="T_fca41_row19_col9" class="data row19 col9">-0.22</td>
+<td id="T_fca41_row19_col10" class="data row19 col10">-0.13</td>
+<td id="T_fca41_row19_col11" class="data row19 col11">-0.19</td>
+<td id="T_fca41_row19_col12" class="data row19 col12">-0.33</td>
+<td id="T_fca41_row19_col13" class="data row19 col13">0.06</td>
+<td id="T_fca41_row19_col14" class="data row19 col14">-0.36</td>
+<td id="T_fca41_row19_col15" class="data row19 col15">-0.38</td>
+<td id="T_fca41_row19_col16" class="data row19 col16">0.05</td>
+<td id="T_fca41_row19_col17" class="data row19 col17">-0.12</td>
+<td id="T_fca41_row19_col18" class="data row19 col18">0.94</td>
+<td id="T_fca41_row19_col19" class="data row19 col19">1.00</td>
+<td id="T_fca41_row19_col20" class="data row19 col20">0.74</td>
+<td id="T_fca41_row19_col21" class="data row19 col21">0.05</td>
+<td id="T_fca41_row19_col22" class="data row19 col22">0.05</td>
+<td id="T_fca41_row19_col23" class="data row19 col23">0.51</td>
+<td id="T_fca41_row19_col24" class="data row19 col24">-0.04</td>
+<td id="T_fca41_row19_col25" class="data row19 col25">-0.24</td>
+<td id="T_fca41_row19_col26" class="data row19 col26">-0.16</td>
+</tr>
+<tr class="odd">
+<th id="T_fca41_level0_row20" class="row_heading level0 row20" data-quarto-table-cell-role="th">Unemployment_rate_2012</th>
+<td id="T_fca41_row20_col0" class="data row20 col0">0.02</td>
+<td id="T_fca41_row20_col1" class="data row20 col1">-0.20</td>
+<td id="T_fca41_row20_col2" class="data row20 col2">0.00</td>
+<td id="T_fca41_row20_col3" class="data row20 col3">-0.05</td>
+<td id="T_fca41_row20_col4" class="data row20 col4">-0.02</td>
+<td id="T_fca41_row20_col5" class="data row20 col5">0.01</td>
+<td id="T_fca41_row20_col6" class="data row20 col6">0.02</td>
+<td id="T_fca41_row20_col7" class="data row20 col7">0.08</td>
+<td id="T_fca41_row20_col8" class="data row20 col8">0.32</td>
+<td id="T_fca41_row20_col9" class="data row20 col9">-0.28</td>
+<td id="T_fca41_row20_col10" class="data row20 col10">-0.14</td>
+<td id="T_fca41_row20_col11" class="data row20 col11">-0.21</td>
+<td id="T_fca41_row20_col12" class="data row20 col12">-0.27</td>
+<td id="T_fca41_row20_col13" class="data row20 col13">0.02</td>
+<td id="T_fca41_row20_col14" class="data row20 col14">-0.30</td>
+<td id="T_fca41_row20_col15" class="data row20 col15">-0.31</td>
+<td id="T_fca41_row20_col16" class="data row20 col16">-0.07</td>
+<td id="T_fca41_row20_col17" class="data row20 col17">-0.00</td>
+<td id="T_fca41_row20_col18" class="data row20 col18">0.76</td>
+<td id="T_fca41_row20_col19" class="data row20 col19">0.74</td>
+<td id="T_fca41_row20_col20" class="data row20 col20">1.00</td>
+<td id="T_fca41_row20_col21" class="data row20 col21">-0.07</td>
+<td id="T_fca41_row20_col22" class="data row20 col22">-0.07</td>
+<td id="T_fca41_row20_col23" class="data row20 col23">0.55</td>
+<td id="T_fca41_row20_col24" class="data row20 col24">0.02</td>
+<td id="T_fca41_row20_col25" class="data row20 col25">-0.32</td>
+<td id="T_fca41_row20_col26" class="data row20 col26">-0.25</td>
+</tr>
+<tr class="even">
+<th id="T_fca41_level0_row21" class="row_heading level0 row21" data-quarto-table-cell-role="th">Rural-urban_Continuum_Code_2003</th>
+<td id="T_fca41_row21_col0" class="data row21 col0">0.08</td>
+<td id="T_fca41_row21_col1" class="data row21 col1">0.01</td>
+<td id="T_fca41_row21_col2" class="data row21 col2">-0.22</td>
+<td id="T_fca41_row21_col3" class="data row21 col3">-0.03</td>
+<td id="T_fca41_row21_col4" class="data row21 col4">0.00</td>
+<td id="T_fca41_row21_col5" class="data row21 col5">0.01</td>
+<td id="T_fca41_row21_col6" class="data row21 col6">-0.02</td>
+<td id="T_fca41_row21_col7" class="data row21 col7">0.45</td>
+<td id="T_fca41_row21_col8" class="data row21 col8">0.28</td>
+<td id="T_fca41_row21_col9" class="data row21 col9">-0.24</td>
+<td id="T_fca41_row21_col10" class="data row21 col10">-0.23</td>
+<td id="T_fca41_row21_col11" class="data row21 col11">-0.13</td>
+<td id="T_fca41_row21_col12" class="data row21 col12">-0.37</td>
+<td id="T_fca41_row21_col13" class="data row21 col13">0.25</td>
+<td id="T_fca41_row21_col14" class="data row21 col14">-0.38</td>
+<td id="T_fca41_row21_col15" class="data row21 col15">-0.41</td>
+<td id="T_fca41_row21_col16" class="data row21 col16">0.93</td>
+<td id="T_fca41_row21_col17" class="data row21 col17">-0.81</td>
+<td id="T_fca41_row21_col18" class="data row21 col18">0.04</td>
+<td id="T_fca41_row21_col19" class="data row21 col19">0.05</td>
+<td id="T_fca41_row21_col20" class="data row21 col20">-0.07</td>
+<td id="T_fca41_row21_col21" class="data row21 col21">1.00</td>
+<td id="T_fca41_row21_col22" class="data row21 col22">0.93</td>
+<td id="T_fca41_row21_col23" class="data row21 col23">0.17</td>
+<td id="T_fca41_row21_col24" class="data row21 col24">-0.45</td>
+<td id="T_fca41_row21_col25" class="data row21 col25">0.29</td>
+<td id="T_fca41_row21_col26" class="data row21 col26">0.39</td>
+</tr>
+<tr class="odd">
+<th id="T_fca41_level0_row22" class="row_heading level0 row22" data-quarto-table-cell-role="th">Rural-urban_Continuum_Code_2013</th>
+<td id="T_fca41_row22_col0" class="data row22 col0">0.08</td>
+<td id="T_fca41_row22_col1" class="data row22 col1">0.01</td>
+<td id="T_fca41_row22_col2" class="data row22 col2">-0.22</td>
+<td id="T_fca41_row22_col3" class="data row22 col3">-0.03</td>
+<td id="T_fca41_row22_col4" class="data row22 col4">-0.00</td>
+<td id="T_fca41_row22_col5" class="data row22 col5">0.01</td>
+<td id="T_fca41_row22_col6" class="data row22 col6">-0.02</td>
+<td id="T_fca41_row22_col7" class="data row22 col7">0.46</td>
+<td id="T_fca41_row22_col8" class="data row22 col8">0.28</td>
+<td id="T_fca41_row22_col9" class="data row22 col9">-0.24</td>
+<td id="T_fca41_row22_col10" class="data row22 col10">-0.23</td>
+<td id="T_fca41_row22_col11" class="data row22 col11">-0.13</td>
+<td id="T_fca41_row22_col12" class="data row22 col12">-0.37</td>
+<td id="T_fca41_row22_col13" class="data row22 col13">0.25</td>
+<td id="T_fca41_row22_col14" class="data row22 col14">-0.38</td>
+<td id="T_fca41_row22_col15" class="data row22 col15">-0.41</td>
+<td id="T_fca41_row22_col16" class="data row22 col16">1.00</td>
+<td id="T_fca41_row22_col17" class="data row22 col17">-0.87</td>
+<td id="T_fca41_row22_col18" class="data row22 col18">0.04</td>
+<td id="T_fca41_row22_col19" class="data row22 col19">0.05</td>
+<td id="T_fca41_row22_col20" class="data row22 col20">-0.07</td>
+<td id="T_fca41_row22_col21" class="data row22 col21">0.93</td>
+<td id="T_fca41_row22_col22" class="data row22 col22">1.00</td>
+<td id="T_fca41_row22_col23" class="data row22 col23">0.18</td>
+<td id="T_fca41_row22_col24" class="data row22 col24">-0.44</td>
+<td id="T_fca41_row22_col25" class="data row22 col25">0.28</td>
+<td id="T_fca41_row22_col26" class="data row22 col26">0.38</td>
+</tr>
+<tr class="even">
+<th id="T_fca41_level0_row23" class="row_heading level0 row23" data-quarto-table-cell-role="th">CI90LB517P_2019</th>
+<td id="T_fca41_row23_col0" class="data row23 col0">0.01</td>
+<td id="T_fca41_row23_col1" class="data row23 col1">-0.09</td>
+<td id="T_fca41_row23_col2" class="data row23 col2">-0.00</td>
+<td id="T_fca41_row23_col3" class="data row23 col3">-0.11</td>
+<td id="T_fca41_row23_col4" class="data row23 col4">-0.10</td>
+<td id="T_fca41_row23_col5" class="data row23 col5">0.03</td>
+<td id="T_fca41_row23_col6" class="data row23 col6">0.01</td>
+<td id="T_fca41_row23_col7" class="data row23 col7">0.26</td>
+<td id="T_fca41_row23_col8" class="data row23 col8">0.38</td>
+<td id="T_fca41_row23_col9" class="data row23 col9">-0.18</td>
+<td id="T_fca41_row23_col10" class="data row23 col10">-0.09</td>
+<td id="T_fca41_row23_col11" class="data row23 col11">-0.23</td>
+<td id="T_fca41_row23_col12" class="data row23 col12">-0.36</td>
+<td id="T_fca41_row23_col13" class="data row23 col13">-0.01</td>
+<td id="T_fca41_row23_col14" class="data row23 col14">-0.41</td>
+<td id="T_fca41_row23_col15" class="data row23 col15">-0.47</td>
+<td id="T_fca41_row23_col16" class="data row23 col16">0.18</td>
+<td id="T_fca41_row23_col17" class="data row23 col17">-0.19</td>
+<td id="T_fca41_row23_col18" class="data row23 col18">0.53</td>
+<td id="T_fca41_row23_col19" class="data row23 col19">0.51</td>
+<td id="T_fca41_row23_col20" class="data row23 col20">0.55</td>
+<td id="T_fca41_row23_col21" class="data row23 col21">0.17</td>
+<td id="T_fca41_row23_col22" class="data row23 col22">0.18</td>
+<td id="T_fca41_row23_col23" class="data row23 col23">1.00</td>
+<td id="T_fca41_row23_col24" class="data row23 col24">-0.09</td>
+<td id="T_fca41_row23_col25" class="data row23 col25">-0.17</td>
+<td id="T_fca41_row23_col26" class="data row23 col26">-0.11</td>
+</tr>
+<tr class="odd">
+<th id="T_fca41_level0_row24" class="row_heading level0 row24" data-quarto-table-cell-role="th">candidatevotes_2016_republican</th>
+<td id="T_fca41_row24_col0" class="data row24 col0">0.11</td>
+<td id="T_fca41_row24_col1" class="data row24 col1">-0.06</td>
+<td id="T_fca41_row24_col2" class="data row24 col2">0.66</td>
+<td id="T_fca41_row24_col3" class="data row24 col3">-0.03</td>
+<td id="T_fca41_row24_col4" class="data row24 col4">-0.21</td>
+<td id="T_fca41_row24_col5" class="data row24 col5">-0.15</td>
+<td id="T_fca41_row24_col6" class="data row24 col6">0.27</td>
+<td id="T_fca41_row24_col7" class="data row24 col7">-0.28</td>
+<td id="T_fca41_row24_col8" class="data row24 col8">-0.22</td>
+<td id="T_fca41_row24_col9" class="data row24 col9">0.18</td>
+<td id="T_fca41_row24_col10" class="data row24 col10">0.31</td>
+<td id="T_fca41_row24_col11" class="data row24 col11">0.13</td>
+<td id="T_fca41_row24_col12" class="data row24 col12">0.40</td>
+<td id="T_fca41_row24_col13" class="data row24 col13">-0.32</td>
+<td id="T_fca41_row24_col14" class="data row24 col14">0.39</td>
+<td id="T_fca41_row24_col15" class="data row24 col15">0.40</td>
+<td id="T_fca41_row24_col16" class="data row24 col16">-0.44</td>
+<td id="T_fca41_row24_col17" class="data row24 col17">0.41</td>
+<td id="T_fca41_row24_col18" class="data row24 col18">-0.02</td>
+<td id="T_fca41_row24_col19" class="data row24 col19">-0.04</td>
+<td id="T_fca41_row24_col20" class="data row24 col20">0.02</td>
+<td id="T_fca41_row24_col21" class="data row24 col21">-0.45</td>
+<td id="T_fca41_row24_col22" class="data row24 col22">-0.44</td>
+<td id="T_fca41_row24_col23" class="data row24 col23">-0.09</td>
+<td id="T_fca41_row24_col24" class="data row24 col24">1.00</td>
+<td id="T_fca41_row24_col25" class="data row24 col25">-0.22</td>
+<td id="T_fca41_row24_col26" class="data row24 col26">-0.32</td>
+</tr>
+<tr class="even">
+<th id="T_fca41_level0_row25" class="row_heading level0 row25" data-quarto-table-cell-role="th">share_2012_republican</th>
+<td id="T_fca41_row25_col0" class="data row25 col0">0.03</td>
+<td id="T_fca41_row25_col1" class="data row25 col1">0.05</td>
+<td id="T_fca41_row25_col2" class="data row25 col2">-0.23</td>
+<td id="T_fca41_row25_col3" class="data row25 col3">0.13</td>
+<td id="T_fca41_row25_col4" class="data row25 col4">0.16</td>
+<td id="T_fca41_row25_col5" class="data row25 col5">0.02</td>
+<td id="T_fca41_row25_col6" class="data row25 col6">0.02</td>
+<td id="T_fca41_row25_col7" class="data row25 col7">0.22</td>
+<td id="T_fca41_row25_col8" class="data row25 col8">0.07</td>
+<td id="T_fca41_row25_col9" class="data row25 col9">-0.04</td>
+<td id="T_fca41_row25_col10" class="data row25 col10">-0.28</td>
+<td id="T_fca41_row25_col11" class="data row25 col11">0.08</td>
+<td id="T_fca41_row25_col12" class="data row25 col12">-0.34</td>
+<td id="T_fca41_row25_col13" class="data row25 col13">0.25</td>
+<td id="T_fca41_row25_col14" class="data row25 col14">-0.32</td>
+<td id="T_fca41_row25_col15" class="data row25 col15">-0.31</td>
+<td id="T_fca41_row25_col16" class="data row25 col16">0.28</td>
+<td id="T_fca41_row25_col17" class="data row25 col17">-0.21</td>
+<td id="T_fca41_row25_col18" class="data row25 col18">-0.24</td>
+<td id="T_fca41_row25_col19" class="data row25 col19">-0.24</td>
+<td id="T_fca41_row25_col20" class="data row25 col20">-0.32</td>
+<td id="T_fca41_row25_col21" class="data row25 col21">0.29</td>
+<td id="T_fca41_row25_col22" class="data row25 col22">0.28</td>
+<td id="T_fca41_row25_col23" class="data row25 col23">-0.17</td>
+<td id="T_fca41_row25_col24" class="data row25 col24">-0.22</td>
+<td id="T_fca41_row25_col25" class="data row25 col25">1.00</td>
+<td id="T_fca41_row25_col26" class="data row25 col26">0.93</td>
+</tr>
+<tr class="odd">
+<th id="T_fca41_level0_row26" class="row_heading level0 row26" data-quarto-table-cell-role="th">share_2016_republican</th>
+<td id="T_fca41_row26_col0" class="data row26 col0">-0.04</td>
+<td id="T_fca41_row26_col1" class="data row26 col1">0.05</td>
+<td id="T_fca41_row26_col2" class="data row26 col2">-0.29</td>
+<td id="T_fca41_row26_col3" class="data row26 col3">0.10</td>
+<td id="T_fca41_row26_col4" class="data row26 col4">0.15</td>
+<td id="T_fca41_row26_col5" class="data row26 col5">0.02</td>
+<td id="T_fca41_row26_col6" class="data row26 col6">-0.01</td>
+<td id="T_fca41_row26_col7" class="data row26 col7">0.38</td>
+<td id="T_fca41_row26_col8" class="data row26 col8">0.23</td>
+<td id="T_fca41_row26_col9" class="data row26 col9">-0.19</td>
+<td id="T_fca41_row26_col10" class="data row26 col10">-0.37</td>
+<td id="T_fca41_row26_col11" class="data row26 col11">0.03</td>
+<td id="T_fca41_row26_col12" class="data row26 col12">-0.53</td>
+<td id="T_fca41_row26_col13" class="data row26 col13">0.48</td>
+<td id="T_fca41_row26_col14" class="data row26 col14">-0.51</td>
+<td id="T_fca41_row26_col15" class="data row26 col15">-0.49</td>
+<td id="T_fca41_row26_col16" class="data row26 col16">0.38</td>
+<td id="T_fca41_row26_col17" class="data row26 col17">-0.31</td>
+<td id="T_fca41_row26_col18" class="data row26 col18">-0.18</td>
+<td id="T_fca41_row26_col19" class="data row26 col19">-0.16</td>
+<td id="T_fca41_row26_col20" class="data row26 col20">-0.25</td>
+<td id="T_fca41_row26_col21" class="data row26 col21">0.39</td>
+<td id="T_fca41_row26_col22" class="data row26 col22">0.38</td>
+<td id="T_fca41_row26_col23" class="data row26 col23">-0.11</td>
+<td id="T_fca41_row26_col24" class="data row26 col24">-0.32</td>
+<td id="T_fca41_row26_col25" class="data row26 col25">0.93</td>
+<td id="T_fca41_row26_col26" class="data row26 col26">1.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;Figure size 640x480 with 0 Axes&gt;</code></pre>
+</div>
+</div>
+<div id="45b2ef6ad05d5a98" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-09T08:35:53.528875Z&quot;,&quot;start_time&quot;:&quot;2024-12-09T08:35:51.343081Z&quot;}}" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # 1.7. Comparaison de performance avec un modèle ayant plus de variables:</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_regression_metrics(y_true, y_pred, model_name<span class="op">=</span><span class="st">""</span>):</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Print RMSE and R^2 for regression analysis.</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">    - y_true (array-like): The true target values.</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">    - y_pred (array-like): The predicted target values.</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">    - model_name (str): Name of the regression model. Default is an empty string.</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    rmse <span class="op">=</span> mean_squared_error(y_true, y_pred, squared<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    rsq <span class="op">=</span> r2_score(y_true, y_pred)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>model_name<span class="sc">}</span><span class="ss"> Regression:"</span>)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"RMSE: </span><span class="sc">{</span>rmse<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"R^2: </span><span class="sc">{</span>rsq<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> rmse, rsq</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="co"># #     Régression parcimonieuse</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>lasso_pipeline <span class="op">=</span> Pipeline(</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    steps<span class="op">=</span>[</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>        (</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>            <span class="st">"preprocess"</span>,</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>            ColumnTransformer(</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>                transformers<span class="op">=</span>[(<span class="st">"number"</span>, numeric_pipeline, numerical_features)]</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>            ),</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"model"</span>, Lasso()),</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>lasso_pipeline.fit(X_train, y_train)</span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>y_pred_parci <span class="op">=</span> lasso_pipeline.predict(X_test)</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>rmse_parci, rsq_parci <span class="op">=</span> print_regression_metrics(</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    y_test, y_pred_parci, <span class="st">"Régression parcimonieuse"</span></span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a><span class="co"># #     Régression non parcimonieuse</span></span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>ols_pipeline <span class="op">=</span> Pipeline(</span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>    steps<span class="op">=</span>[</span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>        (</span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>            <span class="st">"preprocess"</span>,</span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>            ColumnTransformer(</span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>                transformers<span class="op">=</span>[(<span class="st">"number"</span>, numeric_pipeline, numerical_features)]</span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>            ),</span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"scaler"</span>, StandardScaler()),  <span class="co"># Add scaling for LinearRegression</span></span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"model"</span>, LinearRegression()),</span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>ols_pipeline.fit(X_train, y_train)</span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>y_pred_nonparci <span class="op">=</span> ols_pipeline.predict(X_test)</span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>rmse_nonparci, rsq_nonparci <span class="op">=</span> print_regression_metrics(</span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>    y_test, y_pred_nonparci, <span class="st">"Régression non parcimonieuse"</span></span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>df_comp <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>        <span class="st">"parcimonieux"</span>: [rmse_parci, rsq_parci, <span class="bu">len</span>(features_selected)],</span>
+<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>        <span class="st">"non parcimonieux"</span>: [</span>
+<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a>            rmse_nonparci,</span>
+<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>            rsq_nonparci,</span>
+<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a>            ols_pipeline[<span class="op">-</span><span class="dv">1</span>].coef_.shape[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>,</span>
+<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a>        ],</span>
+<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>[<span class="st">"RMSE"</span>, <span class="st">"R2"</span>, <span class="st">"Nombre de paramètres"</span>],</span>
+<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a>df_comp</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\impute\_base.py:598: UserWarning: Skipping features without any observed values: ['POV04_2019' 'CI90LB04_2019' 'CI90UB04_2019' 'PCTPOV04_2019'
+ 'CI90LB04P_2019' 'CI90UB04P_2019']. At least one non-missing value is needed for imputation with strategy='mean'.
+  warnings.warn(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\impute\_base.py:598: UserWarning: Skipping features without any observed values: ['POV04_2019' 'CI90LB04_2019' 'CI90UB04_2019' 'PCTPOV04_2019'
+ 'CI90LB04P_2019' 'CI90UB04P_2019']. At least one non-missing value is needed for imputation with strategy='mean'.
+  warnings.warn(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\metrics\_regression.py:492: FutureWarning: 'squared' is deprecated in version 1.4 and will be removed in 1.6. To calculate the root mean squared error, use the function'root_mean_squared_error'.
+  warnings.warn(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\impute\_base.py:598: UserWarning: Skipping features without any observed values: ['POV04_2019' 'CI90LB04_2019' 'CI90UB04_2019' 'PCTPOV04_2019'
+ 'CI90LB04P_2019' 'CI90UB04P_2019']. At least one non-missing value is needed for imputation with strategy='mean'.
+  warnings.warn(</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Régression parcimonieuse Regression:
+RMSE: 2.7036
+R^2: 0.9727
+Régression non parcimonieuse Regression:
+RMSE: 2.3090
+R^2: 0.9801</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\impute\_base.py:598: UserWarning: Skipping features without any observed values: ['POV04_2019' 'CI90LB04_2019' 'CI90UB04_2019' 'PCTPOV04_2019'
+ 'CI90LB04P_2019' 'CI90UB04P_2019']. At least one non-missing value is needed for imputation with strategy='mean'.
+  warnings.warn(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\metrics\_regression.py:492: FutureWarning: 'squared' is deprecated in version 1.4 and will be removed in 1.6. To calculate the root mean squared error, use the function'root_mean_squared_error'.
+  warnings.warn(</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">parcimonieux</th>
+<th data-quarto-table-cell-role="th">non parcimonieux</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">RMSE</th>
+<td>2.703622</td>
+<td>2.309011</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">R2</th>
+<td>0.972728</td>
+<td>0.980108</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Nombre de paramètres</th>
+<td>27.000000</td>
+<td>332.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="8809bffc5324b134" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-03T10:01:20.119700Z&quot;,&quot;start_time&quot;:&quot;2024-12-03T10:01:18.262420Z&quot;}}" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Exercice 2: rôle de \alpha sur les variables sélectionnées</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># #     Liste de paramètres \alpha:</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>my_alphas <span class="op">=</span> np.array([<span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.02</span>, <span class="fl">0.025</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.8</span>, <span class="fl">1.0</span>])</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># #     Séparation des données entrainement et test:</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>df2.replace([np.inf, <span class="op">-</span>np.inf], np.nan, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    df2.drop([<span class="st">"per_gop"</span>], axis<span class="op">=</span><span class="dv">1</span>), <span class="dv">100</span> <span class="op">*</span> df2[[<span class="st">"per_gop"</span>]], test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>numerical_features <span class="op">=</span> X_train.select_dtypes(include<span class="op">=</span><span class="st">"number"</span>).columns.tolist()</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>categorical_features <span class="op">=</span> X_train.select_dtypes(exclude<span class="op">=</span>[<span class="st">'number'</span>, <span class="st">'datetime'</span>]).columns.tolist()</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>numeric_pipeline <span class="op">=</span> Pipeline(</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    steps<span class="op">=</span>[(<span class="st">"impute"</span>, SimpleImputer(strategy<span class="op">=</span><span class="st">"mean"</span>)), (<span class="st">"scale"</span>, StandardScaler())]</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>preprocessed_features <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    numeric_pipeline.fit_transform(X_train.drop(columns<span class="op">=</span>categorical_features))</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>alpha_for_path, coefs_lasso, _ <span class="op">=</span> lasso_path(</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>    preprocessed_features, y_train, alphas<span class="op">=</span>my_alphas</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'coefs_lasso: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(coefs_lasso))</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>nb_non_zero <span class="op">=</span> np.apply_along_axis(func1d<span class="op">=</span>np.count_nonzero, arr<span class="op">=</span>coefs_lasso, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>nb_non_zero <span class="op">=</span> pd.DataFrame(nb_non_zero).<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a><span class="co"># graphique</span></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">"whitegrid"</span>)</span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> sns.lineplot(y<span class="op">=</span>nb_non_zero, x<span class="op">=</span>alpha_for_path)</span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>p.<span class="bu">set</span>(</span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="vs">r"Number variables and regularization parameter </span><span class="kw">(</span><span class="dv">$</span><span class="ch">\a</span><span class="vs">lpha</span><span class="dv">$</span><span class="kw">)</span><span class="vs">"</span>,</span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>    xlabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="ch">\a</span><span class="vs">lpha</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>    ylabel<span class="op">=</span><span class="st">"Nb. de variables"</span>,</span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\impute\_base.py:598: UserWarning: Skipping features without any observed values: ['POV04_2019' 'CI90LB04_2019' 'CI90UB04_2019' 'PCTPOV04_2019'
+ 'CI90LB04P_2019' 'CI90UB04P_2019']. At least one non-missing value is needed for imputation with strategy='mean'.
+  warnings.warn(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:675: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 2873.8446227479726, tolerance: 1116.0180221013902
+  model = cd_fast.enet_coordinate_descent_multi_task(</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>coefs_lasso: [[[ 0.00000000e+00  0.00000000e+00  0.00000000e+00 ...  3.25420029e-01
+    3.20095831e-01  2.84237757e-01]
+  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00 ...  0.00000000e+00
+    0.00000000e+00  7.66719212e-03]
+  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00 ...  0.00000000e+00
+    1.44150153e+00  6.22549531e+00]
+  ...
+  [ 0.00000000e+00  0.00000000e+00  0.00000000e+00 ...  0.00000000e+00
+   -1.08922628e-01 -1.80804435e-01]
+  [ 2.82252500e-01  5.94165832e-01  1.16394256e+00 ...  2.78487955e+00
+    2.94899149e+00  3.03523501e+00]
+  [ 1.40950918e+01  1.38866604e+01  1.34005590e+01 ...  1.22966530e+01
+    1.22697630e+01  1.21685168e+01]]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:675: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 3171539.7426079144, tolerance: 1116.0180221013902
+  model = cd_fast.enet_coordinate_descent_multi_task(</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>[Text(0.5, 1.0, 'Number variables and regularization parameter ($\\alpha$)'),
+ Text(0.5, 0, '$\\alpha$'),
+ Text(0, 0.5, 'Nb. de variables')]</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="05_variables_selection_files/figure-html/cell-9-output-5.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="e424754680334604" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2024-12-03T10:04:36.644379Z&quot;,&quot;start_time&quot;:&quot;2024-12-03T10:04:31.373616Z&quot;}}" data-execution_count="24">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Validation croisée pour extraction du \alpha optimal et relance du pipeline:</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>my_alphas <span class="op">=</span> np.array([<span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.02</span>, <span class="fl">0.025</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.8</span>, <span class="fl">1.0</span>])</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>lcv <span class="op">=</span> LassoCV(alphas<span class="op">=</span>my_alphas, fit_intercept<span class="op">=</span><span class="va">False</span>, random_state<span class="op">=</span><span class="dv">0</span>, cv<span class="op">=</span><span class="dv">5</span>).fit(</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    preprocessed_features, y_train</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"alpha optimal :"</span>, lcv.alpha_)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co"># # Relance du pipeline:</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>numeric_pipeline <span class="op">=</span> Pipeline(</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    steps<span class="op">=</span>[(<span class="st">"impute"</span>, SimpleImputer(strategy<span class="op">=</span><span class="st">"mean"</span>)), (<span class="st">"scale"</span>, StandardScaler())]</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>categorical_pipeline <span class="op">=</span> Pipeline(</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    steps<span class="op">=</span>[</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"impute"</span>, SimpleImputer(strategy<span class="op">=</span><span class="st">"most_frequent"</span>)),</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"one-hot"</span>, OneHotEncoder(handle_unknown<span class="op">=</span><span class="st">"ignore"</span>, sparse_output<span class="op">=</span><span class="va">False</span>)),</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>preprocessor <span class="op">=</span> ColumnTransformer(</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>    transformers<span class="op">=</span>[</span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"number"</span>, numeric_pipeline, numerical_features),</span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"category"</span>, categorical_pipeline, categorical_features),</span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Lasso(fit_intercept<span class="op">=</span><span class="va">False</span>, alpha<span class="op">=</span>lcv.alpha_)</span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>lasso_pipeline <span class="op">=</span> Pipeline(steps<span class="op">=</span>[(<span class="st">"preprocess"</span>, preprocessor), (<span class="st">"model"</span>, model)])</span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>lasso_optimal <span class="op">=</span> lasso_pipeline.fit(X_train, y_train)</span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a>lasso_model <span class="op">=</span> lasso_pipeline[<span class="st">"model"</span>]</span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Get feature names from the preprocessing step</span></span>
+<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a>features_preprocessing <span class="op">=</span> lasso_pipeline[<span class="st">'preprocess'</span>].get_feature_names_out()</span>
+<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract selected features based on non-zero coefficients</span></span>
+<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a>features_selec2 <span class="op">=</span> pd.Series(features_preprocessing[np.<span class="bu">abs</span>(lasso_model.coef_) <span class="op">&gt;</span> <span class="dv">0</span>])</span>
+<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a>features_selec2</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:1656: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+  y = column_or_1d(y, warn=True)
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 125854.20245944336, tolerance: 896.6050704948441
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 1146303.875180583, tolerance: 896.6050704948441
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 1191168.8750782893, tolerance: 896.6050704948441
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 2333391.122418344, tolerance: 896.6050704948441
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 3799225.138051825, tolerance: 896.6050704948441
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 16473.495041899383, tolerance: 890.9125425010149
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 173914.82750095986, tolerance: 890.9125425010149
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 1473534.2484467826, tolerance: 890.9125425010149
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 1423285.3460307019, tolerance: 890.9125425010149
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 2293686.260319384, tolerance: 890.9125425010149
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 3554640.138318719, tolerance: 890.9125425010149
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 112467.85417700652, tolerance: 888.913352735031
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 624549.2835308472, tolerance: 888.913352735031
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 686170.4390656762, tolerance: 888.913352735031
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 2571434.0234997673, tolerance: 888.913352735031
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 3873705.2603589455, tolerance: 888.913352735031
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 1408.93527806364, tolerance: 893.6593390128605
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 640766.8872459736, tolerance: 893.6593390128605
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 1525974.3817592026, tolerance: 893.6593390128605
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 1448338.2658463088, tolerance: 893.6593390128605
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 1871545.4656674513, tolerance: 893.6593390128605
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 3705177.4054225073, tolerance: 893.6593390128605
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 47063.402113037184, tolerance: 893.9817836618081
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 371614.0078763729, tolerance: 893.9817836618081
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 981630.6123105595, tolerance: 893.9817836618081
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 1432620.0435944828, tolerance: 893.9817836618081
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 2607527.3914995864, tolerance: 893.9817836618081
+  model = cd_fast.enet_coordinate_descent_gram(
+C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\linear_model\_coordinate_descent.py:683: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Duality gap: 3817601.360163153, tolerance: 893.9817836618081
+  model = cd_fast.enet_coordinate_descent_gram(</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>alpha optimal : 1.0</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\dmarin\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\impute\_base.py:598: UserWarning: Skipping features without any observed values: ['POV04_2019' 'CI90LB04_2019' 'CI90UB04_2019' 'PCTPOV04_2019'
+ 'CI90LB04P_2019' 'CI90UB04P_2019']. At least one non-missing value is needed for imputation with strategy='mean'.
+  warnings.warn(</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<pre><code>0                                  number__R_birth_2017
+1     number__Percent of adults with less than a hig...
+2     number__Percent of adults completing some coll...
+3     number__Percent of adults with a bachelor's de...
+4     number__Percent of adults with a high school d...
+5     number__Percent of adults with a bachelor's de...
+6                                number__CI90LBINC_2019
+7                number__candidatevotes_2016_republican
+8                         number__share_2008_republican
+9                         number__share_2012_republican
+10                        number__share_2016_republican
+11                                 category__STATEFP_22
+12                                    category__LSAD_06
+13                                    category__LSAD_15
+14                       category__state_name_Louisiana
+dtype: object</code></pre>
+</div>
+</div>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,311 @@
+---
+title: |
+  <div>Python pour la data science TD 1 - Rappel des bases</div>
+  <div style="text-align:center;">
+    <img src="./img/logo_python.png" style="height:100px; margin-right:10px;">    
+  </div>
+format:
+  revealjs:
+    css: slides.css   # ensure the CSS is loaded even if _metadata.yml isn't picked up
+---
+
+
+## Intro
+
+* Cours `Python` de [Lino Galiana](https://github.com/linogaliana/python-datascientist/tree/main), sous environnement [SSP Cloud](https://www.sspcloud.fr/)
+* Questions à dmarin@open-dc.com
+* Programme:
+    * TD 01 - Rappels de base
+    * TD 02 - `Numpy`, `Pandas` et `GeoPandas`
+    * TD 03 - `Git`
+    * TD 04 - API et webscrapping
+    * TD 05 - Machine learning
+    * TD 06 - Machine learning (2)
+    * TD 07 - Introduction au NLP
+
+---
+
+## Environnements Python, gestionnaire de modules et IDE
+
+Pour programmer en `Python` on a besoin:
+
+* d'un exécutable `Python` (installé par défaut sur Linux et Mac), à installer sur Windows pour un environnement local.
+
+* d'un environnement de développement: IDE (`VS Code`, `PyCharm`, `Spyder` etc.)
+
+* d'un gestionnaire de modules (`pip`, `conda`)
+
+Cet écosystème peut être local ou dans le cloud (`Google Colab`, `SSP Cloud`).
+
+---
+
+::: columns
+::: column
+Dans le cadre du cours ==> écosystème **cloud** sous **`SSP Cloud`** avec IDE **`VS Code`**.
+
+*Note:* En pratique on crée un environnement de développement local, avec un *environnement virtuel*: il s'agit d'un environnement de développement propre au projet, avec ses propres versions de modules, communiquées grâce au fichier `requirements.txt`.
+
+**1ère étape:** Création de compte [`SSP Cloud`](http://datalab.sspcloud.fr/)
+:::
+
+::: column
+<img src="img/01_ssp_cloud_01_connection_page.jpg" width="85%">
+:::
+:::
+
+---
+
+*Application:* Créer une instance SSP Cloud:
+
+> -Se connecter sur le [`Datalab` du SSP Cloud](http://datalab.sspcloud.fr/) <br/>
+> - My Services / + New service <br/>
+> - Lancer un service `VS Code` <br/>
+> - Copier la clé de sécurité dans le presse-papier <br/>
+> - Créer un nouveau notebook `jupyter` <br/>
+> - Tester les commandes du TD <br/>
+> - Supprimer le service à la fin du TD! <br/>
+
+---
+
+<img src="img/01_ssp_cloud_02_services.jpg" width="25%">
+<img src="img/01_ssp_cloud_03_vscode.jpg" width="25%">
+<img src="img/01_ssp_cloud_04_link.jpg" width="25%">
+<img src="img/01_ssp_cloud_05_new_file.jpg" width="25%">
+<img src="img/01_ssp_cloud_06_notebook_example.jpg" width="25%">
+<img src="img/01_ssp_cloud_07_suppresion.jpg" width="25%">
+
+---
+
+## Rappel des bases du langage Python
+
+*Note: * On ne revient pas ici sur les notions de base de programmation telles que les variables, fonctions, boucles, conditions. On se concentre sur les spécificités de `Python` par rapport aux autres langages.
+
+### Types de base
+
+```{python}
+# Les types de base: int, float, str
+a = 2
+b = 3.14
+c = 'texte'
+
+# variables non allouées à un type donné:
+a = 'texte'  # a passe de int à str sans problème
+```
+
+---
+
+### Listes, dictionnaires et tuples
+
+---
+
+#### Listes:
+
+```python
+li = [2, 3, 4]      # liste de 3 éléments
+print(f'1ère valeur: {li[0]}')        # l'index commence à 0
+li.append(5)        # ajoute un élément
+print(li)
+li.extend([6, 7])   # ajoute une liste à la liste
+print(li)
+li.pop(4)           # retire le 4ème élément de la liste (et non l'élément 4 de la liste!)
+print(li)
+
+# # boucle sur les éléments:
+for el in li:
+    print(el)
+
+# # boucle avec conservation des index:
+for ix, el in enumerate(li):
+    print(f'index {ix}, valeur: {el}')
+
+# # Comprehension lists:
+li = [i for i in range(10) if i%2 == 0]
+
+```
+
+---
+
+#### Dictionnaires
+
+```python
+di = {'nom': 'Crusoé', 'prénom': 'Robinson', 'âge': 42}
+print(di)
+di['nom'] = 'Stévenin'  # les clés sont uniques
+print(di) 
+prenom = di.get('prénom', '???')        # clé existante
+adresse = di.get('adresse', '???')      # clé manquante
+print(f'prénom:\t{prenom},\nadresse:\t{adresse}')
+```
+
+---
+
+#### Tuples:
+
+```python
+tu = (49.4545, 2.4545)  # tuple à 2 éléments
+print(f'{tu[0]}, {tu[1]}')
+# tu[2] = 0               # le nombre d'éléments d'un tuple est invariable (pas de méthodes `append` ou `pop`)
+# tu[1] = 0               # le contenu d'un tuple n'est pas modifiable
+```
+
+---
+
+## Mutabilité
+
+En `Python`, seuls les types de base `int`, `float` et `str` ne sont pas mutables.
+
+```python
+a = 2
+b = a
+b = 3
+print(f'a: {a}, b: {b}')  # le contenu de a n'a pas changé: une copie de a a été réalisée pour être alouée à b (idem si a est un float ou str)
+
+li1 = [1, 2]
+print(f'li1: {li1}')
+li2 = li1
+li2[0] = 0
+print(f'li2: {li2}\nli1: {li1}')  # le contenu de li1 a été modifié lorsque li2 a été modifié
+
+# # Solution: créer une copie de l'objet mutable:
+li3 = li1.copy()
+li3[0] = 30
+print(f'li3: {li3}\nli1: {li1}')  # le contenu de li1 n'a pas été modifié lorsque li3 a été modifié
+```
+
+---
+
+## Imports de modules
+
+### Installation d'un module
+
+==> Uniquement pour les modules non natifs (ex de modules natifs: `datetime`, `os`, `re` etc.)
+
+> Dans le terminal:
+
+```shell
+pip install mon_module  # example: pip install pandas
+```
+
+> Dans jupyter:
+
+```python
+!pip install mon_module  # notez le "!"
+```
+
+### Import de modules
+
+==> Toujours en tête de fichier
+
+```python
+import numpy as np  # et jamais "from numpy import *"!
+import pandas as pd
+
+df = pd.read_csv('https://www.insee.fr/fr/statistiques/fichier/6800675/v_commune_2023.csv')
+# reste du code...
+
+```
+
+
+---
+
+
+[Exercices de révision](https://pythonds.linogaliana.fr/content/getting-started/03_revisions.html)
+
+
+---
+
+## Arborescence de projet
+
+Dans un projet, maintenir l'ensemble du code dans un notebook n'est pas maintenable. Le code est déporté sur des fichiers dédiés, modules.
+
+*Arborescence classique de projet:*
+
+```shell
+mon_projet/
+    - `main.py`             # fonction principale
+    - `requirements.txt`    # liste des modules et numéros de version à utiliser
+    - mes_modules/          # répertoire où les modules externes sont créés
+        `module1.py`        # module pour tâche 1
+        `module2.py`        # module pour tâche 2
+        ...
+    - venv/                 # environnement Python virtuel
+```
+
+<br>
+
+```python
+# # Fichier `main.py`:
+import mes_modules.module1 as m1
+import mes_modules.module2 as m2
+
+m1.print_msg('msg appelé depuis main...')
+
+# Fichier module1.py
+def print_msg(msg):
+    print(msg)
+
+```
+
+*Note:* Utiliser la librairie `importlib` pour recharger les modifications du fichier externe dans l'appel du fichier principal.
+
+```python
+# # Fichier `main.py`:
+import importlib
+import mes_modules.module1 as m1
+
+importlib.relaod(m1)  # permet de recharger les modifications dans `module1` sans avoir à relancer Jupyter
+
+m1.print_msg('msg appelé depuis main...')
+
+```
+
+
+---
+
+## Classes et programmation orientée objet (POO ou OOP)
+
+> Permet de structurer des logiques de code par types de données / manipulation <br>
+> Rend le code maintenable et scalable <br>
+> Tous les modules `Python` sont des classes!
+
+*Exemple:*
+
+```python
+# # Classe principale:
+class Mother:
+    def __init__(self, param):
+        self.param = param
+        self._attribut_prive = 2
+
+    def action(self):
+        print(self.param)
+
+# # Classe fille (hérite de la classe principale):
+class Daughter(Mother):
+    def __init__(self, param):
+        super().__init__(param=param)       # initialisation des attributs et méthodes de la classe mère, transmis à la fille
+        self.param_fille = 'param fille'    # définition des attributs et méthodes propres à la fille
+        
+# # Instanciation d'un objet de la classe fille:
+d = Daughter(param='param entrée')
+d.action() # la fille hérite des actions implémentées dans la classe mère
+
+
+```
+
+---
+
+## Conventions PEP-8
+
+==> Guide officiel de style Python : il fixe des règles pour écrire un code lisible et cohérent.
+Non obligatoire mais fortement recommandé pour écrire du code maintenable et reproduit!
+
+> Modules/paquets : `tout_en_minuscules`, underscores permis. <br>
+> Classes : `CapWords` (CamelCase), ex. DataLoader. <br>
+> Fonctions & variables : `snake_case`. <br>
+> Constantes : UPPER_CASE. <br>
+> à lire: [PEP 8 – Style Guide for Python Code](https://peps.python.org/pep-0008/)
+
+---
+
+[TD 02](./02_numpy_pandas_geopandas.html)
