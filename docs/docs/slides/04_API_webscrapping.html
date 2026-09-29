@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<script src="04_API_webscrapping_files/libs/clipboard/clipboard.min.js"></script>
+<script src="04_API_webscrapping_files/libs/quarto-html/tabby.min.js"></script>
+<script src="04_API_webscrapping_files/libs/quarto-html/popper.min.js"></script>
+<script src="04_API_webscrapping_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="04_API_webscrapping_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="04_API_webscrapping_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="04_API_webscrapping_files/libs/quarto-html/quarto-syntax-highlighting-15ea27bac76f9890c21e80949f497921.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
+
+  <title>Python pour la data science</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="04_API_webscrapping_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="04_API_webscrapping_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  background-color: #f8f8f8; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ef2929; } /* Alert */
+    code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #204a87; } /* Attribute */
+    code span.bn { color: #0000cf; } /* BaseN */
+    code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4e9a06; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #8f5902; font-style: italic; } /* Comment */
+    code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+    code span.dt { color: #204a87; } /* DataType */
+    code span.dv { color: #0000cf; } /* DecVal */
+    code span.er { color: #a40000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #0000cf; } /* Float */
+    code span.fu { color: #204a87; font-weight: bold; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+    code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+    code span.ot { color: #8f5902; } /* Other */
+    code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+    code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+    code span.ss { color: #4e9a06; } /* SpecialString */
+    code span.st { color: #4e9a06; } /* String */
+    code span.va { color: #000000; } /* Variable */
+    code span.vs { color: #4e9a06; } /* VerbatimString */
+    code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="04_API_webscrapping_files/libs/revealjs/dist/theme/quarto-839a830630e862584bb5be9033b9903c.css">
+  <link href="04_API_webscrapping_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="04_API_webscrapping_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="04_API_webscrapping_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="04_API_webscrapping_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Python pour la data science</h1>
+  <p class="subtitle">TD 4 - API et webscrapping</p>
+
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section id="intro" class="slide level2">
+<h2>Intro</h2>
+<ul>
+<li><strong>API</strong>: Application Programming Interface: infrastructure dédiée pour permettre d’accéder à de la donnée de façon programmatique ==&gt; légal, encadré, documenté.
+<ul>
+<li>Exemples:
+<ul>
+<li><a href="https://www.data.gouv.fr/datasets/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/">API Sirene de l’INSEE</a></li>
+<li><a href="https://www.data.gouv.fr/dataservices/api-adresse-base-adresse-nationale-ban/">Base adresse nationale de l’IGN (BAN)</a></li>
+<li><a href="https://developers.google.com/maps/documentation/directions/overview">API directions de Google Maps</a></li>
+<li>Etc.</li>
+</ul></li>
+</ul></li>
+<li><strong>Webscrapping</strong>: technique de reproduction de comportements humains (requêtes, copier, coller) pour automatiser un recueil de données.</li>
+</ul>
+<p>💡Les API sont à privilégier dès que c’est possible!</p>
+</section>
+<section id="api" class="slide level2">
+<h2>API</h2>
+<ul>
+<li>Gratuites ou payantes</li>
+<li>En général, nécessité de création de compte</li>
+<li>Structure habituelle:
+<ul>
+<li>URL racine de l’API (“root”): (ex: <code>https://api-adresse.data.gouv.fr</code>)</li>
+<li>Point d’entrée pour la tâche demandée (“End point”): (ex: <code>search</code>)</li>
+<li>Clé de requête (en général <code>?q=</code>)</li>
+<li>Paramètres de requête définis dans la documentation de l’API (ex: <code>5 +Av.+Le+Chatelier&amp;postcode=91120</code>)</li>
+</ul></li>
+</ul>
+<p>Exemple dans la base adresse nationale:</p>
+<p><span class="math display">\[
+\underbrace{{https://api-adresse.data.gouv.fr}}_{Point d’entrée (root)}/
+\underbrace{search}_{end point}/
+\underbrace{{?q=}}_{Clé}
+\underbrace{{5 +Av.+Le+Chatelier}}_{Valeurs de requête}
+\]</span></p>
+<p>==&gt; Retourne en général un objet <code>JSON</code> (ex en slide suivant).</p>
+</section>
+<section id="exemple-dobjet-json" class="slide level2">
+<h2>Exemple d’objet <code>JSON</code></h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb1-1"><a href=""></a><span class="ot">[</span></span>
+<span id="cb1-2"><a href=""></a>  <span class="fu">{</span></span>
+<span id="cb1-3"><a href=""></a>    <span class="dt">"id"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb1-4"><a href=""></a>    <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Alice"</span><span class="fu">,</span></span>
+<span id="cb1-5"><a href=""></a>    <span class="dt">"is_active"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb1-6"><a href=""></a>    <span class="dt">"joined"</span><span class="fu">:</span> <span class="st">"2020-01-15T09:30:00"</span><span class="fu">,</span></span>
+<span id="cb1-7"><a href=""></a>    <span class="dt">"skills"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"Python"</span><span class="ot">,</span> <span class="st">"SQL"</span><span class="ot">,</span> <span class="st">"GIS"</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-8"><a href=""></a>    <span class="dt">"address"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"city"</span><span class="fu">:</span> <span class="st">"Paris"</span><span class="fu">,</span> <span class="dt">"zip"</span><span class="fu">:</span> <span class="st">"75001"</span><span class="fu">}</span></span>
+<span id="cb1-9"><a href=""></a>  <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-10"><a href=""></a>  <span class="fu">{</span></span>
+<span id="cb1-11"><a href=""></a>    <span class="dt">"id"</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span></span>
+<span id="cb1-12"><a href=""></a>    <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Bob"</span><span class="fu">,</span></span>
+<span id="cb1-13"><a href=""></a>    <span class="dt">"is_active"</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></span>
+<span id="cb1-14"><a href=""></a>    <span class="dt">"joined"</span><span class="fu">:</span> <span class="st">"2018-07-23T14:45:00"</span><span class="fu">,</span></span>
+<span id="cb1-15"><a href=""></a>    <span class="dt">"skills"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"JavaScript"</span><span class="ot">,</span> <span class="st">"React"</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-16"><a href=""></a>    <span class="dt">"address"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"city"</span><span class="fu">:</span> <span class="st">"Berlin"</span><span class="fu">,</span> <span class="dt">"zip"</span><span class="fu">:</span> <span class="st">"10115"</span><span class="fu">}</span></span>
+<span id="cb1-17"><a href=""></a>  <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-18"><a href=""></a>  <span class="er">//</span> <span class="er">etc.</span></span>
+<span id="cb1-19"><a href=""></a><span class="ot">]</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="application" class="slide level2 scrollable">
+<h2>Application</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">import</span> requests       <span class="co"># pour lancer une requête web (module natif)</span></span>
+<span id="cb2-2"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd   <span class="co"># pour stocker et manipuler les données requêtées</span></span>
+<span id="cb2-3"><a href=""></a></span>
+<span id="cb2-4"><a href=""></a><span class="co"># # Exemple avec l’API BAN:</span></span>
+<span id="cb2-5"><a href=""></a>root <span class="op">=</span> <span class="st">'https://api-adresse.data.gouv.fr/'</span></span>
+<span id="cb2-6"><a href=""></a>endpoint <span class="op">=</span> <span class="st">'search/'</span></span>
+<span id="cb2-7"><a href=""></a>key <span class="op">=</span> <span class="st">'?q='</span></span>
+<span id="cb2-8"><a href=""></a>address <span class="op">=</span> <span class="st">'8+bd+du+port'</span></span>
+<span id="cb2-9"><a href=""></a></span>
+<span id="cb2-10"><a href=""></a>query <span class="op">=</span> <span class="ss">f'</span><span class="sc">{</span>root<span class="sc">}{</span>endpoint<span class="sc">}{</span>key<span class="sc">}{</span>address<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb2-11"><a href=""></a></span>
+<span id="cb2-12"><a href=""></a><span class="bu">print</span>(query)  </span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<ol type="1">
+<li>Copiez coller le résutat de <code>query</code> dans la barre url du navigateur et pressez <code>Entrée</code></li>
+<li>Examinez la structure de la réponse</li>
+</ol>
+<p>(suite au slide suivant)</p>
+</section>
+<section class="slide level2 scrollable">
+
+<ol start="3" type="1">
+<li>Chargez le contenu pertinent de la réponse dans un dataframe <code>pandas</code> au moyen du code ci-dessous</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a>req <span class="op">=</span> requests.get(query)  <span class="co"># requête web</span></span>
+<span id="cb3-2"><a href=""></a></span>
+<span id="cb3-3"><a href=""></a><span class="co"># # Récupération de l'ensemble de la donnée:</span></span>
+<span id="cb3-4"><a href=""></a>data <span class="op">=</span> req.json()</span>
+<span id="cb3-5"><a href=""></a>df2 <span class="op">=</span> pd.DataFrame(data)</span>
+<span id="cb3-6"><a href=""></a>df2.head()  <span class="co"># observez le résultat...</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p><br></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a>df3 <span class="op">=</span> pd.DataFrame(data[<span class="st">'features'</span>])</span>
+<span id="cb4-2"><a href=""></a>df3.head() <span class="co"># observez le résultat...</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p><br></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="co"># # Lorsque la structure JSON de sortie est emboitée comme ici, utiliser `pd.json_normalize`:</span></span>
+<span id="cb5-2"><a href=""></a>df4 <span class="op">=</span> pd.json_normalize(data[<span class="st">'features'</span>])</span>
+<span id="cb5-3"><a href=""></a>df4.head() <span class="co"># observez le résultat...</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section class="slide level2">
+
+<p><a href="https://pythonds.linogaliana.fr/content/manipulation/04c_API_TP.html#premi%C3%A8re-utilisation-dapi:~:text=Tester%20sans%20aucun%20autre%20param%C3%A8tre%2C%20le%20retour%20de%20notre%20API.%20Transformer%20en%20DataFrame%20le%20r%C3%A9sultat.">Exercice 1</a></p>
+<p>💡Aide</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="co"># # Récupérer des coordonnées avec l'API BAN:</span></span>
+<span id="cb6-2"><a href=""></a><span class="im">import</span> requests</span>
+<span id="cb6-3"><a href=""></a></span>
+<span id="cb6-4"><a href=""></a>postcode <span class="op">=</span> <span class="dv">92120</span></span>
+<span id="cb6-5"><a href=""></a>url_ban_example <span class="op">=</span> <span class="ss">f'https://api-adresse.data.gouv.fr/search/?q=</span><span class="sc">{</span>address<span class="sc">.</span>replace(<span class="st">" "</span>, <span class="st">"+"</span>)<span class="sc">}</span><span class="ss">&amp;postcode=</span><span class="sc">{</span>postcode<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb6-6"><a href=""></a>req <span class="op">=</span> requests.get(url_ban_example)</span>
+<span id="cb6-7"><a href=""></a><span class="co"># req.json()</span></span>
+<span id="cb6-8"><a href=""></a>prop <span class="op">=</span> req.json().get(<span class="st">'features'</span>)[<span class="dv">0</span>].get(<span class="st">'properties'</span>) </span>
+<span id="cb6-9"><a href=""></a>x, y <span class="op">=</span> prop.get(<span class="st">'x'</span>), prop.get(<span class="st">'y'</span>) </span>
+<span id="cb6-10"><a href=""></a><span class="bu">print</span>(<span class="ss">f'x: </span><span class="sc">{</span>x<span class="sc">}</span><span class="ss">, y: </span><span class="sc">{</span>y<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb6-11"><a href=""></a></span>
+<span id="cb6-12"><a href=""></a><span class="co"># # Afficher les résultats sur une carte avec `GeoPandas` et `Folium`</span></span>
+<span id="cb6-13"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb6-14"><a href=""></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb6-15"><a href=""></a><span class="im">import</span> folium</span>
+<span id="cb6-16"><a href=""></a></span>
+<span id="cb6-17"><a href=""></a>gdf <span class="op">=</span> gpd.GeoDataFrame(data<span class="op">=</span>pd.DataFrame({<span class="st">'ville'</span>: [<span class="st">'Montrouge'</span>]}), geometry<span class="op">=</span>gpd.points_from_xy([x], [y]), crs<span class="op">=</span><span class="st">'EPSG:2154'</span>)</span>
+<span id="cb6-18"><a href=""></a>gdf.to_crs(epsg<span class="op">=</span><span class="dv">4326</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-19"><a href=""></a>gdf[<span class="st">'longitude'</span>] <span class="op">=</span> gdf.geometry.x</span>
+<span id="cb6-20"><a href=""></a>gdf[<span class="st">'latitude'</span>] <span class="op">=</span> gdf.geometry.y</span>
+<span id="cb6-21"><a href=""></a></span>
+<span id="cb6-22"><a href=""></a>center <span class="op">=</span> gdf[[<span class="st">'latitude'</span>, <span class="st">'longitude'</span>]].mean().values.tolist()</span>
+<span id="cb6-23"><a href=""></a><span class="co"># sw = gdf[['latitude', 'longitude']].min().values.tolist()</span></span>
+<span id="cb6-24"><a href=""></a><span class="co"># ne = gdf[['latitude', 'longitude']].max().values.tolist()</span></span>
+<span id="cb6-25"><a href=""></a></span>
+<span id="cb6-26"><a href=""></a>m <span class="op">=</span> folium.Map(location <span class="op">=</span> center, tiles<span class="op">=</span><span class="st">'CartoDB.Positron'</span>) <span class="co"># CartoDB.Positron, openstreetmap </span></span>
+<span id="cb6-27"><a href=""></a></span>
+<span id="cb6-28"><a href=""></a><span class="co"># I can add marker one by one on the map</span></span>
+<span id="cb6-29"><a href=""></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>,<span class="bu">len</span>(gdf)):</span>
+<span id="cb6-30"><a href=""></a>    folium.Marker(</span>
+<span id="cb6-31"><a href=""></a>        [gdf.iloc[i][<span class="st">'latitude'</span>], gdf.iloc[i][<span class="st">'longitude'</span>]],</span>
+<span id="cb6-32"><a href=""></a>        popup<span class="op">=</span>gdf.iloc[i][<span class="st">'ville'</span>]</span>
+<span id="cb6-33"><a href=""></a>    ).add_to(m)</span>
+<span id="cb6-34"><a href=""></a></span>
+<span id="cb6-35"><a href=""></a><span class="co"># m.fit_bounds([sw, ne])</span></span>
+<span id="cb6-36"><a href=""></a>m</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<p>💡 <em>Note</em>: Si la carte ne s’affiche pas, tapez <code>Ctrl+Shift+P</code> puis <code>Jupyter: Trust Notebook</code> dans le prompt.</p>
+</section>
+<section class="slide level2">
+
+<p><a href="https://pythonds.linogaliana.fr/content/manipulation/04c_API_TP.html#:~:text=Trouver%20un%20lieu%20commun%20o%C3%B9%20se%20retrouver%20entre%20amis%20est%20toujours%20l%E2%80%99objet%20d%E2%80%99%C3%A2pres">Exercice 4</a></p>
+</section>
+<section id="web-scrapping" class="slide level2 scrollable">
+<h2>Web scrapping</h2>
+<h3 id="définition">Définition</h3>
+<p>Le web scraping désigne les techniques d’extraction et d’organisation du contenu des sites internet.</p>
+<h3 id="avertissements">Avertissements</h3>
+<ul>
+<li><p>Toute donnée ne peut être réutilisée à l’insu de la personne à laquelle ces données appartiennent ==&gt; données collectées par web scraping soumises au RGPD et nécessitent donc le consentement des personnes à l’origine de ces données.<sup>1</sup></p></li>
+<li><p>Les structures de données scrappées peuvent évoluer avec le site dont elles sont issues et rendre votre code inopérant à l’avenir.</p></li>
+</ul>
+<h3 id="bonne-pratiques-du-webscrapping">Bonne pratiques du webscrapping</h3>
+<ul>
+<li>Consulter le fichier <code>robots.txt</code> à la racine du site pour vérifier les consignes encadrant le comportement des robots.</li>
+<li>Espacer les requêtes de quelques secondes.</li>
+<li>Effectuer ses requêtes en heures creuses.</li>
+</ul>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>Directive CNIL 2020.</p></li></ol></aside></section>
+<section id="structure-dune-page-html" class="slide level2">
+<h2>Structure d’une page <code>HTML</code></h2>
+<div class="columns">
+<div class="column" style="width:45%;">
+<ul>
+<li><code>HTML</code> brut:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb7-1"><a href=""></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb7-2"><a href=""></a><span class="dt">&lt;</span><span class="kw">html</span><span class="ot"> lang</span><span class="op">=</span><span class="st">"en"</span><span class="dt">&gt;</span></span>
+<span id="cb7-3"><a href=""></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb7-4"><a href=""></a>  <span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> charset</span><span class="op">=</span><span class="st">"UTF-8"</span><span class="dt">&gt;</span></span>
+<span id="cb7-5"><a href=""></a>  <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>Simple Page<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
+<span id="cb7-6"><a href=""></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb7-7"><a href=""></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb7-8"><a href=""></a>  <span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>My Sample Page<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb7-9"><a href=""></a>  <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>This is a short paragraph explaining the content below.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb7-10"><a href=""></a>  </span>
+<span id="cb7-11"><a href=""></a>  <span class="dt">&lt;</span><span class="kw">table</span><span class="ot"> border</span><span class="op">=</span><span class="st">"1"</span><span class="dt">&gt;</span></span>
+<span id="cb7-12"><a href=""></a>    <span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb7-13"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>Name<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;</span></span>
+<span id="cb7-14"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>Age<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;</span></span>
+<span id="cb7-15"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>City<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;</span></span>
+<span id="cb7-16"><a href=""></a>    <span class="dt">&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb7-17"><a href=""></a>    <span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb7-18"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>Alice<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb7-19"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>29<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb7-20"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>Paris<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb7-21"><a href=""></a>    <span class="dt">&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb7-22"><a href=""></a>    <span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb7-23"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>Bob<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb7-24"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>35<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb7-25"><a href=""></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>Berlin<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb7-26"><a href=""></a>    <span class="dt">&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb7-27"><a href=""></a>  <span class="dt">&lt;/</span><span class="kw">table</span><span class="dt">&gt;</span></span>
+<span id="cb7-28"><a href=""></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb7-29"><a href=""></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:10%;">
+
+</div><div class="column" style="width:45%;">
+<ul>
+<li>Rendu:</li>
+</ul>
+<p><img data-src="./img/webscrapping_html_output.jpg"></p>
+</div></div>
+<p><em>Note: </em> Pour observer la structure d’une page <code>HTML</code> depuis votre navigateur: &gt; clic droit / afficher le code source de la page (<code>CTRL + U</code> sous <code>Chrome</code>, <code>CTRL + MAJ + K</code> sous <code>Firefox</code>)</p>
+</section>
+<section id="les-principales-balises-html" class="slide level2">
+<h2>Les principales balises <code>HTML</code></h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Balise</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>&lt;table&gt;</code></td>
+<td>Tableau</td>
+</tr>
+<tr class="even">
+<td><code>&lt;caption&gt;</code></td>
+<td>Titre du tableau</td>
+</tr>
+<tr class="odd">
+<td><code>&lt;tr&gt;</code></td>
+<td>Ligne de tableau</td>
+</tr>
+<tr class="even">
+<td><code>&lt;th&gt;</code></td>
+<td>Cellule d’en-tête</td>
+</tr>
+<tr class="odd">
+<td><code>&lt;td&gt;</code></td>
+<td>Cellule</td>
+</tr>
+<tr class="even">
+<td><code>&lt;thead&gt;</code></td>
+<td>Section de l’en-tête du tableau</td>
+</tr>
+<tr class="odd">
+<td><code>&lt;tbody&gt;</code></td>
+<td>Section du corps du tableau</td>
+</tr>
+<tr class="even">
+<td><code>&lt;tfoot&gt;</code></td>
+<td>Section du pied du tableau</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="beautifulsoup" class="slide level2">
+<h2>BeautifulSoup</h2>
+<ul>
+<li><code>BeautifulSoup</code> est un module <code>Python</code> permettant d’extraire facilement les informations des balises <code>html</code>.</li>
+<li>Installation:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource shell number-lines code-with-copy"><code class="sourceCode"><span id="cb8-1"><a href=""></a># # lxml pour la gestion des structures XML:</span>
+<span id="cb8-2"><a href=""></a>pip install lxml  # '!pip install lxml' dans Jupyter</span>
+<span id="cb8-3"><a href=""></a></span>
+<span id="cb8-4"><a href=""></a># # BeautifulSoup:</span>
+<span id="cb8-5"><a href=""></a>pip install bs4   # '!pip install bs4' dans Jupyter</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section class="slide level2">
+
+<ul>
+<li>Exemple:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="im">import</span> requests  <span class="co"># pour effectuer une requête web</span></span>
+<span id="cb9-2"><a href=""></a><span class="im">import</span> bs4  <span class="co"># BeautifulSoup</span></span>
+<span id="cb9-3"><a href=""></a></span>
+<span id="cb9-4"><a href=""></a>url_ligue_1 <span class="op">=</span> <span class="st">"https://fr.wikipedia.org/wiki/Championnat_de_France_de_football_2019-2020"</span></span>
+<span id="cb9-5"><a href=""></a></span>
+<span id="cb9-6"><a href=""></a>request_text <span class="op">=</span> requests.get(</span>
+<span id="cb9-7"><a href=""></a>    url_ligue_1,</span>
+<span id="cb9-8"><a href=""></a>    headers<span class="op">=</span>{<span class="st">"User-Agent"</span>: <span class="st">"Python for data science tutorial"</span>}  <span class="co"># bonne pratique: indiquer au site le consommateur de sa ressource</span></span>
+<span id="cb9-9"><a href=""></a>).content</span>
+<span id="cb9-10"><a href=""></a></span>
+<span id="cb9-11"><a href=""></a><span class="bu">print</span>(request_text)</span>
+<span id="cb9-12"><a href=""></a></span>
+<span id="cb9-13"><a href=""></a>page <span class="op">=</span> bs4.BeautifulSoup(request_text, <span class="st">"lxml"</span>)</span>
+<span id="cb9-14"><a href=""></a></span>
+<span id="cb9-15"><a href=""></a><span class="bu">print</span>(page)</span>
+<span id="cb9-16"><a href=""></a></span>
+<span id="cb9-17"><a href=""></a><span class="bu">print</span>(page.find(<span class="st">"title"</span>))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="application-pratique" class="slide level2">
+<h2>Application pratique</h2>
+<p><a href="https://pythonds.linogaliana.fr/content/manipulation/04a_webscraping_TP.html#:~:text=Dans%20le%20premier%20paragraphe%20de%20la%20page%20%E2%80%9CParticipants%E2%80%9D%2C%20on%20a%20le%20tableau%20avec%20les%20r%C3%A9sultats%20de%20l%E2%80%99ann%C3%A9e.">Exercice 1</a></p>
+</section>
+<section id="expressions-régulières" class="slide level2">
+<h2>Expressions régulières</h2>
+<ul>
+<li>Expressions régulières ou “regex” ==&gt; outils syntaxiques communs à beaucoup de langages.</li>
+</ul>
+<p><em>Définition: </em></p>
+<div class="center">
+<p>Outil permettant de décrire un ensemble de chaînes de caractères possibles selon une syntaxe précise, et donc de définir un motif (ou pattern)</p>
+</div>
+<p>==&gt; Très utile pour le nettoyage de textes (données issues de formulaires, extractions d’adresses mails depuis un texte, corrections de dates à différents formats etc.)</p>
+</section>
+<section class="slide level2">
+
+<h3 id="exemple-1-recherche-basique">Exemple 1: Recherche basique</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a><span class="im">import</span> re  <span class="co"># module natif de gestion des expressions régulières (re: 'regular expression')</span></span>
+<span id="cb10-2"><a href=""></a></span>
+<span id="cb10-3"><a href=""></a>text <span class="op">=</span> <span class="st">"Quelques mots avec des chiffres: python3, data2science, hello, test"</span></span>
+<span id="cb10-4"><a href=""></a></span>
+<span id="cb10-5"><a href=""></a><span class="co"># # Quelques patterns sous forme d'expressions régulières</span></span>
+<span id="cb10-6"><a href=""></a><span class="co"># # \w    = un caractère (n'importe lequel)</span></span>
+<span id="cb10-7"><a href=""></a><span class="co"># # \w*   = n'importe quel mot</span></span>
+<span id="cb10-8"><a href=""></a><span class="co"># # \d    = un chiffre</span></span>
+<span id="cb10-9"><a href=""></a></span>
+<span id="cb10-10"><a href=""></a><span class="co"># # Définition du pattern:</span></span>
+<span id="cb10-11"><a href=""></a>pattern <span class="op">=</span> <span class="vs">r"</span><span class="dv">\w</span><span class="op">*</span><span class="dv">\d\w</span><span class="op">*</span><span class="vs">"</span>  <span class="co"># n'importe quel mot précédent ou suivant un chiffre</span></span>
+<span id="cb10-12"><a href=""></a></span>
+<span id="cb10-13"><a href=""></a><span class="co"># # Recherche du pattern dans le mot:</span></span>
+<span id="cb10-14"><a href=""></a>words_with_numbers <span class="op">=</span> re.findall(pattern, text)</span>
+<span id="cb10-15"><a href=""></a><span class="bu">print</span>(words_with_numbers)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section class="slide level2">
+
+<h3 id="exemple-2-recherche-dadresses-mail-dans-un-texte">Exemple 2: Recherche d’adresses mail dans un texte</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href=""></a><span class="im">import</span> re</span>
+<span id="cb11-2"><a href=""></a></span>
+<span id="cb11-3"><a href=""></a>text <span class="op">=</span> <span class="st">"Contact me at hello@example.com"</span></span>
+<span id="cb11-4"><a href=""></a></span>
+<span id="cb11-5"><a href=""></a><span class="co"># # Expression régulière pour la définition d'un email:</span></span>
+<span id="cb11-6"><a href=""></a>pattern <span class="op">=</span> <span class="vs">r"</span><span class="dv">\b</span><span class="pp">[A-Za-z0-9._%+-]</span><span class="op">+</span><span class="vs">@</span><span class="pp">[A-Za-z0-9.-]</span><span class="op">+</span><span class="ch">\.</span><span class="pp">[A-Z|a-z]</span><span class="op">{2,}</span><span class="dv">\b</span><span class="vs">"</span></span>
+<span id="cb11-7"><a href=""></a></span>
+<span id="cb11-8"><a href=""></a>match <span class="op">=</span> re.search(pattern, text)</span>
+<span id="cb11-9"><a href=""></a></span>
+<span id="cb11-10"><a href=""></a><span class="cf">if</span> match:</span>
+<span id="cb11-11"><a href=""></a>    <span class="bu">print</span>(<span class="st">"Found email:"</span>, match.group())</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section class="slide level2">
+
+<ul>
+<li>Outils de tests d’expressions régulières: <a href="https://regex101.com/">https://regex101.com/</a></li>
+<li><a href="https://ole.michelsen.dk/tools/regex/">Cheatsheet</a>:</li>
+</ul>
+<p><br></p>
+<p><img data-src="./img/regex_cheatsheet.jpg" class="absolute" style="bottom: 2px; right: 2px; width: 80%; "></p>
+<p><span class="legend absolute" style="bottom: 0px; right: 0px; ">Source: https://ole.michelsen.dk/tools/regex/</span></p>
+</section>
+<section class="slide level2">
+
+<p><a href="https://pythonds.linogaliana.fr/content/manipulation/04b_regex_TP.html#:~:text=On%20va%20d%E2%80%99abord%20s%E2%80%99occuper%20d%E2%80%99extraire%20le%20jour%20de%20naissance">Excercice expressions régulières</a></p>
+</section>
+<section class="slide level2">
+
+<p><a href="./05_ML_session1.html">TD 05</a></p>
+
+</section>
+
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="img/logo_ensae.png" class="slide-logo"></p>
+<div class="footer footer-default">
+<p><span style="font-size:12px; line-height:1.2; color:#888;"> TD ENSAE Python pour la data science – <a href="https://pythonds.linogaliana.fr/">pythonds.linogaliana.fr</a> </span> <span style="font-size:12px; line-height:1.2; color:#888;"> -<br>
+<a href="https://daniel-odc.github.io/td_pythonds_ensae/">Slides</a> </span></p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="04_API_webscrapping_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="04_API_webscrapping_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="04_API_webscrapping_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="04_API_webscrapping_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="04_API_webscrapping_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="04_API_webscrapping_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="04_API_webscrapping_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="04_API_webscrapping_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="04_API_webscrapping_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="04_API_webscrapping_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 720,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 4.0e-2,
+
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 2.0e-2,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copié");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copié");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

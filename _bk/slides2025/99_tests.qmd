@@ -1,0 +1,10 @@
+| Balise       | Description                     |
+|--------------|---------------------------------| 
+| `<table>`    | Tableau                         | 
+| `<caption>`	| Titre du tableau                | 
+| `<tr>`	    | Ligne de tableau                | 
+| `<th>`	    | Cellule d’en-tête               | 
+| `<td>`	    | Cellule                         | 
+| `<thead>`	| Section de l’en-tête du tableau | 
+| `<tbody>`	| Section du corps du tableau     | 
+| `<tfoot>`	| Section du pied du tableau      | 
