@@ -429,4 +429,60 @@ Cf. [cours](https://pythonds.linogaliana.fr/content/git/introgit.html#:~:text=Ou
 
 ---
 
+## Stockage des fichiers avec `S3`
+
+Sur le SSP Cloud, un bucket est créé automatiquement lors de votre création de compte, avec le même nom que votre compte SSP Cloud
+[cf cours](https://pythonds.linogaliana.fr/content/manipulation/05_parquet_s3.html)
+Pour aller plus loin[La documentation sur MinIO du SSPCloud](https://docs.sspcloud.fr/content/storage.html)
+
+```shell
+pip install s3fs
+```
+
+### Lister vos fichiers
+
+```python
+import s3fs
+
+fs = s3fs.S3FileSystem(client_kwargs={"endpoint_url": "https://minio.lab.sspcloud.fr"})
+
+MY_BUCKET = "mon_nom_utilisateur_sspcloud"
+print(fs.ls(MY_BUCKET))
+```
+
+
+### Écrire dans un bucket
+
+```python
+import requests
+import pandas as pd
+import s3fs
+
+url_api = "https://koumoul.com/data-fair/api/v1/datasets/dpe-france/lines?format=json&q_mode=simple&qs=code_insee_commune_actualise%3A%2201450%22&size=100&select=%2A&sampling=neighbors"
+response_json = requests.get(url_api).json()
+df_dpe = pd.json_normalize(response_json["results"])
+FILE_PATH_OUT_S3 = f"{MY_BUCKET}/diffusion/df_dpe.csv"
+
+with fs.open(FILE_PATH_OUT_S3, 'w') as file_out:
+    df_dpe.to_csv(file_out)
+```
+
+### Lire depuis un bucket:
+
+```python
+# # Note: le dossier `diffusion` est par défaut accessible à tous les utilisateurs du SSP Cloud
+FILE_PATH_S3 = f"{MY_BUCKET}/diffusion/df_dpe.csv"
+
+# # Import csv
+with fs.open(FILE_PATH_S3, 'r') as file_in:
+    df_dpe = pd.read_csv(file_in)
+
+# # Import parquet ('r' remplacé par 'rb')
+with fs.open(FILE_PATH_S3, 'rb') as file_in:
+    df_dpe = pd.read_parquet(file_in)
+
+# Vérification
+df_dpe.head(2)
+```
+
 [TD 04](./04_API_webscrapping.html)

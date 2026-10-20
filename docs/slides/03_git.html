@@ -9,7 +9,7 @@
 <link href="03_git_files/libs/quarto-html/quarto-syntax-highlighting-15ea27bac76f9890c21e80949f497921.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.8.24">
 
-  <title>quarto-input629e1593756dae0b</title>
+  <title>quarto-inputfbd0323996dc02b5</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -699,8 +699,43 @@ Python pour la data science TD 3
 </tbody>
 </table>
 </section>
-<section class="slide level2">
-
+<section id="stockage-des-fichiers-avec-s3" class="slide level2">
+<h2>Stockage des fichiers avec <code>S3</code></h2>
+<p>Sur le SSP Cloud, un bucket est créé automatiquement lors de votre création de compte, avec le même nom que votre compte SSP Cloud <a href="https://pythonds.linogaliana.fr/content/manipulation/05_parquet_s3.html">cf cours</a> Pour aller plus loin<a href="https://docs.sspcloud.fr/content/storage.html">La documentation sur MinIO du SSPCloud</a></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource shell number-lines code-with-copy"><code class="sourceCode"><span id="cb5-1"><a href=""></a>pip install s3fs</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<h3 id="lister-vos-fichiers">Lister vos fichiers</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="im">import</span> s3fs</span>
+<span id="cb6-2"><a href=""></a></span>
+<span id="cb6-3"><a href=""></a>fs <span class="op">=</span> s3fs.S3FileSystem(client_kwargs<span class="op">=</span>{<span class="st">"endpoint_url"</span>: <span class="st">"https://minio.lab.sspcloud.fr"</span>})</span>
+<span id="cb6-4"><a href=""></a></span>
+<span id="cb6-5"><a href=""></a>MY_BUCKET <span class="op">=</span> <span class="st">"mon_nom_utilisateur_sspcloud"</span></span>
+<span id="cb6-6"><a href=""></a><span class="bu">print</span>(fs.ls(MY_BUCKET))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<h3 id="écrire-dans-un-bucket">Écrire dans un bucket</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="im">import</span> requests</span>
+<span id="cb7-2"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb7-3"><a href=""></a><span class="im">import</span> s3fs</span>
+<span id="cb7-4"><a href=""></a></span>
+<span id="cb7-5"><a href=""></a>url_api <span class="op">=</span> <span class="st">"https://koumoul.com/data-fair/api/v1/datasets/dpe-france/lines?format=json&amp;q_mode=simple&amp;qs=code_insee_commune_actualise%3A</span><span class="sc">%2201450%</span><span class="st">22&amp;size=100&amp;select=%2A&amp;sampling=neighbors"</span></span>
+<span id="cb7-6"><a href=""></a>response_json <span class="op">=</span> requests.get(url_api).json()</span>
+<span id="cb7-7"><a href=""></a>df_dpe <span class="op">=</span> pd.json_normalize(response_json[<span class="st">"results"</span>])</span>
+<span id="cb7-8"><a href=""></a>FILE_PATH_OUT_S3 <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>MY_BUCKET<span class="sc">}</span><span class="ss">/diffusion/df_dpe.csv"</span></span>
+<span id="cb7-9"><a href=""></a></span>
+<span id="cb7-10"><a href=""></a><span class="cf">with</span> fs.<span class="bu">open</span>(FILE_PATH_OUT_S3, <span class="st">'w'</span>) <span class="im">as</span> file_out:</span>
+<span id="cb7-11"><a href=""></a>    df_dpe.to_csv(file_out)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<h3 id="lire-depuis-un-bucket">Lire depuis un bucket:</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="co"># # Note: le dossier `diffusion` est par défaut accessible à tous les utilisateurs du SSP Cloud</span></span>
+<span id="cb8-2"><a href=""></a>FILE_PATH_S3 <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>MY_BUCKET<span class="sc">}</span><span class="ss">/diffusion/df_dpe.csv"</span></span>
+<span id="cb8-3"><a href=""></a></span>
+<span id="cb8-4"><a href=""></a><span class="co"># # Import csv</span></span>
+<span id="cb8-5"><a href=""></a><span class="cf">with</span> fs.<span class="bu">open</span>(FILE_PATH_S3, <span class="st">'r'</span>) <span class="im">as</span> file_in:</span>
+<span id="cb8-6"><a href=""></a>    df_dpe <span class="op">=</span> pd.read_csv(file_in)</span>
+<span id="cb8-7"><a href=""></a></span>
+<span id="cb8-8"><a href=""></a><span class="co"># # Import parquet ('r' remplacé par 'rb')</span></span>
+<span id="cb8-9"><a href=""></a><span class="cf">with</span> fs.<span class="bu">open</span>(FILE_PATH_S3, <span class="st">'rb'</span>) <span class="im">as</span> file_in:</span>
+<span id="cb8-10"><a href=""></a>    df_dpe <span class="op">=</span> pd.read_parquet(file_in)</span>
+<span id="cb8-11"><a href=""></a></span>
+<span id="cb8-12"><a href=""></a><span class="co"># Vérification</span></span>
+<span id="cb8-13"><a href=""></a>df_dpe.head(<span class="dv">2</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <p><a href="./04_API_webscrapping.html">TD 04</a></p>
 
 </section>
