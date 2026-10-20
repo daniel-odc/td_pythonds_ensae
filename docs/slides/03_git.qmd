@@ -432,7 +432,9 @@ Cf. [cours](https://pythonds.linogaliana.fr/content/git/introgit.html#:~:text=Ou
 ## Stockage des fichiers avec `S3`
 
 Sur le SSP Cloud, un bucket est créé automatiquement lors de votre création de compte, avec le même nom que votre compte SSP Cloud
+
 [cf cours](https://pythonds.linogaliana.fr/content/manipulation/05_parquet_s3.html)
+
 Pour aller plus loin[La documentation sur MinIO du SSPCloud](https://docs.sspcloud.fr/content/storage.html)
 
 ```shell
